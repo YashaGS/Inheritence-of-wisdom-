@@ -17,75 +17,104 @@ from xml.sax.saxutils import escape
 
 DIRECT, PRECURSOR, NONE = "direct", "precursor", None
 
-# (chapter, scholar, mark, lesson_key)
+# (chapter, inherited_work, scholar, mark, lesson_key)
+#
+# The work leads and the scholar attributes it. What a child inherits is the
+# method that was left behind, not a name to admire — so the name never takes
+# the headline position.
 SUBJECTS = [
     ("Mathematics", "0580", "#6a4bc0", [
-        ("Number", "al-Khwārizmī — numerals & zero", DIRECT, None),
-        ("Algebra and graphs", "al-Khwārizmī — al-jabr", DIRECT, "algebra"),
-        ("Coordinate geometry", None, NONE, None),
-        ("Geometry", "ʿUmar Khayyām — cubics", PRECURSOR, None),
-        ("Mensuration", None, NONE, None),
-        ("Trigonometry", "al-Battānī, al-Ṭūsī", DIRECT, None),
-        ("Transformations and vectors", None, NONE, None),
-        ("Probability", None, NONE, None),
-        ("Statistics", None, NONE, None),
+        ("Number", "Place value, zero, and the Hindu-Arabic numerals",
+         "al-Khwārizmī", DIRECT, None),
+        ("Algebra and graphs", "al-jabr — solving by restoring and balancing",
+         "al-Khwārizmī", DIRECT, "algebra"),
+        ("Coordinate geometry", None, None, NONE, None),
+        ("Geometry", "The geometric solution of cubic equations",
+         "ʿUmar Khayyām", PRECURSOR, None),
+        ("Mensuration", None, None, NONE, None),
+        ("Trigonometry", "Sine, cosine and tangent made a subject of their own",
+         "al-Battānī, al-Ṭūsī", DIRECT, None),
+        ("Transformations and vectors", None, None, NONE, None),
+        ("Probability", None, None, NONE, None),
+        ("Statistics", None, None, NONE, None),
     ]),
     ("Physics", "0625", "#2b7cc4", [
-        ("Motion, forces and energy", "Ibn Sīnā, al-Bīrūnī", PRECURSOR, None),
-        ("Thermal physics", None, NONE, None),
-        ("Waves", "Ibn al-Haytham — optics", DIRECT, None),
-        ("Electricity and magnetism", None, NONE, None),
-        ("Nuclear physics", None, NONE, None),
-        ("Space physics", "al-Battānī, Ibn al-Shāṭir", DIRECT, None),
+        ("Motion, forces and energy", "Impetus — the ancestor of momentum",
+         "Ibn Sīnā, al-Bīrūnī", PRECURSOR, None),
+        ("Thermal physics", None, None, NONE, None),
+        ("Waves", "Kitāb al-Manāẓir — light travels to the eye, not from it",
+         "Ibn al-Haytham", DIRECT, None),
+        ("Electricity and magnetism", None, None, NONE, None),
+        ("Nuclear physics", None, None, NONE, None),
+        ("Space physics", "Star catalogues and corrected planetary models",
+         "al-Battānī, Ibn al-Shāṭir", DIRECT, None),
     ]),
     ("Chemistry", "0620", "#c9453a", [
-        ("States of matter", None, NONE, None),
-        ("Atoms, elements and compounds", "Jābir, al-Rāzī", DIRECT, None),
-        ("Stoichiometry", None, NONE, None),
-        ("Electrochemistry", None, NONE, None),
-        ("Chemical energetics", None, NONE, None),
-        ("Chemical reactions", None, NONE, None),
-        ("Acids, bases and salts", "al-Rāzī", DIRECT, None),
-        ("The Periodic Table", None, NONE, None),
-        ("Metals", "Jābir — classifying metals", DIRECT, None),
-        ("Chemistry of the environment", None, NONE, None),
-        ("Organic chemistry", "Muslim chemists — distillation", PRECURSOR, None),
-        ("Experimental techniques and chemical analysis", "Jābir, al-Rāzī", DIRECT, None),
+        ("States of matter", None, None, NONE, None),
+        ("Atoms, elements and compounds", "Substances grouped by how they behave",
+         "Jābir, al-Rāzī", DIRECT, None),
+        ("Stoichiometry", None, None, NONE, None),
+        ("Electrochemistry", None, None, NONE, None),
+        ("Chemical energetics", None, None, NONE, None),
+        ("Chemical reactions", None, None, NONE, None),
+        ("Acids, bases and salts", "The preparation of the mineral acids",
+         "al-Rāzī", DIRECT, None),
+        ("The Periodic Table", None, None, NONE, None),
+        ("Metals", "Metals, spirits and salts, systematically grouped",
+         "Jābir", DIRECT, None),
+        ("Chemistry of the environment", None, None, NONE, None),
+        ("Organic chemistry", "Distillation of organic materials",
+         "Muslim chemists", PRECURSOR, None),
+        ("Experimental techniques and chemical analysis",
+         "The laboratory itself — distillation, filtration, crystallisation",
+         "Jābir, al-Rāzī", DIRECT, None),
     ]),
     ("Biology", "0610", "#1f9c6e", [
-        ("Characteristics and classification", "al-Jāḥiẓ, al-Dīnawarī", DIRECT, None),
-        ("Organisation of the organism", None, NONE, None),
-        ("Movement into and out of cells", None, NONE, None),
-        ("Biological molecules", None, NONE, None),
-        ("Enzymes", None, NONE, None),
-        ("Plant nutrition", None, NONE, None),
-        ("Human nutrition", "Ibn Sīnā — Canon", DIRECT, None),
-        ("Transport in plants", None, NONE, None),
-        ("Transport in animals", "Ibn al-Nafīs — circulation", DIRECT, None),
-        ("Diseases and immunity", "al-Rāzī, Ibn Sīnā", DIRECT, None),
-        ("Gas exchange in humans", None, NONE, None),
-        ("Respiration", None, NONE, None),
-        ("Excretion in humans", None, NONE, None),
-        ("Coordination and response", "Ibn al-Haytham — the eye", DIRECT, None),
-        ("Drugs", None, NONE, None),
-        ("Reproduction", None, NONE, None),
-        ("Inheritance", None, NONE, None),
-        ("Variation and selection", "al-Jāḥiẓ — adaptation", PRECURSOR, None),
-        ("Organisms and their environment", "al-Jāḥiẓ — food chains", DIRECT, None),
-        ("Human influences on ecosystems", None, NONE, None),
-        ("Biotechnology and genetic modification", None, NONE, None),
+        ("Characteristics and classification", "Kitāb al-Ḥayawān — classifying the living world",
+         "al-Jāḥiẓ, al-Dīnawarī", DIRECT, None),
+        ("Organisation of the organism", None, None, NONE, None),
+        ("Movement into and out of cells", None, None, NONE, None),
+        ("Biological molecules", None, None, NONE, None),
+        ("Enzymes", None, None, NONE, None),
+        ("Plant nutrition", None, None, NONE, None),
+        ("Human nutrition", "The Canon of Medicine — diet as treatment",
+         "Ibn Sīnā", DIRECT, None),
+        ("Transport in plants", None, None, NONE, None),
+        ("Transport in animals", "The pulmonary circulation, described and argued",
+         "Ibn al-Nafīs", DIRECT, None),
+        ("Diseases and immunity", "Smallpox distinguished from measles by observation",
+         "al-Rāzī, Ibn Sīnā", DIRECT, None),
+        ("Gas exchange in humans", None, None, NONE, None),
+        ("Respiration", None, None, NONE, None),
+        ("Excretion in humans", None, None, NONE, None),
+        ("Coordination and response", "Optics — how the eye actually sees",
+         "Ibn al-Haytham", DIRECT, None),
+        ("Drugs", None, None, NONE, None),
+        ("Reproduction", None, None, NONE, None),
+        ("Inheritance", None, None, NONE, None),
+        ("Variation and selection", "Adaptation, and the struggle for existence",
+         "al-Jāḥiẓ", PRECURSOR, None),
+        ("Organisms and their environment", "Early food chains and habitat",
+         "al-Jāḥiẓ", DIRECT, None),
+        ("Human influences on ecosystems", None, None, NONE, None),
+        ("Biotechnology and genetic modification", None, None, NONE, None),
     ]),
     ("Computer Science", "0478", "#d1497f", [
-        ("Data representation", "numeral heritage", PRECURSOR, None),
-        ("Data transmission", "al-Kindī — cryptanalysis", DIRECT, None),
-        ("Hardware", None, NONE, None),
-        ("Software", None, NONE, None),
-        ("The internet and its uses", None, NONE, None),
-        ("Automated and emerging technologies", "al-Jazarī, Banū Mūsā", DIRECT, None),
-        ("Algorithm design and problem-solving", "al-Khwārizmī", DIRECT, None),
-        ("Programming", None, NONE, None),
-        ("Databases", None, NONE, None),
-        ("Boolean logic", "al-Fārābī, Ibn Rushd", PRECURSOR, None),
+        ("Data representation", "The place-value system every base rests on",
+         "numeral heritage", PRECURSOR, None),
+        ("Data transmission", "Frequency analysis — the first systematic codebreaking",
+         "al-Kindī", DIRECT, None),
+        ("Hardware", None, None, NONE, None),
+        ("Software", None, None, NONE, None),
+        ("The internet and its uses", None, None, NONE, None),
+        ("Automated and emerging technologies", "Programmable machines that ran without a hand on them",
+         "al-Jazarī, Banū Mūsā", DIRECT, None),
+        ("Algorithm design and problem-solving", "The written, repeatable procedure itself",
+         "al-Khwārizmī", DIRECT, None),
+        ("Programming", None, None, NONE, None),
+        ("Databases", None, None, NONE, None),
+        ("Boolean logic", "Formal and conditional logic",
+         "al-Fārābī, Ibn Rushd", PRECURSOR, None),
     ]),
 ]
 
@@ -151,9 +180,9 @@ def subject_by_key(key):
 
 
 def subject_stats(chapters):
-    d = sum(1 for _, _, m, _ in chapters if m == DIRECT)
-    p = sum(1 for _, _, m, _ in chapters if m == PRECURSOR)
-    live = sum(1 for _, _, _, k in chapters if k)
+    d = sum(1 for *_, m, _ in chapters if m == DIRECT)
+    p = sum(1 for *_, m, _ in chapters if m == PRECURSOR)
+    live = sum(1 for *_, k in chapters if k)
     return d, p, len(chapters), live
 
 
@@ -207,7 +236,7 @@ def render_chapters(key):
     subs = SUBTOPICS.get(key, {})
 
     cards = []
-    for i, (chapter, who, mark, lesson) in enumerate(chapters, start=1):
+    for i, (chapter, work, who, mark, lesson) in enumerate(chapters, start=1):
         live = lesson is not None
         cls = "chap" + (" marked" if mark else "") + (" live" if live else "")
 
@@ -218,9 +247,12 @@ def render_chapters(key):
         else:
             badge = '<span class="ch-dash">&mdash;</span>'
 
-        lineage = (f'<span class="chap-who">{escape(who)}</span>' if who else
-                   '<span class="chap-who plain">taught through the algorithm '
-                   'of the topic</span>')
+        if work:
+            lineage = (f'<span class="chap-work">{escape(work)}</span>'
+                       f'<span class="chap-who">{escape(who)}</span>')
+        else:
+            lineage = ('<span class="chap-who plain">taught through the algorithm '
+                       'of the topic</span>')
 
         status = ""
         if live:
@@ -275,7 +307,7 @@ def _fit(text, limit):
 def counts():
     d = p = plain = live = 0
     for *_, chapters in SUBJECTS:
-        for _, _, mark, key in chapters:
+        for _, _, _, mark, key in chapters:
             d += mark == DIRECT
             p += mark == PRECURSOR
             plain += mark is NONE

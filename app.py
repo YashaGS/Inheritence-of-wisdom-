@@ -297,8 +297,19 @@ a.chap.live:focus-visible{outline:2px solid #b8860b;outline-offset:2px}
   font-size:1.42rem;line-height:1.25;color:#2c2216;
 }
 .chap:not(.marked) .chap-name{color:#a3937a;font-size:1.3rem}
-.chap-who{font-family:Georgia,serif;font-size:.9rem;font-style:italic;color:#7a5c1a}
+/* The work is the inheritance and takes the headline weight; the scholar is
+   attribution and sits quieter. Never the other way round. */
+.chap-work{
+  font-family:Georgia,serif;font-size:1rem;color:#5a4726;line-height:1.4;
+  flex:1 1 100%;margin-top:.15rem;
+}
+.chap-who{
+  font-family:Georgia,serif;font-size:.82rem;font-style:italic;color:#a3937a;
+  flex:1 1 100%;
+}
+.chap-who::before{content:"left by ";font-style:normal;color:#bcae90}
 .chap-who.plain{color:#bcae90}
+.chap-who.plain::before{content:""}
 .sub-list{display:flex;flex-wrap:wrap;gap:5px;margin:.7rem 0 0}
 .sub{
   font-family:Georgia,serif;font-size:.76rem;color:#6b5535;
