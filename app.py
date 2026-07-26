@@ -156,6 +156,14 @@ h1.title {
 .hero p{font-family:Georgia,serif;font-size:1.04rem;line-height:1.7;color:#33281a;margin:0 0 .85rem}
 .hero .names{color:#6b5535}
 .hero .names b{color:#7a5c1a;font-weight:600}
+/* Rubrication, not a highlighter pen: a gold wash sitting under the baseline,
+   the way an illuminated manuscript marks the line that matters. */
+.hero .mark{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1.16rem;font-weight:600;color:#2c2216;
+  background:linear-gradient(180deg,transparent 62%,rgba(184,134,11,.32) 62%);
+  padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
 .hero .kicker{
   font-family:'Iowan Old Style',Palatino,Georgia,serif;
   font-size:1.16rem;line-height:1.5;color:#2c2216;
@@ -736,7 +744,9 @@ HERO = """
   over <strong>now</strong>, while the mind is still being shaped.</p>
 
   <p>None of this is reverence for the past — it is <strong>equipment for what comes
-  next</strong>. The problems waiting for your child have not been solved by anyone.
+  next</strong>.<br/>
+  <span class="mark">The problems waiting for your child have not been solved by
+  anyone.</span><br/>
   Meeting them will take exactly what al-Khwārizmī needed in front of a blank page:
   <strong>a mind that knows how to begin</strong>.</p>
 
