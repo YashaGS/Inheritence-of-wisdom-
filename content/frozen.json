@@ -1,0 +1,113 @@
+{
+  "_README": "FROZEN NODE. Curated at build time by a human + build-time model pass. Per algorism-code-spine.md §2.2, the fields `tier`, `confidence`, `citation` and the syllabus codes are NEVER regenerated at runtime. The app narrates this file; it does not decide it.",
+
+  "objective": {
+    "code": "0580 E2.2.5",
+    "subject": "Cambridge IGCSE Mathematics 0580 (2025-2027)",
+    "title": "Complete the square for expressions in the form ax² + bx + c.",
+    "syllabus_verbatim": "Complete the square for expressions in the form ax² + bx + c.",
+    "related_code": "0580 E2.5.6",
+    "related_verbatim": "Solve quadratic equations by factorisation, completing the square and by use of the quadratic formula. Includes writing a quadratic expression in completed square form.",
+    "syllabus_page": 37,
+    "depth_ref": "Extended tier. Full-mark answers state the completed square form explicitly, then solve."
+  },
+
+  "source": {
+    "work": "Kitāb al-mukhtaṣar fī ḥisāb al-jabr wa-l-muqābala",
+    "author": "Muḥammad ibn Mūsā al-Khwārizmī",
+    "composed": "Baghdad, c. 820 CE",
+    "edition": "Frederic Rosen, The Algebra of Mohammed ben Musa (London: Oriental Translation Fund, 1831)",
+    "archive_id": "algebraofmohamme00khuwuoft",
+    "arabic_image": "assets/khwarizmi_arabic_p5.jpg",
+    "arabic_locator": "Arabic text, p. ٥ (5) — scan leaf n351",
+    "english_image": "assets/rosen_english_p8.jpg",
+    "english_locator": "Rosen 1831, p. 8 — scan leaf n32",
+    "licence": "Public domain (published 1831)"
+  },
+
+  "unlock": {
+    "_note": "Build-time vision pass over assets/khwarizmi_arabic_p5.jpg. Frozen. No live inference on the demo path.",
+    "arabic_transcription": "فاما الاموال والجذور التي تعدل العدد فمثل قولك مال وعشرة اجذاره يعدل تسعة وثلثين درهما ومعناه اي مال اذا زدت عليه مثل عشرة اجذار بلغ ذلك كله تسعة وثلثين ـ فقياسه ان تنصف الاجذار وهي في هذه المسئلة خمسة فتضربها في مثلها فيكون خمسة وعشرين فتزيدها علي التسعة والثلثين فيكون اربعة وستين فتاخذ جذره وهو ثمانية فتنقص منه نصف الاجذار وهو خمسة فيبقي ثلثة وهو جذر المال الذي تريد والمال تسعة",
+    "our_translation": "As for the squares and the roots which equal a number: it is like your saying, “a square and ten of its roots equal thirty-nine dirhams” — its meaning being, which square is it that, when you add to it ten of its roots, the whole amounts to thirty-nine? The rule for it is that you halve the roots, which in this problem is five, and you multiply it by itself, and it becomes twenty-five; you add it to the thirty-nine, and it becomes sixty-four; you take its root, which is eight, and you subtract from it half the roots, which is five, and three remains — and that is the root of the square you wanted, and the square is nine."
+  },
+
+  "critic": {
+    "_note": "The benchmark. The similarity score is computed IN CODE at runtime from these two strings (code-spine §2.3). The model never reports its own confidence.",
+    "benchmark_text": "Roots and Squares are equal to Numbers; for instance, “one square, and ten roots of the same, amount to thirty-nine dirhems;” that is to say, what must be the square which, when increased by ten of its own roots, amounts to thirty-nine? The solution is this: you halve the number of the roots, which in the present instance yields five. This you multiply by itself; the product is twenty-five. Add this to thirty-nine; the sum is sixty-four. Now take the root of this, which is eight, and subtract from it half the number of the roots, which is five; the remainder is three. This is the root of the square which you sought for; the square itself is nine.",
+    "benchmark_citation": "Rosen 1831, p. 8",
+    "checkpoints": [
+      {"claim": "halve the roots → 5", "ours": "five", "benchmark": "five"},
+      {"claim": "square the half → 25", "ours": "twenty-five", "benchmark": "twenty-five"},
+      {"claim": "add to the number → 64", "ours": "sixty-four", "benchmark": "sixty-four"},
+      {"claim": "take the root → 8", "ours": "eight", "benchmark": "eight"},
+      {"claim": "subtract the half → 3", "ours": "three", "benchmark": "three"},
+      {"claim": "the square itself → 9", "ours": "nine", "benchmark": "nine"}
+    ]
+  },
+
+  "lineage": {
+    "_note": "Tier and confidence set by human curation from Miraath-al-Hikma_Heritage-Topics.md. Never model-decided.",
+    "tier": 1,
+    "tier_label": "Tier 1 — Islamic scholar (direct)",
+    "thinker": "Muḥammad ibn Mūsā al-Khwārizmī",
+    "place_time": "Bayt al-Ḥikma, Baghdad, c. 820 CE",
+    "contribution": "Wrote the first systematic treatise on solving equations by balancing (al-jabr). The book’s title gave us the word algebra; his own name, Latinised as algorismus, gave us algorithm.",
+    "how_they_thought": "He refused to treat each equation as its own puzzle. Instead he sorted every quadratic into six canonical types, and wrote one repeatable procedure for each — then proved each procedure geometrically, so the rule was not merely asserted but seen. The move is: reduce the unfamiliar to a known shape, then apply the stored method.",
+    "citation": "Rosen 1831, p. 8",
+    "confidence": "direct",
+    "confidence_mark": "●"
+  },
+
+  "algorithm": {
+    "_note": "The universal layer — present for every objective regardless of lineage tier.",
+    "name": "Reduce to a known shape",
+    "steps": [
+      "Look at what you have: x² + 10x. It is not a square — it is a square with a strip attached.",
+      "Halve the roots. Ten roots become two strips of five.",
+      "Move the strips to two sides of the square. Now you have an L-shape.",
+      "See what is missing: one corner, five by five — twenty-five.",
+      "Add it to BOTH sides. The shape is now a true square; the equation is still balanced.",
+      "Read off the side, then undo the shift."
+    ],
+    "socratic_prompts": [
+      "You have a square and ten strips laid beside it. What shape is it closest to?",
+      "If you had to split the ten strips to keep the shape symmetrical, how would you split them?",
+      "Look at the corner. What exactly is missing — and what is it worth?",
+      "You added twenty-five to one side. What does fairness demand you do to the other?"
+    ],
+    "quran_link": null
+  },
+
+  "cambridge_form": {
+    "objective_code": "0580 E2.2.5",
+    "statement": "Complete the square for expressions in the form ax² + bx + c.",
+    "method": [
+      "Halve the coefficient of x → b/2",
+      "Write (x + b/2)²",
+      "Subtract (b/2)² to compensate for what the bracket added",
+      "Add the original constant c"
+    ],
+    "general_result": "x² + bx + c = (x + b/2)² − (b/2)² + c",
+    "command_words": "“Write in the form (x + a)² + b” — the completed square form is itself the answer, and carries the mark.",
+    "khwarizmi_worked": {
+      "problem": "x² + 10x = 39",
+      "steps": ["half of 10 is 5", "5² = 25", "39 + 25 = 64", "(x + 5)² = 64", "x + 5 = 8", "x = 3"],
+      "answer": "x = 3, and the square is 9"
+    }
+  },
+
+  "apply": {
+    "_note": "Withhold-then-reveal. The child attempts before the solution exists on screen.",
+    "problem": "Solve x² + 6x + 5 = 0 by completing the square.",
+    "hint": "Six roots. How do you split them so the shape stays symmetrical?",
+    "reveal_steps": [
+      "Half of 6 is 3, so the bracket is (x + 3).",
+      "(x + 3)² = x² + 6x + 9 — but we only had 5, not 9.",
+      "The bracket added 9. We had 5. So we must take away 4: (x + 3)² − 4.",
+      "That −4 is the overlap — the corner we borrowed but did not own.",
+      "(x + 3)² = 4 → x + 3 = ±2 → x = −1 or x = −5"
+    ],
+    "answer": "(x + 3)² − 4 = 0, giving x = −1 or x = −5",
+    "mark_scheme": "M1 for (x + 3)². A1 for −4. A1 for both roots. Full marks require the completed square form to be shown, not just the roots."
+  }
+}

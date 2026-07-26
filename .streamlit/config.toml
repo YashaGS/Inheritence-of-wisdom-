@@ -1,0 +1,13 @@
+[browser]
+# No usage telemetry. Nothing leaves this machine on the demo path.
+gatherUsageStats = false
+
+[server]
+headless = true
+
+[theme]
+base = "light"
+backgroundColor = "#f4e9d4"
+secondaryBackgroundColor = "#f7ecd6"
+textColor = "#2c2216"
+primaryColor = "#b8860b"

@@ -1,0 +1,4 @@
+# Exact pins — an unpinned dependency resolving differently on redeploy is a
+# failure mode already paid for once (algorism-code-spine.md §2.7).
+# Streamlit Cloud: set Python 3.11 explicitly in app settings, do not take the default.
+streamlit==1.45.1
