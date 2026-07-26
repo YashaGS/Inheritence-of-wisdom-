@@ -712,12 +712,14 @@ def screen_apply():
 
 HERO = """
 <div class="hero">
-  <p class="punch">Your child is inheriting a fortune —<br/>
+  <p class="punch">The mind is the greatest asset any of us will ever hold.<br/>
+  Your child is inheriting a fortune —
   the wisdom of the greatest thinkers who ever lived.<br/>
-  And <em>no one has told them whose it is</em>.</p>
+  We use it to mould the one thing that lasts: <em>how they think</em>.</p>
 
   <p class="names">Algebra without <b>al-jabr</b>. Algorithm without <b>al-Khwārizmī</b>.
-  Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.</p>
+  Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.
+  Your child has inherited every one of these, and been introduced to none of them.</p>
 
   <p>Every rule in that textbook was once somebody's breakthrough. School hands over the
   finished product and throws away the working — and a finished product is the one thing
