@@ -1781,8 +1781,6 @@ if st.session_state.view == "landing":
     screen_landing()
     st.stop()
 
-render_ask_panel()
-
 if st.session_state.view == "home":
     screen_home()
     st.stop()
@@ -1796,6 +1794,10 @@ if st.session_state.view == "subject":
         st.session_state.subject = None
         st.rerun()
     st.stop()
+
+# Only lessons get the Ask panel. Called after the home and subject views have
+# returned, or the sidebar paints on those too — with one lesson's questions.
+render_ask_panel()
 
 RENDER[st.session_state.step]()
 
