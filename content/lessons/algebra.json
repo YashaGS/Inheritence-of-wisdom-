@@ -26,7 +26,39 @@
     "arabic_locator": "Arabic text, p. ٥ (5) — scan leaf n351",
     "english_image": "assets/rosen_english_p8.jpg",
     "english_locator": "Rosen 1831, p. 8 — scan leaf n32",
-    "licence": "Public domain (published 1831)"
+    "licence": "Public domain (published 1831)",
+    "precisely": {
+      "_note": "Every line here was read off the Rosen scan itself, not recalled.",
+      "rows": [
+        [
+          "Author, as Rosen names him",
+          "Abū ʿAbdallāh Muḥammad ibn Mūsā al-Khwārizmī — the preface has “Abu Abdallah Mohammed ben Musa, <strong>of Khowarezm</strong>”"
+        ],
+        [
+          "The work",
+          "<em>al-Kitāb al-mukhtaṣar fī ḥisāb al-jabr wa-l-muqābala</em> — the Compendious Book on Calculation by Restoration and Balancing"
+        ],
+        [
+          "His own words for it",
+          "“a short work on <strong>Calculating by (the rules of) Completion and Reduction</strong>” — preface, Rosen 1831, p. 3"
+        ],
+        [
+          "Commissioned by",
+          "the Caliph <strong>al-Maʾmūn</strong> — “wrote this Treatise at the command of the Caliph Al Mamun”"
+        ],
+        [
+          "The edition we verify against",
+          "<em>The Algebra of Mohammed ben Musa</em>, edited and translated by <strong>Frederic Rosen</strong>, printed for the Oriental Translation Fund, London, <strong>1831</strong>"
+        ],
+        [
+          "The two pages",
+          "Arabic p. ٥ (scan leaf n351) · English p. 8 (leaf n32) — <strong>facing pages of the same passage</strong>"
+        ]
+      ],
+      "marginal_note": "Jebr is the restoration of anything defective by means of what is complete of another kind.",
+      "marginal_citation": "Marginal note from the Oxford manuscript, reproduced in Rosen 1831",
+      "marginal_after": "So <em>al-jabr</em> literally means restoring what is missing — which is exactly what completing the square does: you supply the corner that is not there. <strong>The name of the subject is a description of the method.</strong>"
+    }
   },
   "unlock": {
     "_note": "Build-time vision pass over assets/khwarizmi_arabic_p5.jpg. Frozen. No live inference on the demo path.",

@@ -1253,6 +1253,21 @@ def screen_unlock():
             unsafe_allow_html=True,
         )
 
+    P = D.get("source", {}).get("precisely")
+    if P:
+        with st.expander("The source, precisely"):
+            rows = "".join(
+                f'<div class="kwrow"><span class="kw-term">{k}</span>'
+                f'<span class="kw-def">{v}</span></div>' for k, v in P["rows"])
+            st.markdown(
+                f'<div class="panel">{rows}'
+                f'<blockquote class="pq" style="margin-top:1.1rem">'
+                f'{P["marginal_note"]}</blockquote>'
+                f'<div class="cite">{P["marginal_citation"]}</div>'
+                f'<p style="margin-top:.9rem">{P["marginal_after"]}</p></div>',
+                unsafe_allow_html=True,
+            )
+
 
 def screen_critic():
     header("Verify — checking the reading", "The critic",
