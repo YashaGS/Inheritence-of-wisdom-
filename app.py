@@ -735,8 +735,10 @@ HERO = """
   taken — a method, written down, outlives the one who found it. And it has to be handed
   over <strong>now</strong>, while the mind is still being shaped.</p>
 
-  <p>Not so your child can admire the thinkers of the past.
-  <strong>So they become the problem-solvers of the present.</strong></p>
+  <p>None of this is reverence for the past — it is <strong>equipment for what comes
+  next</strong>. The problems waiting for your child have not been solved by anyone.
+  Meeting them will take exactly what al-Khwārizmī needed in front of a blank page:
+  <strong>a mind that knows how to begin</strong>.</p>
 
   <p class="kicker">Then we stop talking, and the page turns to them:
   <strong>now you think</strong> — use the faculties you were given.<br/>
