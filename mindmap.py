@@ -15,7 +15,7 @@ curation, not generation (algorism-code-spine.md §5).
 
 from xml.sax.saxutils import escape
 
-DIRECT, PRECURSOR, NONE = "direct", "precursor", None
+DIRECT, PRECURSOR, TIER2, NONE = "direct", "precursor", "tier2", None
 
 # (chapter, inherited_work, scholar, mark, lesson_key)
 #
@@ -44,7 +44,8 @@ SUBJECTS = [
         ("Thermal physics", None, None, NONE, None),
         ("Waves", "Kitāb al-Manāẓir — light travels to the eye, not from it",
          "Ibn al-Haytham", DIRECT, None),
-        ("Electricity and magnetism", None, None, NONE, None),
+        ("Electricity and magnetism", "The field — space itself carries the force",
+         "Michael Faraday", TIER2, "magnetism"),
         ("Nuclear physics", None, None, NONE, None),
         ("Space physics", "Star catalogues and corrected planetary models",
          "al-Battānī, Ibn al-Shāṭir", DIRECT, None),
@@ -221,8 +222,14 @@ SUBTOPICS = {
 }
 
 # Where a built lesson actually lives, so the subtopic can be named on the card.
-LESSON_SUBTOPIC = {"algebra": ("E2.2", "Algebraic manipulation — completing the square")}
-LESSON_SOURCE = {"algebra": "al-Khwārizmī, Kitāb al-jabr · Rosen 1831, p. 8"}
+LESSON_SUBTOPIC = {
+    "algebra": ("E2.2", "Algebraic manipulation — completing the square"),
+    "magnetism": ("4.1", "Simple phenomena of magnetism"),
+}
+LESSON_SOURCE = {
+    "algebra": "al-Khwārizmī, Kitāb al-jabr · Rosen 1831, p. 8",
+    "magnetism": "Faraday, Experimental Researches in Electricity · no manuscript layer",
+}
 
 
 def subject_by_key(key):
@@ -235,7 +242,7 @@ def subject_by_key(key):
 
 def subject_stats(chapters):
     d = sum(1 for *_, m, _ in chapters if m == DIRECT)
-    p = sum(1 for *_, m, _ in chapters if m == PRECURSOR)
+    p = sum(1 for *_, m, _ in chapters if m in (PRECURSOR, TIER2))
     live = sum(1 for *_, k in chapters if k)
     return d, p, len(chapters), live
 
@@ -359,15 +366,16 @@ def _fit(text, limit):
 
 
 def counts():
-    d = p = plain = live = 0
+    d = p = t2 = plain = live = 0
     for *_, chapters in SUBJECTS:
         for _, _, _, mark, key in chapters:
             d += mark == DIRECT
             p += mark == PRECURSOR
+            t2 += mark == TIER2
             plain += mark is NONE
             live += key is not None
-    return {"direct": d, "precursor": p, "plain": plain,
-            "total": d + p + plain, "live": live}
+    return {"direct": d, "precursor": p, "tier2": t2, "plain": plain,
+            "total": d + p + t2 + plain, "live": live}
 
 
 def render():

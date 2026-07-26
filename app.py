@@ -18,7 +18,10 @@ import critic
 import mindmap
 
 ROOT = Path(__file__).parent
-SCREENS = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Jisr", "Apply"]
+# A lesson with a primary source walks all seven screens. One without a
+# manuscript skips Unlock and Critic rather than inventing a source to verify.
+SCREENS_SOURCE = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Jisr", "Apply"]
+SCREENS_PLAIN = ["Mīrāth", "Miftāḥ", "Jisr", "Apply"]
 
 st.set_page_config(
     page_title="Mīrāth al-Ḥikma · Algorism",
@@ -29,8 +32,13 @@ st.set_page_config(
 
 
 @st.cache_data
-def load():
-    return json.loads((ROOT / "content" / "frozen.json").read_text(encoding="utf-8"))
+def load(lesson_id):
+    path = ROOT / "content" / "lessons" / f"{lesson_id}.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def lesson_ids():
+    return sorted(p.stem for p in (ROOT / "content" / "lessons").glob("*.json"))
 
 
 @st.cache_data
@@ -127,6 +135,9 @@ h1.title {
   font-family: Georgia,serif; font-size:.74rem; letter-spacing:.12em;
   text-transform:uppercase; padding:.22rem .7rem; border-radius:2px;
 }
+.tier1.t2 { background:#4a5f6b; }
+.panel.honest { border-left:4px solid #4a5f6b; background:linear-gradient(#fbf5e6,#f4ead2); }
+.panel.honest h3 { color:#3f5561; }
 .steps { counter-reset: s; list-style:none; padding-left:0; }
 .steps li {
   counter-increment: s; position: relative; padding-left: 2.5rem;
@@ -353,6 +364,7 @@ a.ch.live:focus-visible{outline:2px solid var(--sc-colour);outline-offset:2px}
 .ch-dot{width:11px;height:11px;border-radius:50%;display:inline-block}
 .ch-dot.filled{background:var(--sc-colour)}
 .ch-dot.hollow{border:2px solid var(--sc-colour)}
+.ch-dot.tier2{background:#4a5f6b}
 .ch-dash{color:#c2b596;font-size:1rem;text-align:center}
 .ch-name{font-size:1rem;color:#2c2216}
 .ch.plain .ch-name{color:#a3937a}
@@ -379,7 +391,8 @@ div.stButton > button:hover { background:#8f6d20; color:#fff8e8; border-color:#7
 st.markdown(CSS, unsafe_allow_html=True)
 st.markdown(mindmap.colour_css(), unsafe_allow_html=True)
 
-D = load()
+if "lesson" not in st.session_state:
+    st.session_state.lesson = "algebra"
 
 if "view" not in st.session_state:
     st.session_state.view = "home"
@@ -401,11 +414,16 @@ if _subject or _lesson:
 if _subject and mindmap.subject_by_key(_subject):
     st.session_state.view = "subject"
     st.session_state.subject = _subject
-elif _lesson == "algebra":
+elif _lesson and _lesson in lesson_ids():
+    st.session_state.lesson = _lesson
     st.session_state.view = "lesson"
     st.session_state.step = 0
     st.session_state.revealed = False
     st.session_state.attempted = False
+
+D = load(st.session_state.lesson)
+HAS_SOURCE = bool(D.get("has_source"))
+SCREENS = SCREENS_SOURCE if HAS_SOURCE else SCREENS_PLAIN
 
 
 def header(eyebrow, title, subtitle=None):
@@ -514,6 +532,81 @@ def svg_overlap():
     s.append(f'<text x="{ox+X+w+30}" y="{oy+X+w/2+26}" font-size="14" fill="{ink}">owned only 5</text>')
     s.append(f'<text x="{ox+X+w+30}" y="{oy+X+w/2+47}" font-size="15" fill="{red}" font-weight="bold">give back 4</text>')
     s.append(f'<text x="{ox+(X+w)/2}" y="{oy+X+w+34}" text-anchor="middle" font-size="16" fill="#7a5c1a" font-style="italic">(x + 3)² − 4</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_bar_magnet():
+    """Field around one bar magnet: arrowed loops, N to S, densest at the poles."""
+    ink, gold, red, blue = "#2c2216", "#b8860b", "#8b2635", "#2b5f8a"
+    cx, cy, mw, mh = 260, 150, 130, 34
+    s = ['<svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" '
+         'font-family="Georgia,serif">',
+         '<defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" '
+         f'markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="{ink}"/>'
+         '</marker></defs>']
+    for k, (spread, op) in enumerate([(38, .95), (74, .8), (112, .62), (152, .45)]):
+        for sgn in (-1, 1):
+            y = cy + sgn * spread
+            s.append(
+                f'<path d="M {cx + mw/2 - 4} {cy} C {cx + mw/2 + spread*0.9} {cy}, '
+                f'{cx + spread*0.5} {y}, {cx} {y} C {cx - spread*0.5} {y}, '
+                f'{cx - mw/2 - spread*0.9} {cy}, {cx - mw/2 + 4} {cy}" '
+                f'fill="none" stroke="{ink}" stroke-width="1.5" stroke-opacity="{op}" '
+                f'marker-mid="url(#ar)"/>')
+            s.append(
+                f'<path d="M {cx + 26} {y} L {cx - 4} {y}" stroke="{ink}" '
+                f'stroke-width="1.5" stroke-opacity="{op}" marker-end="url(#ar)"/>')
+    s.append(f'<rect x="{cx - mw/2}" y="{cy - mh/2}" width="{mw/2}" height="{mh}" '
+             f'fill="{blue}"/>')
+    s.append(f'<rect x="{cx}" y="{cy - mh/2}" width="{mw/2}" height="{mh}" fill="{red}"/>')
+    s.append(f'<text x="{cx - mw/4}" y="{cy+6}" text-anchor="middle" font-size="16" '
+             f'fill="#fdf7e9">S</text>')
+    s.append(f'<text x="{cx + mw/4}" y="{cy+6}" text-anchor="middle" font-size="16" '
+             f'fill="#fdf7e9">N</text>')
+    s.append(f'<text x="{cx}" y="{cy+mh/2+126}" text-anchor="middle" font-size="13" '
+             f'fill="#6b5535" font-style="italic">Crowded at the poles — that is where '
+             f'the field is strongest</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_neutral_point():
+    """Two N poles facing: lines turn aside, and a neutral point sits between."""
+    ink, gold, red = "#2c2216", "#b8860b", "#8b2635"
+    cy, gap = 150, 92
+    lx, rx, mw, mh = 150, 370, 96, 32
+    s = ['<svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" '
+         'font-family="Georgia,serif">',
+         '<defs><marker id="ar2" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" '
+         f'markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="{ink}"/>'
+         '</marker></defs>']
+    mid = (lx + rx) / 2
+    for sgn in (-1, 1):
+        for k, off in enumerate([26, 54, 86]):
+            op = .9 - k * .2
+            s.append(
+                f'<path d="M {lx + mw/2} {cy} C {mid - 30} {cy + sgn*off*0.35}, '
+                f'{mid - 14} {cy + sgn*off}, {mid} {cy + sgn*(off + 26)}" '
+                f'fill="none" stroke="{ink}" stroke-width="1.5" stroke-opacity="{op}" '
+                f'marker-end="url(#ar2)"/>')
+            s.append(
+                f'<path d="M {rx - mw/2} {cy} C {mid + 30} {cy + sgn*off*0.35}, '
+                f'{mid + 14} {cy + sgn*off}, {mid} {cy + sgn*(off + 26)}" '
+                f'fill="none" stroke="{ink}" stroke-width="1.5" stroke-opacity="{op}" '
+                f'marker-end="url(#ar2)"/>')
+    for x in (lx, rx):
+        s.append(f'<rect x="{x - mw/2}" y="{cy - mh/2}" width="{mw}" height="{mh}" '
+                 f'fill="{red}"/>')
+        s.append(f'<text x="{x}" y="{cy+6}" text-anchor="middle" font-size="15" '
+                 f'fill="#fdf7e9">N</text>')
+    s.append(f'<circle cx="{mid}" cy="{cy}" r="6" fill="{gold}" stroke="{ink}" '
+             f'stroke-width="1.5"/>')
+    s.append(f'<text x="{mid}" y="{cy - 16}" text-anchor="middle" font-size="13" '
+             f'fill="#7a5c1a">neutral point</text>')
+    s.append(f'<text x="{mid}" y="{cy + 118}" text-anchor="middle" font-size="13" '
+             f'fill="#6b5535" font-style="italic">Two equal pushes cancel. '
+             f'A compass here has no direction to take.</text>')
     s.append("</svg>")
     return "".join(s)
 
@@ -637,12 +730,30 @@ def screen_critic():
 
 
 def screen_mirath():
-    header("Lesson · Mīrāth", "Whose you are",
-           "The inheritance — and the tier it sits in.")
     L = D["lineage"]
-    st.markdown(f'<span class="tier1">{L["tier_label"]} {L["confidence_mark"]}</span>',
-                unsafe_allow_html=True)
+    tier = L.get("tier", 1)
+
+    if tier == 1:
+        header("Lesson · Mīrāth", "Whose you are",
+               "The inheritance — and the tier it sits in.")
+    else:
+        header("Lesson · Mīrāth", "No thread here — and we say so",
+               "Wisdom is taken wherever it is found.")
+
+    st.markdown(
+        f'<span class="tier1{"" if tier == 1 else " t2"}">{L["tier_label"]} '
+        f'{L.get("confidence_mark", "")}</span>',
+        unsafe_allow_html=True,
+    )
     st.markdown("<div style='height:.9rem'></div>", unsafe_allow_html=True)
+
+    if L.get("honest_statement"):
+        st.markdown(
+            f'<div class="panel honest"><h3>Before anything else</h3>'
+            f'<p>{L["honest_statement"]}</p></div>',
+            unsafe_allow_html=True,
+        )
+
     c1, c2 = st.columns([1.4, 1], gap="large")
     with c1:
         st.markdown(
@@ -652,19 +763,29 @@ def screen_mirath():
             unsafe_allow_html=True,
         )
         st.markdown(
-            f'<div class="panel"><h3>How he thought</h3>'
+            f'<div class="panel"><h3>How they thought</h3>'
             f'<p class="dropcap">{L["how_they_thought"]}</p>'
             f'<div class="cite">{L["citation"]}</div></div>',
             unsafe_allow_html=True,
         )
     with c2:
+        if tier == 1:
+            body = ('<p>Tier 1 means the thread is <span class="gold">direct</span> — not a '
+                    'precursor, not a flourish. This topic is theirs.</p>'
+                    '<p>Where no such thread exists, we say so and teach another great mind. '
+                    'Where no single originator exists, we drop the hero entirely and teach '
+                    'the method alone.</p>')
+        else:
+            body = ('<p>Tier 2 is not a retreat from the mission — it is its fullest form. '
+                    '<em>al-ḥikma ḍāllat al-muʾmin</em>: wisdom is the believer\'s lost '
+                    'property, to be taken wherever it is found.</p>'
+                    '<p>The House of Wisdom was itself a translation movement. al-Khwārizmī '
+                    'built on Hindu numerals and Greek geometry. Learning from Faraday '
+                    '<em>is</em> thinking the way al-Khwārizmī thought.</p>')
+        if L.get("why_it_matters"):
+            body += f'<p class="gold">{L["why_it_matters"]}</p>'
         st.markdown(
-            f'<div class="panel"><h3>Why this tier</h3>'
-            f'<p>Tier 1 means the thread is <span class="gold">direct</span> — not a '
-            f'precursor, not a flourish. This topic is his.</p>'
-            f'<p>Where no such thread exists, we say so and teach another great mind. '
-            f'Where no single originator exists, we drop the hero entirely and teach '
-            f'the method alone.</p>'
+            f'<div class="panel"><h3>Why this tier</h3>{body}'
             f'<p style="font-size:.93rem;color:#6b5535"><em>The tier is set by hand when '
             f'the node is built. It is never decided by a model at runtime.</em></p>'
             f'</div>',
@@ -690,6 +811,13 @@ def screen_miftah():
                     unsafe_allow_html=True)
 
     st.markdown('<div style="height:.4rem"></div>', unsafe_allow_html=True)
+    if D["id"] == "magnetism":
+        st.markdown('<div class="eyebrow">He could not write the equations — so he '
+                    'drew the answer</div>', unsafe_allow_html=True)
+        show_svg(svg_bar_magnet(),
+                 "The field around a bar magnet, exactly as Faraday first pictured it")
+        return
+
     st.markdown('<div class="eyebrow">His own proof — he did not assert it, he drew it</div>',
                 unsafe_allow_html=True)
 
@@ -729,10 +857,10 @@ def screen_jisr():
             unsafe_allow_html=True,
         )
     with c2:
-        w = C["khwarizmi_worked"]
+        w = C.get("khwarizmi_worked") or C.get("worked")
         rows = "".join(f"<li>{s}</li>" for s in w["steps"])
         st.markdown(
-            f'<div class="panel"><h3>His example, in modern notation</h3>'
+            f'<div class="panel"><h3>Worked through</h3>'
             f'<p style="font-size:1.3rem;text-align:center;color:#2c2216">'
             f'<strong>{w["problem"]}</strong></p>'
             f'<ol class="steps">{rows}</ol>'
@@ -779,7 +907,7 @@ def screen_apply():
                 f'<div class="cite">{A["mark_scheme"]}</div></div>',
                 unsafe_allow_html=True,
             )
-            show_svg(svg_overlap())
+            show_svg(svg_neutral_point() if D["id"] == "magnetism" else svg_overlap())
         else:
             st.markdown(
                 '<div class="panel" style="text-align:center;padding:3.5rem 1rem">'
@@ -1020,8 +1148,8 @@ def screen_subject():
     return
 
 
-RENDER = [screen_manuscript, screen_unlock, screen_critic,
-          screen_mirath, screen_miftah, screen_jisr, screen_apply]
+RENDER = ([screen_manuscript, screen_unlock, screen_critic] if HAS_SOURCE else []) + \
+         [screen_mirath, screen_miftah, screen_jisr, screen_apply]
 
 if st.session_state.view == "home":
     screen_home()

@@ -29,35 +29,63 @@ def check(label, condition, detail=""):
 def main():
     print("\nAlgorism pre-flight\n" + "-" * 52)
 
-    path = ROOT / "content" / "frozen.json"
-    check("frozen.json exists", path.exists())
-    if not path.exists():
+    lessons = sorted((ROOT / "content" / "lessons").glob("*.json"))
+    check("at least one lesson exists", bool(lessons))
+    if not lessons:
         sys.exit(1)
+    print(f"        {len(lessons)} lesson(s): "
+          + ", ".join(p.stem for p in lessons))
 
+    for path in lessons:
+        check_lesson(path)
+
+    print("-" * 52)
+    if FAILURES:
+        print(f"PRE-FLIGHT FAILED — {len(FAILURES)} problem(s):")
+        for f in FAILURES:
+            print(f"  · {f}")
+        sys.exit(1)
+    print("PRE-FLIGHT PASSED — every lesson is complete.\n")
+
+
+def check_lesson(path):
     D = json.loads(path.read_text(encoding="utf-8"))
+    lid = D.get("id", path.stem)
+    has_source = bool(D.get("has_source"))
+    print(f"\n=== {lid} === (tier {D.get('lineage', {}).get('tier')}, "
+          f"source: {'yes' if has_source else 'none'})")
 
-    print("\nFrozen fields")
-    for section, fields in {
-        "objective": ["code", "syllabus_verbatim", "related_code"],
-        "source": ["work", "author", "edition", "arabic_image", "arabic_locator"],
-        "unlock": ["arabic_transcription", "our_translation"],
-        "critic": ["benchmark_text", "benchmark_citation"],
+    print("Frozen fields")
+    required = {
+        "objective": ["code", "syllabus_verbatim"],
         "lineage": ["tier", "thinker", "how_they_thought", "citation", "confidence"],
         "algorithm": ["name", "steps", "socratic_prompts"],
-        "cambridge_form": ["statement", "method", "general_result", "khwarizmi_worked"],
+        "cambridge_form": ["statement", "method", "general_result"],
         "apply": ["problem", "reveal_steps", "answer", "mark_scheme"],
-    }.items():
+    }
+    if has_source:
+        required["source"] = ["work", "author", "edition", "arabic_image", "arabic_locator"]
+        required["unlock"] = ["arabic_transcription", "our_translation"]
+        required["critic"] = ["benchmark_text", "benchmark_citation"]
+
+    for section, fields in required.items():
         for f in fields:
-            check(f"{section}.{f}", bool(D.get(section, {}).get(f)))
+            check(f"{lid}.{section}.{f}", bool(D.get(section, {}).get(f)))
 
-    print("\nAssets on disk")
-    for key in ("arabic_image", "english_image"):
-        rel = D["source"].get(key, "")
-        p = ROOT / rel
-        check(f"{key} ({rel})", p.exists() and p.stat().st_size > 10_000,
-              "missing or suspiciously small")
+    if has_source:
+        print("Assets on disk")
+        for key in ("arabic_image", "english_image"):
+            rel = D["source"].get(key, "")
+            pth = ROOT / rel
+            check(f"{key} ({rel})", pth.exists() and pth.stat().st_size > 10_000,
+                  "missing or suspiciously small")
+    else:
+        # A lesson without a manuscript must not carry half a source layer.
+        for ghost in ("source", "unlock", "critic"):
+            check(f"no phantom {ghost} block", ghost not in D,
+                  "lesson claims no source but carries one")
 
-    print("\nLineage integrity")
+    print("Lineage integrity")
     tier = D["lineage"].get("tier")
     check("tier is 1, 2 or 3", tier in (1, 2, 3), f"got {tier!r}")
     check("tier 1 carries a citation",
@@ -67,21 +95,20 @@ def main():
     check("quran_link is null unless genuinely referenced",
           "quran_link" in D["algorithm"])
 
-    print("\nCritic (recomputed live)")
-    r = critic.score(D["unlock"]["our_translation"], D["critic"]["benchmark_text"])
-    check("all load-bearing claims agree", r["claim_agreement"] == 1.0,
-          f"agreement {r['claim_agreement']}")
-    check("composite score is presentable", r["composite"] >= 0.70,
-          f"scored {r['percent']}%")
-    print(f"        score {r['percent']}%  —  {r['verdict']}")
+    tier = D["lineage"].get("tier")
+    if tier != 1:
+        check("tier 2 states the absence out loud",
+              bool(D["lineage"].get("honest_statement")),
+              "a non-Tier-1 lesson must say so in the lesson, not just in the data")
 
-    print("-" * 52)
-    if FAILURES:
-        print(f"PRE-FLIGHT FAILED — {len(FAILURES)} problem(s):")
-        for f in FAILURES:
-            print(f"  · {f}")
-        sys.exit(1)
-    print("PRE-FLIGHT PASSED — demo node is complete.\n")
+    if has_source:
+        print("Critic (recomputed live)")
+        r = critic.score(D["unlock"]["our_translation"], D["critic"]["benchmark_text"])
+        check("all load-bearing claims agree", r["claim_agreement"] == 1.0,
+              f"agreement {r['claim_agreement']}")
+        check("composite score is presentable", r["composite"] >= 0.70,
+              f"scored {r['percent']}%")
+        print(f"        score {r['percent']}%  —  {r['verdict']}")
 
 
 if __name__ == "__main__":

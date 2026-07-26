@@ -1,0 +1,99 @@
+{
+  "id": "magnetism",
+  "title": "Magnetic fields",
+  "subject": "Physics",
+  "subject_code": "0625",
+  "chapter": "Electricity and magnetism",
+  "has_source": false,
+
+  "_README": "TIER 2 lesson. There is no Islamic thread to magnetism and this file does not pretend otherwise — Miraath-al-Hikma_Heritage-Topics.md lists electricity and magnetism under 'no heritage thread'. The tier, thinker and confidence are frozen curation fields, never model-decided. No primary source, so no Unlock/Critic screens: the app skips them rather than inventing a manuscript.",
+
+  "objective": {
+    "code": "0625 4.1",
+    "subject": "Cambridge IGCSE Physics 0625 (2026-2028)",
+    "title": "Simple phenomena of magnetism",
+    "syllabus_verbatim": "Describe a magnetic field as a region in which a magnetic pole experiences a force.",
+    "related_code": "0625 4.1.6",
+    "related_verbatim": "Draw the pattern and direction of magnetic field lines around a bar magnet.",
+    "supplement_code": "0625 4.1.11",
+    "supplement_verbatim": "Know that the relative strength of a magnetic field is represented by the spacing of the magnetic field lines.",
+    "syllabus_page": 27,
+    "depth_ref": "Core objectives 5, 6, 8 with Supplement 11. Full-mark answers draw arrows on every line, run them N to S outside the magnet, and never let two lines cross."
+  },
+
+  "lineage": {
+    "_note": "Tier 2. Set by hand. The honest statement comes first and is not buried.",
+    "tier": 2,
+    "tier_label": "Tier 2 — another great mind",
+    "no_islamic_thread": true,
+    "honest_statement": "This topic has no Islamic thread. Magnetism was not shaped in the Muslim world, and we are not going to invent a connection to make the story tidier. Wisdom is taken wherever it is found — so we go to the man who actually did this.",
+    "thinker": "Michael Faraday",
+    "place_time": "The Royal Institution, London, 1830s–40s",
+    "contribution": "Introduced the idea of a field: that the space around a magnet is itself altered, and that this alteration can be drawn as lines. Physics had treated magnetism as attraction across empty space; Faraday made the space the subject.",
+    "how_they_thought": "Faraday had almost no mathematics — he had left school at thirteen and was apprenticed to a bookbinder. He could not write the equations, so he refused to work in equations. He thought in pictures: he imagined lines of force filling the space, drew them, and then designed experiments to test whether the picture predicted correctly. It did. Twenty years later Maxwell turned Faraday's pictures into the equations Faraday could never have written — and said openly that the ideas were Faraday's.",
+    "citation": "Faraday, Experimental Researches in Electricity (1839–55), Series XXVIII on lines of force",
+    "confidence": "direct",
+    "confidence_mark": "●",
+    "why_it_matters": "A child who thinks they are 'not a maths person' should meet Faraday before they conclude anything about themselves."
+  },
+
+  "algorithm": {
+    "_note": "The universal layer. Present regardless of tier.",
+    "name": "Make the invisible visible",
+    "steps": [
+      "You cannot see the force. Stop trying to.",
+      "Find something small that the force can move — iron filings, a compass needle.",
+      "Put it at one point. Note which way it turns. That is the direction of the field at that point.",
+      "Repeat at many points. The pattern that emerges is the field.",
+      "Read the spacing: where the lines crowd, the field is strong; where they spread, it is weak.",
+      "You now have a picture of something invisible — and a picture you can predict with."
+    ],
+    "socratic_prompts": [
+      "You are told there is a force in this space, and you can see nothing at all. What could you put there to find out?",
+      "The compass needle turns and stops. What exactly has it told you — how strong the field is, or which way it points?",
+      "Here are two field drawings, one crowded and one spread out. Which magnet is stronger, and how do you know without measuring anything?",
+      "Could two field lines ever cross? Think about what a compass placed exactly on the crossing point would have to do."
+    ],
+    "quran_link": null
+  },
+
+  "cambridge_form": {
+    "objective_code": "0625 4.1",
+    "statement": "Describe a magnetic field as a region in which a magnetic pole experiences a force.",
+    "method": [
+      "A field is a region — not a thing. It is where a pole would feel a force.",
+      "Field lines run from N to S outside the magnet, and every line carries an arrow.",
+      "The direction at a point is the direction of the force on a north pole placed there.",
+      "Spacing encodes strength: crowded lines mean a strong field.",
+      "Lines never cross — a compass at a crossing point would have to point two ways at once."
+    ],
+    "general_result": "Field lines: N → S outside the magnet, arrowed, never crossing, closest together at the poles.",
+    "command_words": "“Draw the pattern and direction” — the arrows carry marks. A drawing without arrows is an incomplete answer, however neat the curves.",
+    "worked": {
+      "problem": "Draw the magnetic field around a single bar magnet.",
+      "steps": [
+        "Lines leave the N pole and return to the S pole.",
+        "They bulge outward, symmetrical about the magnet.",
+        "They are most crowded at the two poles — that is where the field is strongest.",
+        "Arrows on every line, pointing N → S outside the magnet.",
+        "No line touches or crosses another."
+      ],
+      "answer": "A symmetrical arrowed pattern, densest at the poles"
+    }
+  },
+
+  "apply": {
+    "_note": "Withhold-then-reveal. The child predicts before the pattern is shown.",
+    "problem": "Two bar magnets are placed end to end with their N poles facing each other, a small gap apart. Sketch the field in the gap, and mark the point where a compass needle would not know which way to turn.",
+    "hint": "Both poles are pushing outward. What happens exactly halfway between two equal pushes?",
+    "reveal_steps": [
+      "Each N pole sends its lines outward, so in the gap the two sets of lines are heading straight at each other.",
+      "They cannot cross, so they turn aside — the field in the gap bends away to the sides.",
+      "Exactly halfway between two equal poles, the two pushes cancel completely.",
+      "At that point the field is zero. A compass there has no direction to take — it is called a neutral point.",
+      "That is the whole idea in one dot: the field is a real thing at every point in space, and here that thing happens to be nothing."
+    ],
+    "answer": "Field lines bend away sideways; a neutral point sits exactly midway between the two N poles, where the field is zero.",
+    "mark_scheme": "B1 for lines curving away from the gap. B1 for arrows shown on the lines. B1 for the neutral point marked at the midpoint. Candidates lose the mark if any two lines are drawn crossing."
+  }
+}

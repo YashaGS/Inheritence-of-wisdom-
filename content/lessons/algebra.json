@@ -1,6 +1,11 @@
 {
+  "id": "algebra",
+  "title": "Completing the square",
+  "subject": "Mathematics",
+  "subject_code": "0580",
+  "chapter": "Algebra and graphs",
+  "has_source": true,
   "_README": "FROZEN NODE. Curated at build time by a human + build-time model pass. Per algorism-code-spine.md §2.2, the fields `tier`, `confidence`, `citation` and the syllabus codes are NEVER regenerated at runtime. The app narrates this file; it does not decide it.",
-
   "objective": {
     "code": "0580 E2.2.5",
     "subject": "Cambridge IGCSE Mathematics 0580 (2025-2027)",
@@ -11,7 +16,6 @@
     "syllabus_page": 37,
     "depth_ref": "Extended tier. Full-mark answers state the completed square form explicitly, then solve."
   },
-
   "source": {
     "work": "Kitāb al-mukhtaṣar fī ḥisāb al-jabr wa-l-muqābala",
     "author": "Muḥammad ibn Mūsā al-Khwārizmī",
@@ -24,27 +28,48 @@
     "english_locator": "Rosen 1831, p. 8 — scan leaf n32",
     "licence": "Public domain (published 1831)"
   },
-
   "unlock": {
     "_note": "Build-time vision pass over assets/khwarizmi_arabic_p5.jpg. Frozen. No live inference on the demo path.",
     "arabic_transcription": "فاما الاموال والجذور التي تعدل العدد فمثل قولك مال وعشرة اجذاره يعدل تسعة وثلثين درهما ومعناه اي مال اذا زدت عليه مثل عشرة اجذار بلغ ذلك كله تسعة وثلثين ـ فقياسه ان تنصف الاجذار وهي في هذه المسئلة خمسة فتضربها في مثلها فيكون خمسة وعشرين فتزيدها علي التسعة والثلثين فيكون اربعة وستين فتاخذ جذره وهو ثمانية فتنقص منه نصف الاجذار وهو خمسة فيبقي ثلثة وهو جذر المال الذي تريد والمال تسعة",
     "our_translation": "As for the squares and the roots which equal a number: it is like your saying, “a square and ten of its roots equal thirty-nine dirhams” — its meaning being, which square is it that, when you add to it ten of its roots, the whole amounts to thirty-nine? The rule for it is that you halve the roots, which in this problem is five, and you multiply it by itself, and it becomes twenty-five; you add it to the thirty-nine, and it becomes sixty-four; you take its root, which is eight, and you subtract from it half the roots, which is five, and three remains — and that is the root of the square you wanted, and the square is nine."
   },
-
   "critic": {
     "_note": "The benchmark. The similarity score is computed IN CODE at runtime from these two strings (code-spine §2.3). The model never reports its own confidence.",
     "benchmark_text": "Roots and Squares are equal to Numbers; for instance, “one square, and ten roots of the same, amount to thirty-nine dirhems;” that is to say, what must be the square which, when increased by ten of its own roots, amounts to thirty-nine? The solution is this: you halve the number of the roots, which in the present instance yields five. This you multiply by itself; the product is twenty-five. Add this to thirty-nine; the sum is sixty-four. Now take the root of this, which is eight, and subtract from it half the number of the roots, which is five; the remainder is three. This is the root of the square which you sought for; the square itself is nine.",
     "benchmark_citation": "Rosen 1831, p. 8",
     "checkpoints": [
-      {"claim": "halve the roots → 5", "ours": "five", "benchmark": "five"},
-      {"claim": "square the half → 25", "ours": "twenty-five", "benchmark": "twenty-five"},
-      {"claim": "add to the number → 64", "ours": "sixty-four", "benchmark": "sixty-four"},
-      {"claim": "take the root → 8", "ours": "eight", "benchmark": "eight"},
-      {"claim": "subtract the half → 3", "ours": "three", "benchmark": "three"},
-      {"claim": "the square itself → 9", "ours": "nine", "benchmark": "nine"}
+      {
+        "claim": "halve the roots → 5",
+        "ours": "five",
+        "benchmark": "five"
+      },
+      {
+        "claim": "square the half → 25",
+        "ours": "twenty-five",
+        "benchmark": "twenty-five"
+      },
+      {
+        "claim": "add to the number → 64",
+        "ours": "sixty-four",
+        "benchmark": "sixty-four"
+      },
+      {
+        "claim": "take the root → 8",
+        "ours": "eight",
+        "benchmark": "eight"
+      },
+      {
+        "claim": "subtract the half → 3",
+        "ours": "three",
+        "benchmark": "three"
+      },
+      {
+        "claim": "the square itself → 9",
+        "ours": "nine",
+        "benchmark": "nine"
+      }
     ]
   },
-
   "lineage": {
     "_note": "Tier and confidence set by human curation from Miraath-al-Hikma_Heritage-Topics.md. Never model-decided.",
     "tier": 1,
@@ -57,7 +82,6 @@
     "confidence": "direct",
     "confidence_mark": "●"
   },
-
   "algorithm": {
     "_note": "The universal layer — present for every objective regardless of lineage tier.",
     "name": "Reduce to a known shape",
@@ -77,7 +101,6 @@
     ],
     "quran_link": null
   },
-
   "cambridge_form": {
     "objective_code": "0580 E2.2.5",
     "statement": "Complete the square for expressions in the form ax² + bx + c.",
@@ -91,11 +114,17 @@
     "command_words": "“Write in the form (x + a)² + b” — the completed square form is itself the answer, and carries the mark.",
     "khwarizmi_worked": {
       "problem": "x² + 10x = 39",
-      "steps": ["half of 10 is 5", "5² = 25", "39 + 25 = 64", "(x + 5)² = 64", "x + 5 = 8", "x = 3"],
+      "steps": [
+        "half of 10 is 5",
+        "5² = 25",
+        "39 + 25 = 64",
+        "(x + 5)² = 64",
+        "x + 5 = 8",
+        "x = 3"
+      ],
       "answer": "x = 3, and the square is 9"
     }
   },
-
   "apply": {
     "_note": "Withhold-then-reveal. The child attempts before the solution exists on screen.",
     "problem": "Solve x² + 6x + 5 = 0 by completing the square.",
