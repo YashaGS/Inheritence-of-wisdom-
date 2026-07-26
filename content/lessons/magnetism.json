@@ -317,5 +317,223 @@
       "Faraday could not join that argument on its own terms, because he had almost no mathematics. So he asked a <strong>physical</strong> question instead: what is the space in between actually doing?",
       "The limitation is what forced the new idea. Had he been able to derive, he would probably have derived — and the field, the single most important concept in modern physics, might have waited another generation."
     ]
+  },
+  "exam": {
+    "_note": "Exam prep. The eight MCQs and three structured questions marked 'own' are Yasha's own compiled, syllabus-aligned items. The rest were written here from the 0625 4.1 objectives. Nothing from Save My Exams, the Cambridge Coursebook, or past papers — architecture brief §5, and the repo is public.",
+    "intro": "Cambridge IGCSE Physics 0625 · Topic 4.1. Answer first, then reveal. Every structured question shows the mark scheme so you can mark yourself the way an examiner would.",
+    "mcq": [
+      {
+        "q": "A magnetic field is best described as a region in which:",
+        "options": [
+          "an electric current always flows",
+          "a magnetic pole experiences a force",
+          "electrons are stationary",
+          "gravity acts on a magnet"
+        ],
+        "correct": 1,
+        "own": true,
+        "why": "This is the syllabus wording, and examiners want it back. A field is a <em>region</em>, defined by the force a pole would feel in it. A is confusing magnetism with electricity; C and D are unrelated."
+      },
+      {
+        "q": "Outside a bar magnet, in which direction do the field lines point?",
+        "options": [
+          "from S-pole to N-pole",
+          "from N-pole to S-pole",
+          "both ways at once",
+          "they have no direction"
+        ],
+        "correct": 1,
+        "own": true,
+        "why": "N to S <em>outside</em> the magnet — the word outside matters, because inside the magnet they run S to N to complete the loop. C is impossible: the direction at a point is unique, which is also why lines never cross."
+      },
+      {
+        "q": "On a field-line diagram, where the lines are drawn CLOSER together the field is: [Extended]",
+        "options": [
+          "weaker",
+          "stronger",
+          "zero",
+          "reversed in direction"
+        ],
+        "correct": 1,
+        "own": true,
+        "why": "Spacing encodes strength — Supplement objective 4.1.11. Crowded lines mean a strong field, which is why they bunch at the poles."
+      },
+      {
+        "q": "A magnetic material that is NOT a magnet is brought close to a bar magnet. What happens?",
+        "options": [
+          "It is attracted to the N-pole only",
+          "It is attracted to the S-pole only",
+          "It is attracted to either pole",
+          "It is repelled by both poles"
+        ],
+        "correct": 2,
+        "own": true,
+        "why": "Induced magnetism. The material becomes a magnet with the opposite pole facing, whichever pole approaches — so it is always attracted. <strong>Repulsion is the only proof that something is already a magnet.</strong>"
+      },
+      {
+        "q": "Which of these is a use of a PERMANENT magnet, not an electromagnet?",
+        "options": [
+          "MRI scanner",
+          "Maglev train",
+          "Compass needle",
+          "Scrapyard crane for sorting steel"
+        ],
+        "correct": 2,
+        "own": true,
+        "why": "A compass needle must stay magnetised with no power supply. The other three need to be switched on — and a scrapyard crane must be switched <em>off</em> to drop the load, which is the whole point of using an electromagnet."
+      },
+      {
+        "q": "Which device depends on an ELECTROMAGNET?",
+        "options": [
+          "Fridge magnet",
+          "Plotting compass",
+          "MRI scanner",
+          "Bar magnet"
+        ],
+        "correct": 2,
+        "own": true,
+        "why": "An MRI needs a very strong field that can be switched off — only a current can do that. The other three are permanently magnetised."
+      },
+      {
+        "q": "Iron filings are sprinkled on paper over a bar magnet. Where do they cluster most thickly?",
+        "options": [
+          "where the field is weakest",
+          "near the poles, where the field is strongest",
+          "only at the centre of the magnet",
+          "they spread out evenly"
+        ],
+        "correct": 1,
+        "own": true,
+        "why": "Each filing becomes a tiny induced magnet and lines up with the field. They gather where the field is strongest — the poles — which is the same fact as lines crowding there."
+      },
+      {
+        "q": "A plotting compass finds the direction of a magnetic field because:",
+        "options": [
+          "the compass is heavy",
+          "its needle is a small magnet that lines up with the field",
+          "the needle is non-magnetic",
+          "it always points towards the Sun"
+        ],
+        "correct": 1,
+        "own": true,
+        "why": "The needle is itself a small magnet, so it turns until it lies along the field. Its N end points the way the field points at that spot."
+      },
+      {
+        "q": "Which pair of materials are BOTH magnetic?",
+        "options": [
+          "copper and aluminium",
+          "iron and steel",
+          "brass and zinc",
+          "gold and tin"
+        ],
+        "correct": 1,
+        "why": "Iron, steel, cobalt and nickel are the magnetic materials you are expected to know. Copper and aluminium conduct electricity well but are not magnetic — a very common confusion."
+      },
+      {
+        "q": "A steel bar and an iron bar are each placed in a strong magnetic field and then removed. Which statement is correct?",
+        "options": [
+          "Both keep their magnetism",
+          "Both lose their magnetism immediately",
+          "The steel keeps it; the iron loses it",
+          "The iron keeps it; the steel loses it"
+        ],
+        "correct": 2,
+        "why": "Steel is magnetically hard — it makes permanent magnets. Soft iron is easily magnetised and easily demagnetised, which is why electromagnet cores are soft iron."
+      },
+      {
+        "q": "Two bar magnets are placed with their N poles facing each other. At the exact midpoint between them:",
+        "options": [
+          "the field is at its strongest",
+          "the field is zero",
+          "the field points from left to right",
+          "the field points from right to left"
+        ],
+        "correct": 1,
+        "why": "Two equal fields in opposite directions cancel exactly. This is a neutral point, and a compass placed there has no direction to take."
+      },
+      {
+        "q": "Which statement about magnetic field lines is NOT true? [Extended]",
+        "options": [
+          "They can cross where two fields meet",
+          "They carry a direction, shown by an arrow",
+          "They are closer together where the field is stronger",
+          "Outside a magnet they run from N to S"
+        ],
+        "correct": 0,
+        "why": "Lines never cross. If they did, a compass at the crossing point would have to point two ways at once. Where two fields meet the lines bend around each other, and may cancel to a neutral point."
+      }
+    ],
+    "theory": [
+      {
+        "q": "Magnetic fields — definition and direction. [Extended]",
+        "parts": [
+          "(a) Define the term <em>magnetic field</em>. [1]",
+          "(b) State what is meant by the direction of the magnetic field at a point. [1]",
+          "(c) <strong>[Extended]</strong> Explain, in terms of magnetic fields, why two magnets can repel each other without touching. [2]"
+        ],
+        "marks": 4,
+        "own": true,
+        "model": "(a) A region in which a magnetic pole experiences a force. (b) The direction of the force on a north pole placed at that point. (c) Each magnet produces a field in the space around it; the field of one exerts a force on the pole of the other, so the force acts through the space between them without contact.",
+        "how": "For <strong>Define</strong>, give the syllabus sentence — 'a region in which…' — not a description of what magnets do. For <strong>(b)</strong> the word <em>north</em> is the mark; 'the direction it points' scores nothing. For <strong>Explain</strong>, the marks are for naming the field as the thing that carries the force, so say <em>field</em> explicitly.",
+        "scheme": "(a) B1 region / magnetic pole experiences a force. (b) B1 direction of force on a N pole. (c) B1 each magnet sets up a field in the surrounding space; B1 the field exerts a force on the other magnet's pole, so no contact is needed."
+      },
+      {
+        "q": "Magnetic materials may be classed as soft or hard.",
+        "parts": [
+          "(a) State two differences between the properties of a temporary magnet and a permanent magnet. [2]",
+          "(b) State the difference between a magnetic and a non-magnetic material. [1]"
+        ],
+        "marks": 3,
+        "own": true,
+        "model": "(a) A temporary magnet is made of soft iron, is easily magnetised and loses its magnetism easily; a permanent magnet is made of steel, is harder to magnetise and keeps its magnetism. (b) A magnetic material can be attracted by a magnet and can be magnetised; a non-magnetic material cannot.",
+        "how": "<strong>State</strong> means one line each, no explanation needed — but two <em>distinct</em> differences are required, so 'soft iron vs steel' plus 'loses vs keeps magnetism' rather than the same point twice.",
+        "scheme": "(a) B1 soft iron vs steel (or easily magnetised vs not); B1 loses magnetism easily vs retains it. Two identical points score 1. (b) B1 magnetic materials can be attracted / magnetised, non-magnetic cannot."
+      },
+      {
+        "q": "Permanent magnets and electromagnets have different uses.",
+        "parts": [
+          "(a) State two everyday uses of permanent magnets. [2]",
+          "(b) State two uses of electromagnets. [2]"
+        ],
+        "marks": 4,
+        "own": true,
+        "model": "(a) Compass needle; fridge magnet; loudspeaker; magnetic door catch. (b) Scrapyard crane; electric bell; relay; MRI scanner; maglev train.",
+        "how": "The examiner is looking for the <em>switchability</em> distinction underneath. Anything that must work with no power supply is a permanent magnet; anything that must be turned on and off is an electromagnet. Naming a device is enough — do not waste time explaining unless asked.",
+        "scheme": "(a) B1 each for two correct permanent-magnet uses, max 2. (b) B1 each for two correct electromagnet uses, max 2. A device that needs switching off to work (crane, relay) cannot be credited in (a)."
+      },
+      {
+        "q": "A student is given a bar magnet, a sheet of paper and a plotting compass.",
+        "parts": [
+          "(a) Describe how the student would plot the magnetic field pattern around the magnet. [3]",
+          "(b) State how the completed diagram shows where the field is strongest. [1]"
+        ],
+        "marks": 4,
+        "model": "(a) Place the magnet under (or on) the paper and draw round it. Put the compass near one pole and mark a dot at each end of the needle. Move the compass so its tail sits on the previous dot, and mark again. Repeat until you reach the other pole, then join the dots into a smooth line with an arrow showing the direction. Repeat from several starting points. (b) The field is strongest where the lines are closest together — near the poles.",
+        "how": "<strong>Describe</strong> a method: the marks are for a sequence someone else could follow. Marking the needle ends, moving the compass to the mark, and adding arrows are the three separate marks — arrows are almost always worth one on their own.",
+        "scheme": "(a) B1 mark the position of the compass needle ends; B1 move the compass so it starts where the last mark ended, and repeat; B1 join the marks and add arrows N to S. (b) B1 lines closest together / most crowded, at the poles."
+      },
+      {
+        "q": "Two bar magnets are placed end to end on a bench with their north poles facing, a small gap apart.",
+        "parts": [
+          "(a) Sketch the magnetic field pattern in the gap. [2]",
+          "(b) Mark with an X the point where a compass needle would not settle in any direction, and explain why. [2]"
+        ],
+        "marks": 4,
+        "model": "(a) Lines leave each N pole and curve away from the gap to either side; no lines cross. (b) X at the midpoint of the gap. The two magnets produce equal and opposite fields there, so the resultant field is zero — a neutral point — and there is no direction for the needle to align with.",
+        "how": "For <strong>Sketch</strong>, arrows still carry a mark. For the explanation, the words that earn credit are <em>equal and opposite</em> and <em>resultant field is zero</em> — 'they cancel' alone is usually only worth one.",
+        "scheme": "(a) B1 lines curving away from the gap on both sides; B1 arrows shown pointing away from each N pole. Any crossing lines lose a mark. (b) B1 X at the midpoint; B1 fields equal and opposite so the resultant is zero."
+      },
+      {
+        "q": "A scrapyard uses an electromagnet on a crane to lift steel objects. [Extended]",
+        "parts": [
+          "(a) Explain why an electromagnet is used rather than a permanent magnet. [2]",
+          "(b) The core of the electromagnet is made of soft iron rather than steel. Explain why. [2]"
+        ],
+        "marks": 4,
+        "model": "(a) An electromagnet can be switched off, so the load can be released; a permanent magnet could not be made to let go. Its strength can also be varied by changing the current. (b) Soft iron is easily magnetised, giving a strong field when the current flows, and loses its magnetism almost immediately when the current stops — so the load drops cleanly. Steel would retain its magnetism and hold the load.",
+        "how": "Both parts are <strong>Explain</strong>, so a property alone is not enough — you must say what that property lets the crane <em>do</em>. 'Soft iron is easily magnetised' scores one; adding 'so it loses magnetism when switched off and releases the load' earns the second.",
+        "scheme": "(a) B1 can be switched off / strength can be varied; B1 so the load can be released. (b) B1 soft iron is easily magnetised and demagnetised; B1 so the field collapses when the current stops and the load is released — steel would retain magnetism."
+      }
+    ]
   }
 }

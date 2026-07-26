@@ -27,6 +27,7 @@ SCREENS_PLAIN = ["Mīrāth", "Miftāḥ", "Jisr", "Apply"]
 # lineage together, so Manuscript and Mīrāth are not separate stops.
 SCREENS_FULL = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Shapes", "Jisr", "Key words", "Practice"]
 SCREENS_STORY = ["Mīrāth", "Miftāḥ", "Jisr", "Key words", "Practice"]
+SCREENS_STORY_EXAM = SCREENS_STORY + ["Exam prep"]
 
 st.set_page_config(
     page_title="Mīrāth al-Ḥikma · Algorism",
@@ -171,6 +172,52 @@ h1.title {
   font-family:'Iowan Old Style',Palatino,Georgia,serif !important;
   font-size:1.16rem !important;color:#2c2216 !important;
   margin:0 0 .8rem !important;
+}
+
+/* ---- exam prep ---- */
+.exq{display:flex;gap:.75rem;align-items:baseline;margin:0 0 .55rem}
+.exq-n{
+  flex:0 0 auto;width:1.7rem;height:1.7rem;border-radius:50%;
+  background:#f0e2c0;border:1px solid #c9a227;color:#7a5c1a;
+  font-family:Georgia,serif;font-size:.82rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.exq-t{font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.08rem;color:#2c2216;line-height:1.45}
+.exq-marks{font-family:Georgia,serif;font-size:.82rem;color:#9a8358;margin-left:.5rem}
+.own-tag{
+  font-family:Georgia,serif;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:#efe3c6;border:1px solid #d3bd8e;color:#7a5c1a;
+  padding:.1rem .4rem;border-radius:2px;margin-left:.45rem;vertical-align:middle;
+}
+.exq-parts{margin:0 0 .7rem 2.45rem}
+.exq-part{font-family:Georgia,serif;font-size:.97rem;line-height:1.6;color:#33281a;margin-bottom:.25rem}
+.ex-a{
+  display:flex;flex-direction:column;gap:.4rem;
+  background:#f7ecd6;border:1px solid #dcc9a0;border-left:3px solid #1f5e3d;
+  border-radius:3px;padding:.75rem .9rem;margin-top:.45rem;
+}
+.ex-ok{font-family:Georgia,serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#1f5e3d;font-weight:700}
+.ex-no{font-family:Georgia,serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#8b2635;font-weight:700}
+.ex-key{font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1rem;color:#2c2216}
+.ex-why{font-family:Georgia,serif;font-size:.88rem;line-height:1.55;color:#5a4726}
+.ex-model,.ex-how,.ex-scheme{
+  border:1px solid #dcc9a0;border-radius:3px;padding:.85rem 1.1rem;margin:0 0 .5rem;
+  background:linear-gradient(#fdf7e9,#f7ecd6);
+}
+.ex-model{border-left:3px solid #1f5e3d}
+.ex-how{border-left:3px solid #b8860b}
+.ex-scheme{border-left:3px solid #8b2635;background:#f9f0dd}
+.ex-model h4,.ex-how h4,.ex-scheme h4{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:.92rem;
+  letter-spacing:.06em;text-transform:uppercase;margin:0 0 .4rem;color:#7a5c1a;
+}
+.ex-scheme h4{color:#8b2635}
+.ex-model p,.ex-how p,.ex-scheme p{
+  font-family:Georgia,serif;font-size:.95rem;line-height:1.62;color:#33281a;margin:0;
+}
+section[data-testid="stSidebar"] ~ div textarea, .stTextArea textarea{
+  font-family:Georgia,serif !important;background:#fdf7e9 !important;
+  border:1px solid #dcc9a0 !important;color:#2c2216 !important;
 }
 
 /* ---- key words ---- */
@@ -556,7 +603,9 @@ elif _lesson and _lesson in lesson_ids():
 D = load(st.session_state.lesson)
 HAS_SOURCE = bool(D.get("has_source"))
 HAS_STORY = "story" in D
+HAS_EXAM = "exam" in D
 SCREENS = (SCREENS_FULL if (HAS_STORY and HAS_SOURCE) else
+           SCREENS_STORY_EXAM if (HAS_STORY and HAS_EXAM) else
            SCREENS_STORY if HAS_STORY else
            SCREENS_SOURCE if HAS_SOURCE else SCREENS_PLAIN)
 
@@ -1008,6 +1057,12 @@ def screen_landing():
             st.session_state.view = "lesson"
             st.session_state.step = 0
             st.rerun()
+        # Straight to the papers, for anyone who wants the exam first.
+        if "exam" in D and st.button("Exam prep — questions & mark schemes",
+                                     key="to_exam", use_container_width=True):
+            st.session_state.view = "lesson"
+            st.session_state.step = len(SCREENS) - 1
+            st.rerun()
         lb1, lb2 = st.columns(2)
         with lb1:
             if st.button("← Chapters", key="landing_back", use_container_width=True):
@@ -1179,6 +1234,82 @@ def screen_keywords():
                     f'<p style="font-size:.94rem;color:#6b5535">Examiners mark the word, '
                     f'not the paraphrase. These are the ones that carry marks.</p>'
                     f'{rows}</div>', unsafe_allow_html=True)
+
+
+def screen_exam():
+    E = D["exam"]
+    header("Exam prep", "Answer it the way it will be marked", E["intro"])
+
+    st.session_state.setdefault("mcq_pick", {})
+    st.session_state.setdefault("mcq_shown", set())
+    st.session_state.setdefault("theory_shown", set())
+
+    st.markdown('<div class="eyebrow">Multiple choice</div>', unsafe_allow_html=True)
+    LETTERS = "ABCD"
+    for i, q in enumerate(E["mcq"]):
+        own = ' <span class="own-tag">own item</span>' if q.get("own") else ""
+        st.markdown(f'<div class="exq"><span class="exq-n">{i + 1}</span>'
+                    f'<span class="exq-t">{q["q"]}{own}</span></div>',
+                    unsafe_allow_html=True)
+        c1, c2 = st.columns([2, 1], gap="large")
+        with c1:
+            pick = st.radio(
+                "options", q["options"], index=None, key=f"mcq_{i}",
+                label_visibility="collapsed",
+                format_func=lambda o, opts=q["options"]: f"{LETTERS[opts.index(o)]}.  {o}",
+            )
+        with c2:
+            if st.button("Check", key=f"mcqchk_{i}", use_container_width=True):
+                st.session_state.mcq_shown.add(i)
+            if i in st.session_state.mcq_shown:
+                right = q["options"][q["correct"]]
+                got = pick == right
+                verdict = ("<span class='ex-ok'>Correct</span>" if got
+                           else "<span class='ex-no'>Not right</span>" if pick
+                           else "<span class='ex-no'>No answer chosen</span>")
+                st.markdown(
+                    f'<div class="ex-a">{verdict}<span class="ex-key">Answer: '
+                    f'<b>{LETTERS[q["correct"]]}</b> — {right}</span>'
+                    f'<span class="ex-why">{q["why"]}</span></div>',
+                    unsafe_allow_html=True)
+        st.markdown('<div style="height:.5rem"></div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="eyebrow">Structured questions — '
+                f'{sum(t["marks"] for t in E["theory"])} marks total</div>',
+                unsafe_allow_html=True)
+
+    for i, t in enumerate(E["theory"]):
+        own = ' <span class="own-tag">own item</span>' if t.get("own") else ""
+        parts = "".join(f'<div class="exq-part">{p}</div>' for p in t["parts"])
+        st.markdown(
+            f'<div class="exq"><span class="exq-n">{i + 1}</span>'
+            f'<span class="exq-t">{t["q"]}{own}'
+            f'<span class="exq-marks">[{t["marks"]} marks]</span></span></div>'
+            f'<div class="exq-parts">{parts}</div>',
+            unsafe_allow_html=True)
+
+        st.text_area("Your answer", key=f"th_{i}", height=130,
+                     placeholder="Write your answer here, as you would in the exam…",
+                     label_visibility="collapsed")
+
+        if st.button("Show the mark scheme", key=f"thchk_{i}"):
+            st.session_state.theory_shown.add(i)
+
+        if i in st.session_state.theory_shown:
+            st.markdown(
+                f'<div class="ex-model"><h4>Model answer</h4><p>{t["model"]}</p></div>'
+                f'<div class="ex-how"><h4>How to write it</h4><p>{t["how"]}</p></div>'
+                f'<div class="ex-scheme"><h4>Mark scheme</h4><p>{t["scheme"]}</p></div>',
+                unsafe_allow_html=True)
+        st.markdown('<div style="height:1rem"></div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="panel" style="border-color:#c9a227">'
+        '<p style="font-size:.94rem">Mark yourself against the scheme, not against '
+        'how right it felt. An answer that says the correct thing in the wrong '
+        'command word still scores zero — which is the single most common way '
+        'marks are lost.</p></div>', unsafe_allow_html=True)
 
 
 def render_ask_panel():
@@ -1800,6 +1931,8 @@ if HAS_STORY and HAS_SOURCE:
 elif HAS_STORY:
     RENDER = [screen_story, screen_miftah, screen_jisr,
               screen_keywords, screen_practice]
+    if HAS_EXAM:
+        RENDER.append(screen_exam)
 elif HAS_SOURCE:
     RENDER = [screen_manuscript, screen_unlock, screen_critic,
               screen_mirath, screen_miftah, screen_jisr, screen_apply]
