@@ -2,10 +2,10 @@
 Mīrāth al-Ḥikma · Algorism
 A page of al-Khwārizmī's Algebra, carried to a Cambridge IGCSE lesson.
 
-Demo discipline: every screen reads from content/frozen.json. There is no
-network call and no model call anywhere in this file. The only number computed
-at runtime is the critic score, and it is computed deterministically in
-critic.py from two frozen strings.
+Demo discipline: every screen reads from content/lessons/<id>.json. There is no
+network call and no model call anywhere in this file. Two things are computed at
+runtime and both are deterministic: the critic score (critic.py, from two frozen
+strings) and the Ask panel's answer matching (ask.py, against frozen answers).
 """
 
 import base64
@@ -495,7 +495,7 @@ a.ch.live:focus-visible{outline:2px solid var(--sc-colour);outline-offset:2px}
   background:#b8860b;color:#fdf7e9;padding:.2rem .55rem;border-radius:2px;white-space:nowrap;
 }
 .ch-pending{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#a3937a;white-space:nowrap;justify-self:end}
-.ch-live{justify-self:end}
+
 @media(max-width:860px){
   .ch, .ch.plain{grid-template-columns:18px minmax(0,1fr)}
   .ch-who,.ch-live,.ch-pending{justify-self:start;text-align:left;grid-column:2}

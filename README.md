@@ -1,6 +1,8 @@
 # Mīrāth al-Ḥikma · Algorism
 
-**One page of al-Khwārizmī's *Algebra*, carried to a Cambridge IGCSE lesson — with every claim traceable to an attached source.**
+**The algorithm behind every topic — how to think, how to solve.**
+
+Five Cambridge IGCSE lessons, one per subject, each putting back the mind that worked the topic out — with every claim traceable to an attached source, and honest about the topics where there is no such mind to name.
 
 Built for Algorism №001, Bengaluru, 26 July 2026.
 
@@ -29,19 +31,30 @@ Wisdom is *ḍāllat al-muʾmin* — the believer's lost property, taken whereve
 
 ## What this demo does
 
-Cambridge IGCSE Mathematics 0580, objective **E2.2.5** — *"Complete the square for expressions in the form ax² + bx + c."*
+**Five lessons, one in every subject** — each mapped to a verbatim Cambridge objective.
 
-Seven screens:
+| Subject | Objective | Inherited from |
+|---|---|---|
+| Mathematics 0580 | **E2.2** completing the square | al-Khwārizmī |
+| Physics 0625 | **4.1** magnetic fields | Faraday *(Tier 2)* |
+| Chemistry 0620 | **12.4** separation and purification | Jābir, al-Rāzī |
+| Biology 0610 | **9.1** circulatory systems | Ibn al-Nafīs |
+| Computer Science 0478 | **2.3** encryption | al-Kindī |
 
-**Manuscript** → **Unlock** → **Critic** → **Mīrāth** → **Miftāḥ** → **Jisr** → **Apply**
+Every lesson walks the same arc — **Mīrāth** (the inheritance) → **Miftāḥ** (the key) → **Jisr** (the bridge to the exam) → vocabulary → **Taṭbīq** (apply), with a pinned Ask panel throughout.
 
-1. **Manuscript** — al-Khwārizmī's Arabic page, from Rosen's 1831 public-domain edition.
+The algebra lesson additionally carries the full verification pipeline, because it is the one topic with a public-domain facing-page source:
+
+**Mīrāth** → **Unlock** → **Critic** → **Miftāḥ** → **Shapes** → **Jisr** → **Key words** → **Practice**
+
+1. **Mīrāth** — where it came from and why anyone bothered, with the manuscript page.
 2. **Unlock** — the transcription and translation produced by a build-time vision pass.
-3. **Critic** — the translation scored **against Rosen's own English on the facing page**.
-4. **Mīrāth** — whose you are: the scholar, the tier, the citation.
-5. **Miftāḥ** — the thinking move, taught Socratically, with his geometric proof.
+3. **Critic** — that translation scored **against Rosen's own English on the facing page**.
+4. **Miftāḥ** — the thinking move, taught Socratically, with his geometric proof.
+5. **Shapes** — the five forms a quadratic arrives in, each with a diagram.
 6. **Jisr** — the same move in the form the exam demands.
-7. **Apply** — the child solves one, withhold-then-reveal. The flow ends on their attempt.
+7. **Key words** — the command words and terminology the marks are attached to.
+8. **Practice** — ten problems, each revealing independently.
 
 ---
 
@@ -55,9 +68,9 @@ Current score: **80.1% — VERIFIED**, 8/8 claims agreeing.
 
 **The two page images are facing pages of the same passage.** Arabic p.٥ (leaf n351) is al-Khwārizmī's *"a square and ten of its roots equal thirty-nine dirhams"*; English p.8 (leaf n32) is Rosen translating exactly that. The comparison is real, not staged.
 
-**Tier, confidence and citation are frozen fields**, set by human curation in `content/frozen.json`, never regenerated at runtime. The model's job is to narrate the node, not to decide it.
+**Tier, confidence and citation are frozen fields**, set by human curation in `content/lessons/<id>.json`, never regenerated at runtime. The model's job is to narrate the node, not to decide it.
 
-**Nothing is generated while you watch.** The demo path reads `content/frozen.json` and makes no network call and no model call. Verified by inspecting browser traffic: `localhost` only. It runs with the wifi off.
+**Nothing is generated while you watch.** The demo path reads `content/lessons/<id>.json` and makes no network call and no model call. The Ask panel matches questions deterministically in `ask.py` — there is no model in the loop to invent a scholar into. Verified by inspecting browser traffic: `localhost` only. It runs with the wifi off.
 
 ---
 
@@ -79,12 +92,16 @@ Muḥammad ibn Mūsā al-Khwārizmī, *Kitāb al-mukhtaṣar fī ḥisāb al-jab
 
 Edition: Frederic Rosen, *The Algebra of Mohammed ben Musa* (London: Oriental Translation Fund, 1831). Public domain. [archive.org/details/algebraofmohamme00khuwuoft](https://archive.org/details/algebraofmohamme00khuwuoft)
 
-Syllabus boundary: Cambridge IGCSE Mathematics 0580, syllabus for 2025–2027.
+Syllabus boundary: Cambridge IGCSE **Mathematics 0580** (2025–27), **Physics 0625**, **Chemistry 0620**, **Biology 0610** and **Computer Science 0478** (2026–28). Every chapter and subtopic title in the app was extracted verbatim from these PDFs.
 
 ---
 
 ## Scope, stated honestly
 
-This is one objective, end to end — the vertical slice, not the product. The frame it grows into (subject grid, chapter mind maps, per-learner calibration) is deliberately not built yet.
+This is five objectives, one per subject — a vertical slice, not the product. **58 chapters and 226 Cambridge subtopics are mapped; five have finished lessons.** The map shows what is not built rather than hiding it.
 
-Roughly **70% of syllabus objectives have no Tier-1 lineage.** They are carried by the universal algorithm layer and given a Tier-2 thinker where a clear one exists. That is the design, not a shortfall.
+The frame it grows into — per-learner calibration, simulations and hands-on practicals, past-paper drilling — is deliberately not built yet.
+
+**Of the 58 chapters mapped, 33 have no Islamic thread at all** — and the app says so on the chapter itself rather than quietly omitting it. At the finer grain of individual objectives the share without a Tier-1 lineage is higher still.
+
+Those are carried by the universal algorithm layer, and given a Tier-2 thinker where a clear one exists. That is the design, not a shortfall.

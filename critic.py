@@ -116,7 +116,9 @@ if __name__ == "__main__":
     import json
     from pathlib import Path
 
-    data = json.loads((Path(__file__).parent / "content" / "frozen.json").read_text())
+    data = json.loads(
+        (Path(__file__).parent / "content" / "lessons" / "algebra.json").read_text()
+    )
     result = score(data["unlock"]["our_translation"], data["critic"]["benchmark_text"])
     print(json.dumps({k: v for k, v in result.items() if k != "detail"}, indent=2))
     for d in result["detail"]:
