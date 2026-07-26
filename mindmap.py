@@ -91,6 +91,56 @@ SUBJECTS = [
 
 SUBJECT_KEYS = ["maths", "physics", "chemistry", "biology", "cs"]
 
+# Cambridge subtopics, extracted verbatim from the syllabus PDF and grouped by the
+# chapter number in their own code (E2.x sits under chapter 2). Only Mathematics is
+# populated so far; a subject with no entry simply shows its chapters.
+SUBTOPICS = {
+    "maths": {
+        1: [("E1.1", "Types of number"), ("E1.2", "Sets"), ("E1.3", "Powers and roots"),
+            ("E1.4", "Fractions, decimals and percentages"), ("E1.5", "Ordering"),
+            ("E1.6", "The four operations"), ("E1.7", "Indices I"),
+            ("E1.8", "Standard form"), ("E1.9", "Estimation"),
+            ("E1.10", "Limits of accuracy"), ("E1.11", "Ratio and proportion"),
+            ("E1.12", "Rates"), ("E1.13", "Percentages"), ("E1.14", "Using a calculator"),
+            ("E1.15", "Time"), ("E1.16", "Money"),
+            ("E1.17", "Exponential growth and decay"), ("E1.18", "Surds")],
+        2: [("E2.1", "Introduction to algebra"), ("E2.2", "Algebraic manipulation"),
+            ("E2.3", "Algebraic fractions"), ("E2.4", "Indices II"),
+            ("E2.5", "Equations"), ("E2.6", "Inequalities"), ("E2.7", "Sequences"),
+            ("E2.8", "Proportion"), ("E2.9", "Graphs in practical situations"),
+            ("E2.10", "Graphs of functions"), ("E2.11", "Sketching curves"),
+            ("E2.12", "Differentiation"), ("E2.13", "Functions")],
+        3: [("E3.1", "Coordinates"), ("E3.2", "Drawing linear graphs"),
+            ("E3.3", "Gradient of linear graphs"), ("E3.4", "Length and midpoint"),
+            ("E3.5", "Equations of linear graphs"), ("E3.6", "Parallel lines"),
+            ("E3.7", "Perpendicular lines")],
+        4: [("E4.1", "Geometrical terms"), ("E4.2", "Geometrical constructions"),
+            ("E4.3", "Scale drawings"), ("E4.4", "Similarity"), ("E4.5", "Symmetry"),
+            ("E4.6", "Angles"), ("E4.7", "Circle theorems I"),
+            ("E4.8", "Circle theorems II")],
+        5: [("E5.1", "Units of measure"), ("E5.2", "Area and perimeter"),
+            ("E5.3", "Circles, arcs and sectors"), ("E5.4", "Surface area and volume"),
+            ("E5.5", "Compound shapes and parts of shapes")],
+        6: [("E6.1", "Pythagoras’ theorem"), ("E6.2", "Right-angled triangles"),
+            ("E6.3", "Exact trigonometric values"), ("E6.4", "Trigonometric functions"),
+            ("E6.5", "Non-right-angled triangles"),
+            ("E6.6", "Pythagoras’ theorem and trigonometry")],
+        7: [("E7.1", "Transformations"), ("E7.2", "Vectors in two dimensions"),
+            ("E7.3", "Magnitude of a vector"), ("E7.4", "Vector geometry")],
+        8: [("E8.1", "Introduction to probability"),
+            ("E8.2", "Relative and expected frequencies"),
+            ("E8.3", "Probability of combined events"), ("E8.4", "Conditional probability")],
+        9: [("E9.1", "Classifying statistical data"), ("E9.2", "Interpreting statistical data"),
+            ("E9.3", "Averages and measures of spread"),
+            ("E9.4", "Statistical charts and diagrams"), ("E9.5", "Scatter diagrams"),
+            ("E9.6", "Cumulative frequency diagrams"), ("E9.7", "Histograms")],
+    },
+}
+
+# Where a built lesson actually lives, so the subtopic can be named on the card.
+LESSON_SUBTOPIC = {"algebra": ("E2.2", "Algebraic manipulation — completing the square")}
+LESSON_SOURCE = {"algebra": "al-Khwārizmī, Kitāb al-jabr · Rosen 1831, p. 8"}
+
 
 def subject_by_key(key):
     """Return (name, code, colour, chapters) for a subject key, or None."""
@@ -149,35 +199,59 @@ def render_subject_cards():
 
 
 def render_chapters(key):
-    """Subject page — every Cambridge chapter, heritage ones highlighted."""
+    """Subject page — chapters as cards, with their Cambridge subtopics inside."""
     s = subject_by_key(key)
     if not s:
         return "<p>Unknown subject.</p>"
     name, code, colour, chapters = s
+    subs = SUBTOPICS.get(key, {})
 
-    rows = []
-    for chapter, who, mark, lesson in chapters:
+    cards = []
+    for i, (chapter, who, mark, lesson) in enumerate(chapters, start=1):
         live = lesson is not None
-        if mark:
-            dot = ('<span class="ch-dot filled"></span>' if mark == DIRECT
-                   else '<span class="ch-dot hollow"></span>')
-            inner = (f'{dot}<span class="ch-name">{escape(chapter)}</span>'
-                     f'<span class="ch-who">{escape(who)}</span>'
-                     + ('<span class="ch-live">Open lesson →</span>' if live
-                        else '<span class="ch-pending">not built yet</span>'))
-            cls = "ch marked" + (" live" if live else "")
-            if live:
-                rows.append(f'<a class="{cls}" href="?t={lesson}" target="_self">{inner}</a>')
-            else:
-                rows.append(f'<div class="{cls}">{inner}</div>')
+        cls = "chap" + (" marked" if mark else "") + (" live" if live else "")
+
+        if mark == DIRECT:
+            badge = '<span class="ch-dot filled"></span>'
+        elif mark == PRECURSOR:
+            badge = '<span class="ch-dot hollow"></span>'
         else:
-            rows.append(
-                f'<div class="ch plain"><span class="ch-dash">—</span>'
-                f'<span class="ch-name">{escape(chapter)}</span>'
-                f'<span class="ch-who">taught through the algorithm of the topic</span></div>'
-            )
-    return (f'<div class="ch-list chl-{key}">'
-            + "".join(rows) + "</div>")
+            badge = '<span class="ch-dash">&mdash;</span>'
+
+        lineage = (f'<span class="chap-who">{escape(who)}</span>' if who else
+                   '<span class="chap-who plain">taught through the algorithm '
+                   'of the topic</span>')
+
+        status = ""
+        if live:
+            sub_code, sub_title = LESSON_SUBTOPIC.get(lesson, ("", ""))
+            status = (f'<span class="chap-cta">Enter chapter &rarr;</span>'
+                      f'<span class="chap-at">Lesson sits in '
+                      f'<b>{escape(sub_code)}</b> &middot; {escape(sub_title)}</span>')
+            src = LESSON_SOURCE.get(lesson)
+            if src:
+                status += f'<span class="chap-src">Source &middot; {escape(src)}</span>'
+        elif mark:
+            status = '<span class="chap-pending">lesson not built yet</span>'
+
+        chips = "".join(
+            f'<span class="sub">{escape(c)} <i>{escape(t)}</i></span>'
+            for c, t in subs.get(i, [])
+        )
+        chip_block = f'<div class="sub-list">{chips}</div>' if chips else ""
+
+        inner = (f'<div class="chap-head">{badge}'
+                 f'<span class="chap-name">{escape(chapter)}</span>{lineage}</div>'
+                 f'{chip_block}'
+                 + (f'<div class="chap-foot">{status}</div>' if status else ""))
+
+        if live:
+            cards.append(f'<a class="{cls}" href="?t={lesson}" target="_self">{inner}</a>')
+        else:
+            cards.append(f'<div class="{cls}">{inner}</div>')
+
+    return f'<div class="chap-list chl-{key}">' + "".join(cards) + "</div>"
+
 
 
 INK, MUTED, FAINT = "#2c2216", "#6b5535", "#a3937a"

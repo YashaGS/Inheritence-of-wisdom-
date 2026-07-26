@@ -253,7 +253,77 @@ h1.title {
   border:1px solid #dcc9a0;padding:.2rem .55rem;border-radius:2px;
 }
 
-/* ---- subject page: chapter list ---- */
+/* ---- home: the lesson arc ---- */
+.arc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:.4rem 0 2rem}
+@media(max-width:820px){.arc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.arc .step{
+  position:relative;background:linear-gradient(#fdf7e9,#f7ecd6);
+  border:1px solid #dcc9a0;border-radius:3px;padding:.95rem 1rem;
+}
+.arc .step .ar{
+  font-family:'Geeza Pro','Al Bayan','Amiri',serif;direction:rtl;
+  font-size:1.32rem;color:#7a5c1a;display:block;line-height:1.5;
+}
+.arc .step .tr{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.02rem;
+  color:#2c2216;display:block;margin-top:.1rem;
+}
+.arc .step .en{
+  font-family:Georgia,serif;font-size:.8rem;color:#9a8358;font-style:italic;
+  display:block;margin-bottom:.35rem;
+}
+.arc .step .what{font-family:Georgia,serif;font-size:.86rem;color:#6b5535;line-height:1.5;display:block;margin-top:.3rem}
+.arc .step::after{
+  content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);
+  color:#c9a227;font-size:1rem;z-index:2;
+}
+.arc .step:last-child::after{content:""}
+@media(max-width:820px){.arc .step::after{content:""}}
+
+/* ---- subject page: chapter cards ---- */
+.chap-list{display:flex;flex-direction:column;gap:10px}
+.chap{
+  display:block;padding:1.05rem 1.2rem;border-radius:3px;text-decoration:none;
+  background:transparent;border:1px solid transparent;
+}
+.chap.marked{background:linear-gradient(#fdf7e9,#f7ecd6);border-color:#dcc9a0}
+.chap.live{border-width:1.8px;background:#f9edcf}
+a.chap.live{transition:transform .16s ease,box-shadow .16s ease}
+a.chap.live:hover{transform:translateX(3px);box-shadow:0 3px 10px rgba(90,70,30,.18)}
+a.chap.live:focus-visible{outline:2px solid #b8860b;outline-offset:2px}
+.chap-head{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.chap-name{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1.42rem;line-height:1.25;color:#2c2216;
+}
+.chap:not(.marked) .chap-name{color:#a3937a;font-size:1.3rem}
+.chap-who{font-family:Georgia,serif;font-size:.9rem;font-style:italic;color:#7a5c1a}
+.chap-who.plain{color:#bcae90}
+.sub-list{display:flex;flex-wrap:wrap;gap:5px;margin:.7rem 0 0}
+.sub{
+  font-family:Georgia,serif;font-size:.76rem;color:#6b5535;
+  background:#f2e6c9;border:1px solid #e0cfa6;border-radius:2px;padding:.14rem .45rem;
+}
+.sub i{color:#8a7550;font-style:italic}
+.chap:not(.marked) .sub{background:#f3ecdc;border-color:#e6dcc4;color:#a3937a}
+.chap:not(.marked) .sub i{color:#b3a586}
+.chap-foot{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:.85rem 0 0}
+.chap-cta{
+  font-family:Georgia,serif;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;
+  background:#b8860b;color:#fdf7e9;padding:.26rem .7rem;border-radius:2px;
+}
+.chap-at{font-family:Georgia,serif;font-size:.82rem;color:#6b5535}
+.chap-at b{color:#7a5c1a}
+.chap-src{
+  font-family:Georgia,serif;font-size:.78rem;color:#7a6338;font-style:italic;
+  border-left:2px solid #c9a227;padding-left:.55rem;
+}
+.chap-pending{
+  font-family:Georgia,serif;font-size:.76rem;letter-spacing:.06em;
+  text-transform:uppercase;color:#a3937a;
+}
+
+/* ---- subject page: chapter list (legacy rows) ---- */
 .ch-list{display:flex;flex-direction:column;gap:5px}
 /* four children — dot, name, scholar, status — so four columns. With three,
    the status chip has no track and wraps to its own row. */
@@ -820,6 +890,40 @@ BRIEF = """
 </div>
 """
 
+ARC = """
+<div class="eyebrow">Every lesson walks the same four moves</div>
+<div class="arc">
+  <div class="step">
+    <span class="ar">ميراث</span>
+    <span class="tr">Mīrāth</span>
+    <span class="en">inheritance</span>
+    <span class="what">Whose you are. The mind behind the topic, and how strong
+    the thread to them really is.</span>
+  </div>
+  <div class="step">
+    <span class="ar">مفتاح</span>
+    <span class="tr">Miftāḥ</span>
+    <span class="en">key</span>
+    <span class="what">What they left you. The thinking move that opens the
+    problem — think how they thought.</span>
+  </div>
+  <div class="step">
+    <span class="ar">جسر</span>
+    <span class="tr">Jisr</span>
+    <span class="en">bridge</span>
+    <span class="what">Carrying it across. The same move in the exact form
+    Cambridge asks for, at full-mark depth.</span>
+  </div>
+  <div class="step">
+    <span class="ar">تطبيق</span>
+    <span class="tr">Taṭbīq</span>
+    <span class="en">apply</span>
+    <span class="what">Now you think. A real exam problem, with the solution
+    withheld until you have tried it.</span>
+  </div>
+</div>
+"""
+
 BELOW_PICKER = """
 <div class="contrast">
   <p><strong>School says:</strong> here is the rule, here is a worked example, here are
@@ -854,6 +958,8 @@ def screen_home():
 
     st.markdown(HERO, unsafe_allow_html=True)
     st.markdown(BRIEF, unsafe_allow_html=True)
+
+    st.markdown(ARC, unsafe_allow_html=True)
 
     st.markdown('<div class="eyebrow">What do you want to learn today?</div>',
                 unsafe_allow_html=True)
