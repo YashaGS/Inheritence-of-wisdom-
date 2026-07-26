@@ -15,6 +15,7 @@ from pathlib import Path
 import streamlit as st
 
 import critic
+import mindmap
 
 ROOT = Path(__file__).parent
 SCREENS = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Jisr", "Apply"]
@@ -155,12 +156,25 @@ st.markdown(CSS, unsafe_allow_html=True)
 
 D = load()
 
+if "view" not in st.session_state:
+    st.session_state.view = "map"
 if "step" not in st.session_state:
     st.session_state.step = 0
 if "revealed" not in st.session_state:
     st.session_state.revealed = False
 if "attempted" not in st.session_state:
     st.session_state.attempted = False
+
+# A click on a live node in the map navigates to ?t=<key>. Consume it once,
+# then clear it so a later rerun doesn't bounce back into the lesson.
+_picked = st.query_params.get("t")
+if _picked:
+    st.query_params.clear()
+    if _picked == "algebra":
+        st.session_state.view = "lesson"
+        st.session_state.step = 0
+        st.session_state.revealed = False
+        st.session_state.attempted = False
 
 
 def header(eyebrow, title, subtitle=None):
@@ -554,8 +568,65 @@ def screen_apply():
         )
 
 
+def screen_map():
+    header(
+        "Cambridge IGCSE · five subjects",
+        "Mīrāth al-Ḥikma",
+        "Choose a topic. The map shows the whole syllabus — and admits what is not built yet.",
+    )
+    st.markdown(f'<div class="panel" style="padding:1.1rem">{mindmap.render()}</div>',
+                unsafe_allow_html=True)
+
+    tiers, total, live = mindmap.counts()
+    c1, c2, c3, c4 = st.columns(4, gap="medium")
+    for col, (n, label) in zip(
+        (c1, c2, c3, c4),
+        [(f"{tiers[1]}/{total}", "carry a Tier-1 Islamic lineage"),
+         (f"{tiers[2]}/{total}", "carry another great mind (Tier 2)"),
+         (f"{tiers[3]}/{total}", "have no single originator (Tier 3)"),
+         (f"{live}", "lessons built so far")],
+    ):
+        with col:
+            st.markdown(
+                f'<div class="panel" style="text-align:center;padding:1rem .7rem">'
+                f'<div style="font-family:Iowan Old Style,Palatino,Georgia,serif;'
+                f'font-size:1.9rem;color:#7a5c1a">{n}</div>'
+                f'<div style="font-family:Georgia,serif;font-size:.82rem;color:#6b5535">'
+                f'{label}</div></div>',
+                unsafe_allow_html=True,
+            )
+
+    c1, c2 = st.columns(2, gap="large")
+    with c1:
+        st.markdown(
+            '<div class="panel"><h3>Why most of this map is dimmed</h3>'
+            '<p>One lesson is built: <span class="gold">completing the square</span>, from '
+            'al-Khwārizmī\'s own manuscript. Everything else is drawn as planned, not '
+            'pretended — clicking a dimmed topic does nothing, because nothing is there yet.</p>'
+            '<p>That is the same discipline as the critic score. A system that will not '
+            'invent a scholar should not invent a lesson either.</p></div>',
+            unsafe_allow_html=True,
+        )
+    with c2:
+        st.markdown(
+            '<div class="panel"><h3>Read these numbers carefully</h3>'
+            '<p>This map is at <span class="gold">topic</span> level — 45 topics across '
+            'five syllabuses. At the finer grain of individual Cambridge '
+            '<span class="gold">objectives</span>, the Tier-1 share falls well below '
+            'what you see here: most objectives have no Islamic thread at all.</p>'
+            '<p>Which is the point. The lineage is a bonus where it is real. '
+            'The <em>algorithm of the topic</em> — the thinking method — is what covers '
+            'the whole syllabus, and it is present at every tier.</p></div>',
+            unsafe_allow_html=True,
+        )
+
+
 RENDER = [screen_manuscript, screen_unlock, screen_critic,
           screen_mirath, screen_miftah, screen_jisr, screen_apply]
+
+if st.session_state.view == "map":
+    screen_map()
+    st.stop()
 
 RENDER[st.session_state.step]()
 
@@ -568,6 +639,9 @@ with nav1:
         if st.button("← Back", key="back"):
             st.session_state.step -= 1
             st.rerun()
+    elif st.button("← Map", key="tomap"):
+        st.session_state.view = "map"
+        st.rerun()
 with nav2:
     dots = " · ".join(
         f'<span style="color:{"#b8860b" if i == st.session_state.step else "#c9bfa4"}">{n}</span>'
