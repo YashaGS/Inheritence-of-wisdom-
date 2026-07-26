@@ -144,6 +144,75 @@ h1.title {
   border-left:2px solid #d4a933; padding:.35rem 0 .35rem .9rem; margin:.5rem 0;
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
+
+/* ---- home: subject cards ---- */
+.subject-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:.4rem 0 0}
+@media(max-width:1000px){.subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){.subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Streamlit underlines every anchor in markdown; override it on the card and
+   everything inside it, or the whole grid reads as a wall of links. */
+.subject-grid a, .subject-grid a *, .ch-list a, .ch-list a *{text-decoration:none !important}
+.sc{
+  position:relative;display:flex;flex-direction:column;gap:.28rem;
+  padding:1.3rem 1.1rem 1.15rem 1.35rem;
+  background:linear-gradient(#fdf7e9,#f7ecd6);
+  border:1px solid #dcc9a0;border-left:5px solid var(--sc-colour);border-radius:3px;
+  box-shadow:0 1px 3px rgba(90,70,30,.14);
+  transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.sc:hover{box-shadow:0 4px 12px rgba(90,70,30,.2)}
+.sc:hover{border-color:var(--sc-colour);transform:translateY(-2px)}
+.sc:focus-visible{outline:2px solid var(--sc-colour);outline-offset:2px}
+.sc-bar{position:absolute;inset:0 auto 0 0;width:4px;background:var(--sc-colour)}
+.sc-name{font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.24rem;color:#2c2216}
+.sc-code{font-family:Georgia,serif;font-size:.8rem;color:#9a8358;letter-spacing:.04em}
+.sc-meta{font-family:Georgia,serif;font-size:.86rem;color:#6b5535;margin-top:.35rem}
+.sc-meta strong{color:var(--sc-colour)}
+.sc-live{
+  margin-top:.55rem;align-self:flex-start;font-family:Georgia,serif;font-size:.72rem;
+  letter-spacing:.09em;text-transform:uppercase;background:#b8860b;color:#fdf7e9;
+  padding:.2rem .55rem;border-radius:2px;
+}
+.sc-soon{
+  margin-top:.55rem;align-self:flex-start;font-family:Georgia,serif;font-size:.72rem;
+  letter-spacing:.09em;text-transform:uppercase;color:#a3937a;
+  border:1px solid #dcc9a0;padding:.2rem .55rem;border-radius:2px;
+}
+
+/* ---- subject page: chapter list ---- */
+.ch-list{display:flex;flex-direction:column;gap:5px}
+/* four children — dot, name, scholar, status — so four columns. With three,
+   the status chip has no track and wraps to its own row. */
+.ch{
+  display:grid;grid-template-columns:18px minmax(0,1fr) auto minmax(90px,auto);
+  align-items:center;gap:.5rem 1rem;padding:.62rem .9rem;border-radius:3px;
+  font-family:Georgia,serif;text-decoration:none;
+}
+.ch.plain{grid-template-columns:18px minmax(0,1fr) auto}
+.ch.plain{background:transparent;border:1px solid transparent}
+.ch.marked{background:linear-gradient(#fdf7e9,#f7ecd6);border:1px solid #dcc9a0}
+.ch.live{border-color:var(--sc-colour);border-width:1.6px;background:#f9edcf}
+a.ch.live{transition:transform .16s ease}
+a.ch.live:hover{transform:translateX(3px)}
+a.ch.live:focus-visible{outline:2px solid var(--sc-colour);outline-offset:2px}
+.ch-dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+.ch-dot.filled{background:var(--sc-colour)}
+.ch-dot.hollow{border:2px solid var(--sc-colour)}
+.ch-dash{color:#c2b596;font-size:1rem;text-align:center}
+.ch-name{font-size:1rem;color:#2c2216}
+.ch.plain .ch-name{color:#a3937a}
+.ch-who{font-size:.85rem;color:#6b5535;font-style:italic;justify-self:end;text-align:right}
+.ch.plain .ch-who{color:#bcae90}
+.ch-live{
+  font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;
+  background:#b8860b;color:#fdf7e9;padding:.2rem .55rem;border-radius:2px;white-space:nowrap;
+}
+.ch-pending{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#a3937a;white-space:nowrap;justify-self:end}
+.ch-live{justify-self:end}
+@media(max-width:860px){
+  .ch, .ch.plain{grid-template-columns:18px minmax(0,1fr)}
+  .ch-who,.ch-live,.ch-pending{justify-self:start;text-align:left;grid-column:2}
+}
 div.stButton > button {
   font-family: Georgia,serif; background:#7a5c1a; color:#f7ecd6;
   border:1px solid #6b4f14; border-radius:2px; padding:.5rem 1.5rem;
@@ -153,11 +222,14 @@ div.stButton > button:hover { background:#8f6d20; color:#fff8e8; border-color:#7
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
+st.markdown(mindmap.colour_css(), unsafe_allow_html=True)
 
 D = load()
 
 if "view" not in st.session_state:
-    st.session_state.view = "map"
+    st.session_state.view = "home"
+if "subject" not in st.session_state:
+    st.session_state.subject = None
 if "step" not in st.session_state:
     st.session_state.step = 0
 if "revealed" not in st.session_state:
@@ -165,16 +237,20 @@ if "revealed" not in st.session_state:
 if "attempted" not in st.session_state:
     st.session_state.attempted = False
 
-# A click on a live node in the map navigates to ?t=<key>. Consume it once,
-# then clear it so a later rerun doesn't bounce back into the lesson.
-_picked = st.query_params.get("t")
-if _picked:
+# Navigation arrives as a query param: ?s=<subject> or ?t=<lesson>. Consume it
+# once and clear it, so a later rerun doesn't bounce back to the same screen.
+_subject = st.query_params.get("s")
+_lesson = st.query_params.get("t")
+if _subject or _lesson:
     st.query_params.clear()
-    if _picked == "algebra":
-        st.session_state.view = "lesson"
-        st.session_state.step = 0
-        st.session_state.revealed = False
-        st.session_state.attempted = False
+if _subject and mindmap.subject_by_key(_subject):
+    st.session_state.view = "subject"
+    st.session_state.subject = _subject
+elif _lesson == "algebra":
+    st.session_state.view = "lesson"
+    st.session_state.step = 0
+    st.session_state.revealed = False
+    st.session_state.attempted = False
 
 
 def header(eyebrow, title, subtitle=None):
@@ -568,64 +644,87 @@ def screen_apply():
         )
 
 
-def screen_map():
-    header(
-        "Cambridge IGCSE · five subjects",
-        "Mīrāth al-Ḥikma",
-        "Choose a topic. This is the inherited layer — where the thread is real, and how strong it is.",
+def screen_home():
+    st.markdown('<div class="eyebrow">Mīrāth al-Ḥikma</div>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title" style="font-size:3.6rem;line-height:1.05">'
+                'Inheritance of Wisdom</h1>', unsafe_allow_html=True)
+    st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="panel"><p class="dropcap" style="font-size:1.1rem">'
+        'Build your thought process. Every topic on your syllabus was cracked by '
+        'someone — and the way they thought is a <span class="gold">blueprint</span> '
+        'you can borrow. This trains your mind on those blueprints, then puts you to '
+        'work with them on the exact problems Cambridge sets.</p>'
+        '<p>Where a scholar of the Muslim world stands behind a topic, you meet them '
+        'first. Where one does not, we say so and hand you another great mind — or '
+        'the method alone. Nothing here is invented to make a story tidier.</p></div>',
+        unsafe_allow_html=True,
     )
-    st.markdown(f'<div class="panel" style="padding:1.1rem">{mindmap.render()}</div>',
+
+    st.markdown('<div style="height:1.4rem"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="eyebrow">What do you want to learn today?</div>',
                 unsafe_allow_html=True)
+    st.markdown(mindmap.render_subject_cards(), unsafe_allow_html=True)
 
-    n = mindmap.counts()
-    c1, c2, c3, c4 = st.columns(4, gap="medium")
-    for col, (num, label) in zip(
-        (c1, c2, c3, c4),
-        [(f"{n['total']}", "Cambridge chapters, verified against the syllabus"),
-         (f"{n['direct']}", "with a direct Islamic lineage"),
-         (f"{n['precursor']}", "precursor threads — partial, and marked so"),
-         (f"{n['live']}", "lessons actually built")],
-    ):
-        with col:
-            st.markdown(
-                f'<div class="panel" style="text-align:center;padding:1rem .7rem">'
-                f'<div style="font-family:Iowan Old Style,Palatino,Georgia,serif;'
-                f'font-size:1.9rem;color:#7a5c1a">{num}</div>'
-                f'<div style="font-family:Georgia,serif;font-size:.82rem;color:#6b5535">'
-                f'{label}</div></div>',
-                unsafe_allow_html=True,
-            )
 
+def screen_subject():
+    key = st.session_state.subject
+    s = mindmap.subject_by_key(key)
+    if not s:
+        st.session_state.view = "home"
+        st.rerun()
+    name, code, colour, chapters = s
+    d, p, total, live = mindmap.subject_stats(chapters)
+
+    header(f"Cambridge IGCSE {code}", name,
+           f"{total} chapters. {d + p} carry a thread back to the Muslim world — "
+           f"and the rest are named honestly.")
+
+    st.markdown(mindmap.render_chapters(key), unsafe_allow_html=True)
+
+    st.markdown('<div style="height:1.2rem"></div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2, gap="large")
     with c1:
         st.markdown(
-            '<div class="panel"><h3>Why most of this map is dimmed</h3>'
-            '<p>One lesson is built: <span class="gold">completing the square</span>, from '
-            'al-Khwārizmī\'s own manuscript. Everything else is drawn as planned, not '
-            'pretended — clicking a dimmed topic does nothing, because nothing is there yet.</p>'
-            '<p>That is the same discipline as the critic score. A system that will not '
-            'invent a scholar should not invent a lesson either.</p></div>',
+            f'<div class="panel"><h3>Reading the marks</h3>'
+            f'<p><strong>Filled circle</strong> — direct lineage: the field was shaped '
+            f'in the Muslim world. <strong>Hollow circle</strong> — precursor: an early '
+            f'or partial contribution, and we mark the difference rather than blur it.</p>'
+            f'<p>Chapters with a dash are on the syllabus and not on the heritage map. '
+            f'They are taught through the <span class="gold">algorithm of the topic</span> '
+            f'— the thinking method — which exists for every chapter regardless.</p></div>',
             unsafe_allow_html=True,
         )
     with c2:
         st.markdown(
-            '<div class="panel"><h3>These are the real chapters</h3>'
-            '<p>Every title on this map was checked word-for-word against the Cambridge '
-            'syllabus PDFs — all 58 of them. Nothing is paraphrased to make a lineage fit.</p>'
-            '<p>Highlighted chapters carry an Islamic thread: <span class="gold">filled</span> '
-            'for direct, <span class="gold">hollow</span> for precursor. The plain ones are on '
-            'the syllabus and not on the heritage map — they are taught through '
-            '<span class="gold">Tier 2</span> (another great mind) or <span class="gold">Tier 3</span> '
-            '(the algorithm alone), and are no less rigorous for it.</p></div>',
+            f'<div class="panel"><h3>What is actually built</h3>'
+            f'<p>{live} of {total} chapters in {name} has a finished lesson. '
+            f'The others show their lineage because the curation is done — '
+            f'the lesson is not.</p>'
+            f'<p>Every chapter title on this page was checked word-for-word against '
+            f'the Cambridge syllabus. A project whose claim is honesty does not get '
+            f'to paraphrase the source.</p></div>',
             unsafe_allow_html=True,
         )
+    return
 
 
 RENDER = [screen_manuscript, screen_unlock, screen_critic,
           screen_mirath, screen_miftah, screen_jisr, screen_apply]
 
-if st.session_state.view == "map":
-    screen_map()
+if st.session_state.view == "home":
+    screen_home()
+    st.stop()
+
+if st.session_state.view == "subject":
+    screen_subject()
+    st.markdown('<div style="height:.6rem"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+    if st.button("← All subjects", key="tohome"):
+        st.session_state.view = "home"
+        st.session_state.subject = None
+        st.rerun()
     st.stop()
 
 RENDER[st.session_state.step]()
@@ -639,8 +738,9 @@ with nav1:
         if st.button("← Back", key="back"):
             st.session_state.step -= 1
             st.rerun()
-    elif st.button("← Map", key="tomap"):
-        st.session_state.view = "map"
+    elif st.button("← Chapters", key="tosubject"):
+        st.session_state.view = "subject"
+        st.session_state.subject = st.session_state.subject or "maths"
         st.rerun()
 with nav2:
     dots = " · ".join(

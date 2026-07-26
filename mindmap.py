@@ -89,6 +89,97 @@ SUBJECTS = [
     ]),
 ]
 
+SUBJECT_KEYS = ["maths", "physics", "chemistry", "biology", "cs"]
+
+
+def subject_by_key(key):
+    """Return (name, code, colour, chapters) for a subject key, or None."""
+    try:
+        return SUBJECTS[SUBJECT_KEYS.index(key)]
+    except ValueError:
+        return None
+
+
+def subject_stats(chapters):
+    d = sum(1 for _, _, m, _ in chapters if m == DIRECT)
+    p = sum(1 for _, _, m, _ in chapters if m == PRECURSOR)
+    live = sum(1 for _, _, _, k in chapters if k)
+    return d, p, len(chapters), live
+
+
+def colour_css():
+    """Per-subject colour rules.
+
+    Streamlit's markdown sanitiser drops inline `style` attributes, so a custom
+    property set inline (`style="--sc-colour:…"`) silently never lands. Emitting
+    real classes is the only reliable route.
+    """
+    out = ["<style>"]
+    for key, (_, _, colour, _) in zip(SUBJECT_KEYS, SUBJECTS):
+        out.append(
+            f".sc-{key}{{border-left:5px solid {colour} !important}}"
+            f".sc-{key}:hover{{border-color:{colour}}}"
+            f".sc-{key} .sc-meta strong{{color:{colour}}}"
+            f".chl-{key} .ch-dot.filled{{background:{colour}}}"
+            f".chl-{key} .ch-dot.hollow{{border:2px solid {colour}}}"
+            f".chl-{key} .ch.live{{border-color:{colour}}}"
+        )
+    out.append("</style>")
+    return "".join(out)
+
+
+def render_subject_cards():
+    """Home page — subjects only. HTML rather than SVG so the cards reflow on
+    a phone and get real hover/focus states."""
+    out = ['<div class="subject-grid">']
+    for key, (name, code, colour, chapters) in zip(SUBJECT_KEYS, SUBJECTS):
+        d, p, total, live = subject_stats(chapters)
+        badge = ('<span class="sc-live">1 lesson ready</span>' if live
+                 else '<span class="sc-soon">lineage mapped</span>')
+        out.append(
+            f'<a class="sc sc-{key}" href="?s={key}" target="_self">'
+            f'<span class="sc-name">{escape(name)}</span>'
+            f'<span class="sc-code">Cambridge IGCSE {code}</span>'
+            f'<span class="sc-meta">{total} chapters · '
+            f'<strong>{d + p}</strong> carry a lineage</span>'
+            f'{badge}</a>'
+        )
+    out.append("</div>")
+    return "".join(out)
+
+
+def render_chapters(key):
+    """Subject page — every Cambridge chapter, heritage ones highlighted."""
+    s = subject_by_key(key)
+    if not s:
+        return "<p>Unknown subject.</p>"
+    name, code, colour, chapters = s
+
+    rows = []
+    for chapter, who, mark, lesson in chapters:
+        live = lesson is not None
+        if mark:
+            dot = ('<span class="ch-dot filled"></span>' if mark == DIRECT
+                   else '<span class="ch-dot hollow"></span>')
+            inner = (f'{dot}<span class="ch-name">{escape(chapter)}</span>'
+                     f'<span class="ch-who">{escape(who)}</span>'
+                     + ('<span class="ch-live">Open lesson →</span>' if live
+                        else '<span class="ch-pending">not built yet</span>'))
+            cls = "ch marked" + (" live" if live else "")
+            if live:
+                rows.append(f'<a class="{cls}" href="?t={lesson}" target="_self">{inner}</a>')
+            else:
+                rows.append(f'<div class="{cls}">{inner}</div>')
+        else:
+            rows.append(
+                f'<div class="ch plain"><span class="ch-dash">—</span>'
+                f'<span class="ch-name">{escape(chapter)}</span>'
+                f'<span class="ch-who">taught through the algorithm of the topic</span></div>'
+            )
+    return (f'<div class="ch-list chl-{key}">'
+            + "".join(rows) + "</div>")
+
+
 INK, MUTED, FAINT = "#2c2216", "#6b5535", "#a3937a"
 GOLD, EDGE, CARD, CARD2 = "#b8860b", "#dcc9a0", "#fdf7e9", "#f7ecd6"
 
