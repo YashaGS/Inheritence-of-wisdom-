@@ -88,6 +88,12 @@ def check_lesson(path):
             check(f"no phantom {ghost} block", ghost not in D,
                   "lesson claims no source but carries one")
 
+    A = D.get("ask", {})
+    check("has an Ask panel", bool(A.get("qa")),
+          "the panel is invisible on any lesson without one")
+    check("Ask has a refusal", bool(A.get("refusal")),
+          "without a refusal an unmatched question returns nothing")
+
     baghdad = "baghdad" in D["apply"].get("closing", "").lower()
     islamic = D["lineage"].get("tier") == 1 and not D["lineage"].get("no_islamic_thread")
     check("closing line matches the lesson's own lineage", baghdad <= islamic,

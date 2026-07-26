@@ -91,5 +91,77 @@
     "mark_scheme": "B1 for lines curving away from the gap. B1 for arrows shown on the lines. B1 for the neutral point marked at the midpoint. Candidates lose the mark if any two lines are drawn crossing.",
     "reveal_heading": "The neutral point",
     "closing": "with a method a bookbinder’s apprentice drew in London, because he could not write the equations"
+  },
+  "ask": {
+    "_note": "Grounded Q&A. Frozen answers, matched deterministically in ask.py. No model, no network.",
+    "suggested": [
+      "What actually is a field?",
+      "Why can't two field lines cross?",
+      "How do we know the field is there if we can't see it?",
+      "Why did Faraday draw instead of using equations?",
+      "What is a neutral point?"
+    ],
+    "qa": [
+      {
+        "match": [
+          "what is a field",
+          "actually is a field",
+          "define field",
+          "what's a field"
+        ],
+        "answer": "A field is a <em>region</em>, not an object. It is the space around a magnet where a magnetic pole would feel a force. Before Faraday, physics said magnets simply attracted across empty space. He said the space itself is changed — and that the change can be drawn."
+      },
+      {
+        "match": [
+          "cross",
+          "lines cross",
+          "why can't",
+          "intersect"
+        ],
+        "answer": "Because the direction at a point is unique. A field line's direction is where a north pole would be pushed. If two lines crossed, a compass placed exactly there would have to point two different ways at once, which it cannot. So lines bend around each other instead."
+      },
+      {
+        "match": [
+          "how do we know",
+          "can't see",
+          "cannot see",
+          "invisible",
+          "prove"
+        ],
+        "answer": "You put something in it that the force can move — iron filings or a compass needle. Each one turns to line up with the field at its own point. Do that at many points and the pattern appears. You never see the field; you see what it does, and that is enough to predict with."
+      },
+      {
+        "match": [
+          "faraday",
+          "why did he draw",
+          "equations",
+          "no mathematics",
+          "not good at maths"
+        ],
+        "answer": "Because he could not do the mathematics. Faraday left school at thirteen and was apprenticed to a bookbinder. Rather than fake the algebra, he thought in pictures — lines of force he could draw and then test by experiment. Twenty years later Maxwell turned those pictures into equations, and said openly the ideas were Faraday's."
+      },
+      {
+        "match": [
+          "neutral point",
+          "zero field",
+          "compass",
+          "midway",
+          "cancel"
+        ],
+        "answer": "A point where the field is exactly zero because two equal fields cancel. Put two N poles facing each other and, precisely halfway between, the two pushes are equal and opposite. A compass placed there has no direction to take. It is the clearest proof that a field is a real thing at every point — here that thing happens to be nothing."
+      },
+      {
+        "match": [
+          "strong",
+          "strength",
+          "spacing",
+          "crowded",
+          "how strong"
+        ],
+        "answer": "Read the spacing. Where the lines crowd together the field is strong; where they spread out it is weak. That is why the lines bunch at the poles — the field is strongest there. Cambridge tests this directly in objective 4.1.11."
+      }
+    ],
+    "refusal": "I can only answer from what has been verified for this lesson — magnetic fields, Faraday, and Cambridge 0625 4.1. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
+    "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
   }
 }

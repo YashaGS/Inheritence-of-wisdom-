@@ -87,5 +87,76 @@
     "mark_scheme": "B1 for identifying E and T. B1 for stating that frequency is unchanged by substitution. B1 for explaining that a modern cipher produces a uniform frequency distribution. Candidates who answer only 'the key is longer' do not gain the third mark.",
     "reveal_heading": "What the count gave away",
     "closing": "with a method written down in Baghdad twelve centuries ago"
+  },
+  "ask": {
+    "_note": "Grounded Q&A. Frozen answers, matched deterministically in ask.py. No model, no network.",
+    "suggested": [
+      "How does frequency analysis actually work?",
+      "Why doesn't this break modern encryption?",
+      "What's the difference between symmetric and asymmetric?",
+      "Who was al-Kindī?",
+      "Why is encryption needed at all?"
+    ],
+    "qa": [
+      {
+        "match": [
+          "frequency analysis",
+          "how does it work",
+          "actually work",
+          "counting"
+        ],
+        "answer": "Count how often each symbol appears in the coded message and rank them. Then rank the letters of the plain language by their known frequency — in English, E first, then T. Line the rankings up: the commonest symbol is probably the commonest letter. Substitution changes <em>which</em> symbol stands for a letter; it cannot change <em>how often</em> that letter occurs."
+      },
+      {
+        "match": [
+          "modern",
+          "why doesn't",
+          "break modern",
+          "aes",
+          "fail against"
+        ],
+        "answer": "Because a modern cipher flattens the frequencies. Every output symbol appears roughly equally often, so ranking them tells you nothing at all. That is the whole design goal: encryption is not about hiding which letters you used, it is about destroying the pattern they leave."
+      },
+      {
+        "match": [
+          "symmetric",
+          "asymmetric",
+          "difference between",
+          "public key",
+          "private key"
+        ],
+        "answer": "Symmetric uses one key for both encrypting and decrypting — fast, but you have to get that key to the other person safely, which is the hard part. Asymmetric uses two: a public key anyone may have, which encrypts, and a private key only you hold, which decrypts. That solves the key-sharing problem."
+      },
+      {
+        "match": [
+          "al-kindi",
+          "alkindi",
+          "who was",
+          "kindi"
+        ],
+        "answer": "A philosopher and mathematician in Baghdad, around 850 CE — a generation after al-Khwārizmī, in the same city. His <em>Risāla fī Istikhrāj al-Muʿammā</em> is the earliest known written description of breaking a cipher systematically. This hackathon is named for the man who gave computing the algorithm; al-Kindī gave it cryptanalysis."
+      },
+      {
+        "match": [
+          "why is encryption needed",
+          "needed at all",
+          "purpose",
+          "why encrypt",
+          "point of encryption"
+        ],
+        "answer": "Because data crossing a network can be intercepted, and you cannot stop that. Encryption does not prevent interception — it makes what is intercepted useless. Cambridge asks you to name the threat precisely: interception, not deletion and not corruption."
+      },
+      {
+        "match": [
+          "substitution",
+          "unsafe",
+          "secret key",
+          "why not just"
+        ],
+        "answer": "A substitution cipher keeps the key secret but leaves the frequency pattern completely untouched. The attacker never needs to learn the key — they work it out from the counts. That is why a secret is not the same thing as security, and why al-Kindī's attack still matters twelve centuries later."
+      }
+    ],
+    "refusal": "I can only answer from what has been verified for this lesson — al-Kindī, frequency analysis, and Cambridge 0478 2.3. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
+    "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
   }
 }
