@@ -713,7 +713,8 @@ def screen_apply():
 HERO = """
 <div class="hero">
   <p class="punch">Your child is inheriting a fortune —<br/>
-  and <em>no one has told them who left it</em>.</p>
+  the wisdom of the greatest thinkers who ever lived.<br/>
+  And <em>no one has told them whose it is</em>.</p>
 
   <p class="names">Algebra without <b>al-jabr</b>. Algorithm without <b>al-Khwārizmī</b>.
   Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.</p>
@@ -727,9 +728,9 @@ HERO = """
   <strong>how those minds actually moved</strong>. How to think. How to break a problem
   open.</p>
 
-  <p>That is the real inheritance — a method, written down, outlives the one who found
-  it. It cannot be spent, lost or taken. And it has to be handed over
-  <strong>now</strong>, while the mind is still being shaped.</p>
+  <p>That is the real inheritance, and the only kind that cannot be spent, lost or
+  taken — a method, written down, outlives the one who found it. And it has to be handed
+  over <strong>now</strong>, while the mind is still being shaped.</p>
 
   <p class="kicker">Same syllabus. Same exam. A child who walks out knowing
   <strong>the knowledge is theirs</strong>.</p>
