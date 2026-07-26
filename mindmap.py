@@ -288,15 +288,14 @@ def render_subject_cards():
     a phone and get real hover/focus states."""
     out = ['<div class="subject-grid">']
     for key, (name, code, colour, chapters) in zip(SUBJECT_KEYS, SUBJECTS):
-        d, p, total, live = subject_stats(chapters)
-        badge = ('<span class="sc-live">1 lesson ready</span>' if live
-                 else '<span class="sc-soon">lineage mapped</span>')
+        _d, _p, total, live = subject_stats(chapters)
+        badge = (f'<span class="sc-live">{live} lesson ready</span>' if live
+                 else '<span class="sc-soon">lessons coming</span>')
         out.append(
             f'<a class="sc sc-{key}" href="?s={key}" target="_self">'
             f'<span class="sc-name">{escape(name)}</span>'
             f'<span class="sc-code">Cambridge IGCSE {code}</span>'
-            f'<span class="sc-meta">{total} chapters · '
-            f'<strong>{d + p}</strong> carry a lineage</span>'
+            f'<span class="sc-meta">{total} chapters</span>'
             f'{badge}</a>'
         )
     out.append("</div>")
@@ -339,7 +338,9 @@ def render_chapters(key):
             src = LESSON_SOURCE.get(lesson)
             if src:
                 status += f'<span class="chap-src">Source &middot; {escape(src)}</span>'
-        elif mark:
+        else:
+            # Every chapter carries an algorithm, so the only status that
+            # matters here is whether its lesson exists yet.
             status = '<span class="chap-pending">lesson not built yet</span>'
 
         chips = "".join(

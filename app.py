@@ -1760,8 +1760,8 @@ def screen_subject():
     d, p, total, live = mindmap.subject_stats(chapters)
 
     header(f"Cambridge IGCSE {code}", name,
-           f"{total} chapters. {d + p} carry a thread back to the Muslim world — "
-           f"and the rest are named honestly.")
+           f"{total} chapters. Every one of them carries a thinking method — "
+           f"and where a real lineage stands behind it, the chapter names it.")
 
     st.markdown(mindmap.render_chapters(key), unsafe_allow_html=True)
 
@@ -1770,20 +1770,22 @@ def screen_subject():
     with c1:
         st.markdown(
             f'<div class="panel"><h3>Reading the marks</h3>'
-            f'<p><strong>Filled circle</strong> — direct lineage: the field was shaped '
-            f'in the Muslim world. <strong>Hollow circle</strong> — precursor: an early '
-            f'or partial contribution, and we mark the difference rather than blur it.</p>'
-            f'<p>Chapters with a dash are on the syllabus and not on the heritage map. '
-            f'They are taught through the <span class="gold">algorithm of the topic</span> '
-            f'— the thinking method — which exists for every chapter regardless.</p></div>',
+            f'<p>Every chapter here has an <span class="gold">algorithm of the topic</span> '
+            f'— the thinking method that cracks it. That is the part which never depends '
+            f'on who happened to discover it.</p>'
+            f'<p>The mark shows the <em>lineage</em>, where one exists. '
+            f'<strong>Filled circle</strong> — direct: the field was shaped in the Muslim '
+            f'world. <strong>Hollow circle</strong> — precursor: an early or partial '
+            f'contribution, marked rather than blurred. A dash means no single originator, '
+            f'and the method is taught alone.</p></div>',
             unsafe_allow_html=True,
         )
     with c2:
         st.markdown(
             f'<div class="panel"><h3>What is actually built</h3>'
             f'<p>{live} of {total} chapters in {name} has a finished lesson. '
-            f'The others show their lineage because the curation is done — '
-            f'the lesson is not.</p>'
+            f'The rest say so on the chapter itself rather than being quietly '
+            f'left to look the same.</p>'
             f'<p>Every chapter title on this page was checked word-for-word against '
             f'the Cambridge syllabus. A project whose claim is honesty does not get '
             f'to paraphrase the source.</p></div>',
