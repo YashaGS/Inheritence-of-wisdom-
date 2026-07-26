@@ -550,6 +550,11 @@ SCREENS = (SCREENS_FULL if (HAS_STORY and HAS_SOURCE) else
 
 
 def header(eyebrow, title, subtitle=None):
+    # Number the step from the actual flow rather than hard-coding it, since
+    # a lesson with a manuscript has eight screens and one without has five.
+    if st.session_state.get("view") == "lesson":
+        eyebrow = (f"Step {st.session_state.step + 1} of {len(SCREENS)}"
+                   f" &nbsp;·&nbsp; {eyebrow}")
     st.markdown(f'<div class="eyebrow">{eyebrow}</div>', unsafe_allow_html=True)
     st.markdown(f'<h1 class="title">{title}</h1>', unsafe_allow_html=True)
     if subtitle:
@@ -999,8 +1004,9 @@ def screen_landing():
 def screen_story():
     S = D["story"]
     L = D["lineage"]
-    header("Lesson · Mīrāth", S["title"],
-           "Where this came from, and why anyone bothered.")
+    header("Mīrāth — the inheritance", S["title"],
+           "Who worked this out, and what they left behind. "
+           "Before the method, the reason it exists at all.")
 
     b = img_b64(D["source"]["arabic_image"]) if HAS_SOURCE else None
     c1, c2 = st.columns([1, 1.25], gap="large") if b else (None, st.container())
@@ -1054,7 +1060,7 @@ def screen_story():
 
 def screen_examples():
     E = D["examples"]
-    header("Lesson · Miftāḥ", "Five shapes, one move", E["intro"])
+    header("Miftāḥ — the shapes it comes in", "Five shapes, one move", E["intro"])
 
     for item in E["items"]:
         fig = EXAMPLE_FIGURES.get(item["key"])
@@ -1078,7 +1084,7 @@ def screen_examples():
 
 def screen_practice():
     P = D["practice"]
-    header("Apply", "Now you do it", P["intro"])
+    header("Taṭbīq — apply", "Now you do it", P["intro"])
 
     if "solved" not in st.session_state:
         st.session_state.solved = set()
@@ -1124,8 +1130,9 @@ def screen_practice():
 
 def screen_keywords():
     K = D["keywords"]
-    header("Lesson · Jisr", "The words the marks are attached to",
-           "IGCSE is marked on precise terminology and on obeying the command word.")
+    header("Jisr — the vocabulary", "The words the marks are attached to",
+           "IGCSE marks the command word and the exact term. "
+           "Answering the wrong command scores zero, however right the content.")
 
     c1, c2 = st.columns([1, 1.2], gap="large")
     with c1:
@@ -1225,8 +1232,9 @@ def screen_manuscript():
 
 
 def screen_unlock():
-    header("Layer One · Unlock", "The page, read",
-           "A vision pass at build time. Frozen — nothing is generated while you watch.")
+    header("Unlock — reading the source", "The page, read",
+           "We go to the original and translate it ourselves. "
+           "At this point nothing here is trusted — the next screen tests it.")
     u = D["unlock"]
     c1, c2 = st.columns(2, gap="large")
     with c1:
@@ -1247,8 +1255,9 @@ def screen_unlock():
 
 
 def screen_critic():
-    header("Layer One · Verify", "The critic",
-           "The number below is computed in code from two texts. No model reports its own confidence.")
+    header("Verify — checking the reading", "The critic",
+           "Before a word is taught, the reading is scored against a trusted translation. "
+           "The number is computed in code from the two texts — no model reports its own confidence.")
     r = critic.score(D["unlock"]["our_translation"], D["critic"]["benchmark_text"])
     band = {"high": "", "medium": " med", "fail": " bad"}[r["band"]]
 
@@ -1292,11 +1301,13 @@ def screen_mirath():
     tier = L.get("tier", 1)
 
     if tier == 1:
-        header("Lesson · Mīrāth", "Whose you are",
-               "The inheritance — and the tier it sits in.")
+        header("Mīrāth — the inheritance", "The mind behind this topic",
+               "Who worked it out, what they left behind, and how strong "
+               "the thread back to them really is.")
     else:
-        header("Lesson · Mīrāth", "No thread here — and we say so",
-               "Wisdom is taken wherever it is found.")
+        header("Mīrāth — the inheritance", "No thread here — and we say so",
+               "This topic has no Islamic lineage. Rather than invent one, "
+               "we hand you the mind that did do the work.")
 
     st.markdown(
         f'<span class="tier1{"" if tier == 1 else " t2"}">{L["tier_label"]}'
@@ -1352,8 +1363,9 @@ def screen_mirath():
 
 
 def screen_miftah():
-    header("Lesson · Miftāḥ", "The key",
-           "The thinking move that cracks it — think how he thought.")
+    header("Miftāḥ — the key", "The thinking move",
+           "The sequence of mental moves that opens this problem. "
+           "You are learning how they thought, not what they concluded.")
     A = D["algorithm"]
     c1, c2 = st.columns([1.15, 1], gap="large")
     with c1:
@@ -1418,8 +1430,8 @@ def screen_miftah():
 
 
 def screen_jisr():
-    header("Lesson · Jisr", "Carried across",
-           "The same move, in the form the exam demands.")
+    header("Jisr — the bridge", "Carried across to the exam",
+           "The same move, written the way Cambridge asks for it, at full-mark depth.")
     C = D["cambridge_form"]
     c1, c2 = st.columns(2, gap="large")
     with c1:
@@ -1461,8 +1473,9 @@ def screen_jisr():
 
 
 def screen_apply():
-    header("Apply", "Now you do it",
-           "The flow ends here — not with an explanation, with your attempt.")
+    header("Taṭbīq — apply", "Now you do it",
+           "Nothing is revealed until you have tried. Struggle first, answer second — "
+           "that is how a method becomes a habit instead of a note.")
     A = D["apply"]
     c1, c2 = st.columns([1, 1.1], gap="large")
     with c1:
