@@ -25,7 +25,7 @@ SCREENS_SOURCE = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Ji
 SCREENS_PLAIN = ["Mīrāth", "Miftāḥ", "Jisr", "Apply"]
 # A lesson with a story opens on it: the story carries the manuscript and the
 # lineage together, so Manuscript and Mīrāth are not separate stops.
-SCREENS_STORY = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Jisr", "Apply"]
+SCREENS_STORY = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Shapes", "Jisr", "Practice"]
 
 st.set_page_config(
     page_title="Mīrāth al-Ḥikma · Algorism",
@@ -159,6 +159,44 @@ h1.title {
   border-left:2px solid #d4a933; padding:.35rem 0 .35rem .9rem; margin:.5rem 0;
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
+
+/* ---- worked examples ---- */
+.ex-q{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.34rem;
+  color:#2c2216;text-align:center;margin:0 0 .9rem;
+}
+.ex-a{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.08rem;
+  color:#1f5e3d;text-align:center;margin:.4rem 0 0;
+}
+
+/* ---- practice ---- */
+.prac-count{font-family:Georgia,serif;font-size:.9rem;color:#7a5c1a;font-weight:600}
+.prac-hint{font-family:Georgia,serif;font-size:.9rem;color:#6b5535;font-style:italic}
+.prac{
+  display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;
+  background:linear-gradient(#fdf7e9,#f7ecd6);border:1px solid #dcc9a0;
+  border-radius:3px;padding:.8rem 1rem;margin-bottom:.55rem;min-height:3.5rem;
+}
+.prac-n{
+  flex:0 0 auto;width:1.6rem;height:1.6rem;border-radius:50%;
+  background:#f0e2c0;border:1px solid #c9a227;color:#7a5c1a;
+  font-family:Georgia,serif;font-size:.82rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.prac-q{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.1rem;color:#2c2216;flex:1 1 auto;
+}
+.prac-t{
+  font-family:Georgia,serif;font-size:.74rem;color:#a3937a;font-style:italic;flex:1 1 100%;
+}
+.prac-a{
+  background:#f2e6c9;border:1px solid #dcc9a0;border-left:3px solid #1f5e3d;
+  border-radius:3px;padding:.8rem 1rem;margin-bottom:.55rem;min-height:3.5rem;
+  display:flex;flex-direction:column;gap:.25rem;
+}
+.pf{font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.04rem;color:#5a4726}
+.pa{font-family:Georgia,serif;font-size:.92rem;color:#1f5e3d}
 
 /* ---- subtopic landing ---- */
 .landing-q{border-left:4px solid #b8860b}
@@ -716,6 +754,109 @@ def svg_frequency():
     return "".join(s)
 
 
+INK, GOLD, RED, DIM = "#2c2216", "#b8860b", "#8b2635", "#dcc9a0"
+SQ, STRIP, CORNER = "#e9dcc0", "#dcc9a0", "#c9a227"
+
+
+def _frame(w=430, h=250):
+    return (f'<svg viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" '
+            f'font-family="Georgia,serif">')
+
+
+def svg_type_even(b=10, side=118, unit=7.4):
+    """b even and positive: two equal strips, one square corner."""
+    h = b / 2 * unit
+    ox, oy = 46, 34
+    s = [_frame()]
+    s.append(f'<rect x="{ox}" y="{oy}" width="{side}" height="{side}" fill="{SQ}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side/2}" y="{oy+side/2+6}" text-anchor="middle" font-size="18" fill="{INK}" font-style="italic">x²</text>')
+    s.append(f'<rect x="{ox+side}" y="{oy}" width="{h}" height="{side}" fill="{STRIP}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side+h/2}" y="{oy+side/2+5}" text-anchor="middle" font-size="13" fill="{INK}" font-style="italic">{b//2}x</text>')
+    s.append(f'<rect x="{ox}" y="{oy+side}" width="{side}" height="{h}" fill="{STRIP}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side/2}" y="{oy+side+h/2+5}" text-anchor="middle" font-size="13" fill="{INK}" font-style="italic">{b//2}x</text>')
+    s.append(f'<rect x="{ox+side}" y="{oy+side}" width="{h}" height="{h}" fill="{CORNER}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side+h/2}" y="{oy+side+h/2+5}" text-anchor="middle" font-size="12" fill="{INK}">{(b//2)**2}</text>')
+    s.append(f'<rect x="{ox}" y="{oy}" width="{side+h}" height="{side+h}" fill="none" stroke="{GOLD}" stroke-width="2.2"/>')
+    s.append(f'<text x="{ox+(side+h)/2}" y="{oy+side+h+26}" text-anchor="middle" font-size="14" fill="#7a5c1a" font-style="italic">(x + {b//2})² — one square, one corner added</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_type_odd(b=5, side=118, unit=13):
+    """b odd: the half is a fraction, the corner is a fraction squared."""
+    h = b / 2 * unit
+    ox, oy = 46, 34
+    s = [_frame()]
+    s.append(f'<rect x="{ox}" y="{oy}" width="{side}" height="{side}" fill="{SQ}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side/2}" y="{oy+side/2+6}" text-anchor="middle" font-size="18" fill="{INK}" font-style="italic">x²</text>')
+    for x, y, w, ht in ((ox+side, oy, h, side), (ox, oy+side, side, h)):
+        s.append(f'<rect x="{x}" y="{y}" width="{w}" height="{ht}" fill="{STRIP}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side+h/2}" y="{oy+side/2+5}" text-anchor="middle" font-size="12" fill="{INK}" font-style="italic">5x/2</text>')
+    s.append(f'<text x="{ox+side/2}" y="{oy+side+h/2+5}" text-anchor="middle" font-size="12" fill="{INK}" font-style="italic">5x/2</text>')
+    s.append(f'<rect x="{ox+side}" y="{oy+side}" width="{h}" height="{h}" fill="{CORNER}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+side+h/2}" y="{oy+side+h/2+4}" text-anchor="middle" font-size="11" fill="{INK}">25/4</text>')
+    s.append(f'<rect x="{ox}" y="{oy}" width="{side+h}" height="{side+h}" fill="none" stroke="{GOLD}" stroke-width="2.2"/>')
+    s.append(f'<text x="{ox+(side+h)/2}" y="{oy+side+h+26}" text-anchor="middle" font-size="14" fill="#7a5c1a" font-style="italic">(x + 5/2)² — a fractional side is still a side</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_type_negative(b=6, side=150, unit=13):
+    """b negative: the square is built inside, by cutting strips away."""
+    h = b / 2 * unit
+    ox, oy = 52, 30
+    inner = side - h
+    s = [_frame(430, 262)]
+    s.append(f'<rect x="{ox}" y="{oy}" width="{side}" height="{side}" fill="none" stroke="{INK}" stroke-width="1.5" stroke-dasharray="5 4"/>')
+    s.append(f'<text x="{ox+side+8}" y="{oy+12}" font-size="12" fill="#8a7550" font-style="italic">x</text>')
+    s.append(f'<rect x="{ox}" y="{oy}" width="{inner}" height="{inner}" fill="{SQ}" stroke="{INK}" stroke-width="1.6"/>')
+    s.append(f'<text x="{ox+inner/2}" y="{oy+inner/2+6}" text-anchor="middle" font-size="15" fill="{INK}" font-style="italic">(x − 3)²</text>')
+    s.append(f'<rect x="{ox+inner}" y="{oy}" width="{h}" height="{inner}" fill="{RED}" fill-opacity=".22" stroke="{RED}" stroke-width="1.3"/>')
+    s.append(f'<rect x="{ox}" y="{oy+inner}" width="{inner}" height="{h}" fill="{RED}" fill-opacity=".22" stroke="{RED}" stroke-width="1.3"/>')
+    s.append(f'<rect x="{ox+inner}" y="{oy+inner}" width="{h}" height="{h}" fill="{RED}" fill-opacity=".38" stroke="{RED}" stroke-width="1.3"/>')
+    s.append(f'<text x="{ox+inner+h/2}" y="{oy+inner+h/2+4}" text-anchor="middle" font-size="11" fill="{RED}">9</text>')
+    s.append(f'<text x="{ox+side/2}" y="{oy+side+26}" text-anchor="middle" font-size="14" fill="#7a5c1a" font-style="italic">Cut 3 from each side. The corner is counted twice — add 9 back.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_type_scaled(side=96, unit=8):
+    """a ≠ 1: a copies of the same shape, so divide before completing."""
+    ox, oy, h = 40, 40, 3 * unit
+    s = [_frame(430, 236)]
+    for k in (0, 1):
+        x = ox + k * (side + h + 26)
+        s.append(f'<rect x="{x}" y="{oy}" width="{side}" height="{side}" fill="{SQ}" stroke="{INK}" stroke-width="1.4"/>')
+        s.append(f'<text x="{x+side/2}" y="{oy+side/2+5}" text-anchor="middle" font-size="15" fill="{INK}" font-style="italic">x²</text>')
+        s.append(f'<rect x="{x+side}" y="{oy}" width="{h}" height="{side}" fill="{STRIP}" stroke="{INK}" stroke-width="1.4"/>')
+        s.append(f'<rect x="{x}" y="{oy+side}" width="{side}" height="{h}" fill="{STRIP}" stroke="{INK}" stroke-width="1.4"/>')
+        s.append(f'<rect x="{x+side}" y="{oy+side}" width="{h}" height="{h}" fill="{CORNER}" stroke="{INK}" stroke-width="1.4"/>')
+        s.append(f'<rect x="{x}" y="{oy}" width="{side+h}" height="{side+h}" fill="none" stroke="{GOLD}" stroke-width="2"/>')
+    s.append(f'<text x="{ox+side+h+13}" y="{oy+side/2+6}" text-anchor="middle" font-size="20" fill="{INK}">+</text>')
+    s.append(f'<text x="215" y="{oy+side+h+34}" text-anchor="middle" font-size="14" fill="#7a5c1a" font-style="italic">Two identical shapes. Take the 2 out, then complete one.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_type_zero(w=210, h=96):
+    """RHS zero: a rectangle of zero area must have a zero side."""
+    ox, oy = 60, 46
+    s = [_frame(430, 216)]
+    s.append(f'<rect x="{ox}" y="{oy}" width="{w}" height="{h}" fill="{STRIP}" stroke="{INK}" stroke-width="1.5"/>')
+    s.append(f'<text x="{ox+w/2}" y="{oy+h/2+6}" text-anchor="middle" font-size="15" fill="{INK}">area = 0</text>')
+    s.append(f'<text x="{ox+w/2}" y="{oy-12}" text-anchor="middle" font-size="13" fill="{INK}" font-style="italic">x + 3</text>')
+    s.append(f'<text x="{ox-16}" y="{oy+h/2+5}" text-anchor="middle" font-size="13" fill="{INK}" font-style="italic">2x</text>')
+    s.append(f'<text x="{ox+w/2}" y="{oy+h+30}" text-anchor="middle" font-size="14" fill="#7a5c1a" font-style="italic">A rectangle with no area has a side of length zero.</text>')
+    s.append(f'<text x="{ox+w/2}" y="{oy+h+52}" text-anchor="middle" font-size="13" fill="{RED}">Only works because the other side is 0 — not 39.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+EXAMPLE_FIGURES = {"even": svg_type_even, "odd": svg_type_odd,
+                   "negative": svg_type_negative, "scaled": svg_type_scaled,
+                   "zero": svg_type_zero}
+
+
 def show_svg(markup, caption=None):
     st.markdown(
         f'<div class="panel" style="text-align:center">{markup}'
@@ -806,6 +947,76 @@ def screen_story():
         f'{L["confidence_mark"]}</div></div>',
         unsafe_allow_html=True,
     )
+
+
+def screen_examples():
+    E = D["examples"]
+    header("Lesson · Miftāḥ", "Five shapes, one move", E["intro"])
+
+    for item in E["items"]:
+        fig = EXAMPLE_FIGURES.get(item["key"])
+        st.markdown(f'<div class="eyebrow">{item["label"]}</div>', unsafe_allow_html=True)
+        c1, c2 = st.columns([1, 1.1], gap="large")
+        with c1:
+            steps = "".join(f"<li>{x}</li>" for x in item["steps"])
+            st.markdown(
+                f'<div class="panel"><p class="ex-q">{item["problem"]}</p>'
+                f'<ol class="steps">{steps}</ol>'
+                f'<p class="ex-a">{item["answer"]}</p>'
+                f'<div class="cite">{item["note"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+        with c2:
+            if fig:
+                st.markdown(f'<div class="panel" style="padding:.8rem">{fig()}</div>',
+                            unsafe_allow_html=True)
+        st.markdown('<div style="height:.5rem"></div>', unsafe_allow_html=True)
+
+
+def screen_practice():
+    P = D["practice"]
+    header("Apply", "Now you do it", P["intro"])
+
+    if "solved" not in st.session_state:
+        st.session_state.solved = set()
+
+    done = len(st.session_state.solved)
+    total = len(P["items"])
+    st.markdown(
+        f'<div class="panel" style="padding:.9rem 1.2rem">'
+        f'<span class="prac-count">{done} of {total} revealed</span>'
+        f'<span class="prac-hint"> — work it on paper first. Revealing before '
+        f'you have tried teaches you nothing.</span></div>',
+        unsafe_allow_html=True,
+    )
+
+    for i, item in enumerate(P["items"]):
+        c1, c2 = st.columns([1.25, 1], gap="large")
+        with c1:
+            st.markdown(
+                f'<div class="prac"><span class="prac-n">{i + 1}</span>'
+                f'<span class="prac-q">{item["q"]}</span>'
+                f'<span class="prac-t">{item["type"]}</span></div>',
+                unsafe_allow_html=True,
+            )
+        with c2:
+            if i in st.session_state.solved:
+                st.markdown(
+                    f'<div class="prac-a"><span class="pf">{item["form"]}</span>'
+                    f'<span class="pa">{item["ans"]}</span></div>',
+                    unsafe_allow_html=True,
+                )
+            elif st.button("Check", key=f"prac_{i}"):
+                st.session_state.solved.add(i)
+                st.rerun()
+
+    if done == total:
+        st.markdown(
+            '<div class="panel" style="text-align:center;border-color:#c9a227">'
+            '<p style="font-size:1.1rem">Ten problems, five shapes, one method — '
+            'the one he wrote down so it would outlast him.</p>'
+            '<p class="gold" style="font-size:1.2rem">You are its <em>wārith</em>.</p>'
+            '</div>', unsafe_allow_html=True)
 
 
 def render_ask_panel():
@@ -1385,7 +1596,7 @@ def screen_subject():
 
 if HAS_STORY:
     RENDER = [screen_story, screen_unlock, screen_critic,
-              screen_miftah, screen_jisr, screen_apply]
+              screen_miftah, screen_examples, screen_jisr, screen_practice]
 elif HAS_SOURCE:
     RENDER = [screen_manuscript, screen_unlock, screen_critic,
               screen_mirath, screen_miftah, screen_jisr, screen_apply]

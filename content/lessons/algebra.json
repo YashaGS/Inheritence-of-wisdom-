@@ -256,5 +256,146 @@
     ],
     "refusal": "I can only answer from what has been verified for this lesson — al-Khwārizmī, completing the square, and Cambridge 0580 E2.2. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
     "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  },
+  "examples": {
+    "_note": "Five shapes a Cambridge quadratic actually comes in. Each carries a diagram key resolved in app.py. Type 5 is the trap: factorising only solves when a side is zero.",
+    "intro": "Every quadratic you will meet is one of five shapes. The move is the same each time — only the arithmetic changes.",
+    "items": [
+      {
+        "key": "even",
+        "label": "Type 1 · b is even and positive",
+        "problem": "x² + 10x = 39",
+        "steps": [
+          "Half of 10 is 5.",
+          "5² = 25 — that is the missing corner.",
+          "Add 25 to both sides: (x + 5)² = 64.",
+          "√64 = 8, so x + 5 = 8.",
+          "x = 3"
+        ],
+        "answer": "x = 3   (al-Khwārizmī's own problem)",
+        "note": "The cleanest case, and the one he chose to teach with."
+      },
+      {
+        "key": "odd",
+        "label": "Type 2 · b is odd",
+        "problem": "x² + 5x + 6 = 0",
+        "steps": [
+          "Half of 5 is 5/2 — a fraction, and that is fine.",
+          "(5/2)² = 25/4.",
+          "(x + 5/2)² − 25/4 + 6 = 0",
+          "(x + 5/2)² = 1/4",
+          "x + 5/2 = ±1/2  →  x = −2 or x = −3"
+        ],
+        "answer": "x = −2 or x = −3",
+        "note": "Nothing breaks when b is odd. Keep fractions rather than decimals — Cambridge prefers (x + 5/2)² to (x + 2.5)²."
+      },
+      {
+        "key": "negative",
+        "label": "Type 3 · b is negative",
+        "problem": "x² − 6x + 5 = 0",
+        "steps": [
+          "Half of −6 is −3.",
+          "(−3)² = 9 — still positive.",
+          "(x − 3)² − 9 + 5 = 0",
+          "(x − 3)² = 4",
+          "x − 3 = ±2  →  x = 5 or x = 1"
+        ],
+        "answer": "x = 5 or x = 1",
+        "note": "The square is built inside, not outside. Squaring kills the minus sign, so the corner is added exactly as before."
+      },
+      {
+        "key": "scaled",
+        "label": "Type 4 · a is not 1",
+        "problem": "2x² + 12x + 10 = 0",
+        "steps": [
+          "Take the 2 out first: 2(x² + 6x + 5) = 0.",
+          "Divide both sides by 2 — a product is zero only if a factor is.",
+          "x² + 6x + 5 = 0, which is now Type 1.",
+          "(x + 3)² − 4 = 0",
+          "x = −1 or x = −5"
+        ],
+        "answer": "x = −1 or x = −5",
+        "note": "Never complete the square with a coefficient still attached. Remove a first, always."
+      },
+      {
+        "key": "zero",
+        "label": "Type 5 · the shortcut — and when it fails",
+        "problem": "2x² + 6x = 0",
+        "steps": [
+          "Both terms share 2x. Factorise: 2x(x + 3) = 0.",
+          "A product is zero only if one factor is zero.",
+          "2x = 0  →  x = 0",
+          "x + 3 = 0  →  x = −3"
+        ],
+        "answer": "x = 0 or x = −3",
+        "note": "This only works because the right-hand side is zero. x(x + 10) = 39 factorises fine and solves nothing — you would be guessing factor pairs of 39. Completing the square works whatever is on the right, which is why al-Khwārizmī needed it: his problems equalled thirty-nine dirhams, not zero."
+      }
+    ]
+  },
+  "practice": {
+    "_note": "Ten problems, roughly ascending. Each reveals independently so a child can check one at a time.",
+    "intro": "Now you. Work each one on paper before you reveal it — the reveal is worthless if you have not tried.",
+    "items": [
+      {
+        "q": "x² + 4x + 3 = 0",
+        "form": "(x + 2)² − 1 = 0",
+        "ans": "x = −1 or x = −3",
+        "type": "b even"
+      },
+      {
+        "q": "x² + 8x + 12 = 0",
+        "form": "(x + 4)² − 4 = 0",
+        "ans": "x = −2 or x = −6",
+        "type": "b even"
+      },
+      {
+        "q": "x² − 4x − 5 = 0",
+        "form": "(x − 2)² − 9 = 0",
+        "ans": "x = 5 or x = −1",
+        "type": "b negative"
+      },
+      {
+        "q": "x² + 3x + 2 = 0",
+        "form": "(x + 3/2)² − 1/4 = 0",
+        "ans": "x = −1 or x = −2",
+        "type": "b odd"
+      },
+      {
+        "q": "x² + 10x = 0",
+        "form": "x(x + 10) = 0",
+        "ans": "x = 0 or x = −10",
+        "type": "shortcut — right side is zero"
+      },
+      {
+        "q": "3x² + 9x = 0",
+        "form": "3x(x + 3) = 0",
+        "ans": "x = 0 or x = −3",
+        "type": "shortcut — number and variable common"
+      },
+      {
+        "q": "x² − 2x − 8 = 0",
+        "form": "(x − 1)² − 9 = 0",
+        "ans": "x = 4 or x = −2",
+        "type": "b negative"
+      },
+      {
+        "q": "2x² + 8x + 6 = 0",
+        "form": "2[(x + 2)² − 1] = 0",
+        "ans": "x = −1 or x = −3",
+        "type": "a ≠ 1 — take the 2 out first"
+      },
+      {
+        "q": "x² + 7x + 10 = 0",
+        "form": "(x + 7/2)² − 9/4 = 0",
+        "ans": "x = −2 or x = −5",
+        "type": "b odd"
+      },
+      {
+        "q": "Write x² − 10x + 30 in completed square form, and state its minimum value.",
+        "form": "(x − 5)² + 5",
+        "ans": "Minimum value 5, when x = 5. It never reaches zero, so the equation x² − 10x + 30 = 0 has no real roots.",
+        "type": "the discriminator — completed square form answers a question factorising cannot"
+      }
+    ]
   }
 }
