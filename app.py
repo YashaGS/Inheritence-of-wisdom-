@@ -1651,8 +1651,8 @@ ARC = """
     <span class="ar">ميراث</span>
     <span class="tr">Mīrāth</span>
     <span class="en">inheritance</span>
-    <span class="what">Whose you are. The mind behind the topic, and how strong
-    the thread to them really is.</span>
+    <span class="what">Who worked this out, and what they left behind — and how
+    strong the thread back to them really is.</span>
   </div>
   <div class="step">
     <span class="ar">مفتاح</span>
