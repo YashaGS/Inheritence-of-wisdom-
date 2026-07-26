@@ -611,6 +611,55 @@ def svg_neutral_point():
     return "".join(s)
 
 
+# English letter frequencies, standard published values (percentages).
+ENG_FREQ = [("e", 12.7), ("t", 9.1), ("a", 8.2), ("o", 7.5), ("i", 7.0), ("n", 6.7),
+            ("s", 6.3), ("h", 6.1), ("r", 6.0), ("d", 4.3), ("l", 4.0), ("c", 2.8)]
+CIPHER_SYMS = ["✦", "◈", "▲", "●", "◆", "■", "✚", "◐", "★", "▼", "☰", "◇"]
+
+
+def svg_frequency():
+    """The two rankings side by side. The disguise changes the labels and leaves
+    the shape untouched — which is the whole lesson, in one picture."""
+    ink, gold, muted = "#2c2216", "#b8860b", "#6b5535"
+    W, top_y, bot_y, bar_w, gap = 520, 118, 262, 30, 8
+    x0, scale = 34, 6.4
+    s = [f'<svg viewBox="0 0 {W} 310" xmlns="http://www.w3.org/2000/svg" '
+         f'font-family="Georgia,serif">']
+
+    s.append(f'<text x="{x0}" y="22" font-size="12.5" fill="{muted}" '
+             f'font-style="italic">What you intercepted — symbols you cannot read</text>')
+    s.append(f'<text x="{x0}" y="{bot_y - 96}" font-size="12.5" fill="{muted}" '
+             f'font-style="italic">What English does — frequencies anyone can look up</text>')
+
+    for i, ((letter, freq), sym) in enumerate(zip(ENG_FREQ, CIPHER_SYMS)):
+        x = x0 + i * (bar_w + gap)
+        h = freq * scale
+        # ciphertext bars hang down from the top axis
+        s.append(f'<rect x="{x}" y="{top_y - h}" width="{bar_w}" height="{h}" '
+                 f'fill="{gold}" fill-opacity=".72"/>')
+        s.append(f'<text x="{x + bar_w/2}" y="{top_y + 15}" text-anchor="middle" '
+                 f'font-size="14" fill="{ink}">{sym}</text>')
+        # english bars grow down from the lower axis
+        s.append(f'<rect x="{x}" y="{bot_y}" width="{bar_w}" height="{h}" '
+                 f'fill="{ink}" fill-opacity=".55"/>')
+        s.append(f'<text x="{x + bar_w/2}" y="{bot_y - 6}" text-anchor="middle" '
+                 f'font-size="14" fill="{ink}" font-style="italic">{letter}</text>')
+        if i < 2:
+            s.append(f'<line x1="{x + bar_w/2}" y1="{top_y + 22}" '
+                     f'x2="{x + bar_w/2}" y2="{bot_y - 22}" stroke="{gold}" '
+                     f'stroke-width="1.4" stroke-dasharray="3 3"/>')
+
+    s.append(f'<line x1="{x0 - 6}" y1="{top_y}" x2="{W - 20}" y2="{top_y}" '
+             f'stroke="{ink}" stroke-width="1"/>')
+    s.append(f'<line x1="{x0 - 6}" y1="{bot_y}" x2="{W - 20}" y2="{bot_y}" '
+             f'stroke="{ink}" stroke-width="1"/>')
+    s.append(f'<text x="{W/2}" y="303" text-anchor="middle" font-size="13" '
+             f'fill="{muted}" font-style="italic">Same shape. The cipher changed the '
+             f'labels and could not touch the pattern.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
 def show_svg(markup, caption=None):
     st.markdown(
         f'<div class="panel" style="text-align:center">{markup}'
@@ -811,6 +860,13 @@ def screen_miftah():
                     unsafe_allow_html=True)
 
     st.markdown('<div style="height:.4rem"></div>', unsafe_allow_html=True)
+    if D["id"] == "cipher":
+        st.markdown('<div class="eyebrow">He stopped reading the message and '
+                    'counted it instead</div>', unsafe_allow_html=True)
+        show_svg(svg_frequency(),
+                 "Rank the ciphertext, rank the language, line them up")
+        return
+
     if D["id"] == "magnetism":
         st.markdown('<div class="eyebrow">He could not write the equations — so he '
                     'drew the answer</div>', unsafe_allow_html=True)
@@ -907,7 +963,9 @@ def screen_apply():
                 f'<div class="cite">{A["mark_scheme"]}</div></div>',
                 unsafe_allow_html=True,
             )
-            show_svg(svg_neutral_point() if D["id"] == "magnetism" else svg_overlap())
+            figure = {"magnetism": svg_neutral_point, "cipher": svg_frequency}.get(
+                D["id"], svg_overlap)
+            show_svg(figure())
         else:
             st.markdown(
                 '<div class="panel" style="text-align:center;padding:3.5rem 1rem">'

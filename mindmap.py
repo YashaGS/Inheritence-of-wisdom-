@@ -104,7 +104,7 @@ SUBJECTS = [
         ("Data representation", "The place-value system every base rests on",
          "numeral heritage", PRECURSOR, None),
         ("Data transmission", "Frequency analysis — the first systematic codebreaking",
-         "al-Kindī", DIRECT, None),
+         "al-Kindī", DIRECT, "cipher"),
         ("Hardware", None, None, NONE, None),
         ("Software", None, None, NONE, None),
         ("The internet and its uses", None, None, NONE, None),
@@ -225,10 +225,12 @@ SUBTOPICS = {
 LESSON_SUBTOPIC = {
     "algebra": ("E2.2", "Algebraic manipulation — completing the square"),
     "magnetism": ("4.1", "Simple phenomena of magnetism"),
+    "cipher": ("2.3", "Encryption"),
 }
 LESSON_SOURCE = {
     "algebra": "al-Khwārizmī, Kitāb al-jabr · Rosen 1831, p. 8",
     "magnetism": "Faraday, Experimental Researches in Electricity · no manuscript layer",
+    "cipher": "al-Kindī, Risāla fī Istikhrāj al-Muʿammā, c. 850 CE · no manuscript layer",
 }
 
 

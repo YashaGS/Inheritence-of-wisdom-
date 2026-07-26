@@ -1,0 +1,95 @@
+{
+  "id": "cipher",
+  "title": "Encryption — and how it breaks",
+  "subject": "Computer Science",
+  "subject_code": "0478",
+  "chapter": "Data transmission",
+  "has_source": false,
+
+  "_README": "TIER 1, no manuscript. al-Kindī's Risāla is extant but not available as a public-domain facing-page edition we have read, so there is no Unlock/Critic layer here and the app does not pretend otherwise. Tier, citation and confidence are frozen curation fields. Note the honest bridge in objective.bridge — Cambridge asks for the NEED for encryption, and al-Kindī is why the need exists.",
+
+  "objective": {
+    "code": "0478 2.3",
+    "subject": "Cambridge IGCSE Computer Science 0478 (2026-2028)",
+    "title": "Encryption",
+    "syllabus_verbatim": "Understand the need for and purpose of encryption when transmitting data.",
+    "related_code": "0478 2.3.2",
+    "related_verbatim": "Understand how data is encrypted using symmetric and asymmetric encryption.",
+    "syllabus_page": 15,
+    "bridge": "The syllabus asks why encryption is needed. The honest answer is historical: because al-Kindī showed, in the ninth century, that the obvious method does not work. Every modern cipher is built to survive the attack he invented.",
+    "depth_ref": "Core. Full-mark answers name interception as the threat, and distinguish symmetric (one shared key) from asymmetric (public key encrypts, private key decrypts)."
+  },
+
+  "lineage": {
+    "_note": "Tier 1 direct. Curated by hand from Miraath-al-Hikma_Heritage-Topics.md.",
+    "tier": 1,
+    "tier_label": "Tier 1 — Islamic scholar (direct)",
+    "thinker": "Abū Yūsuf Yaʿqūb al-Kindī",
+    "place_time": "Baghdad, c. 850 CE — a generation after al-Khwārizmī, in the same city",
+    "contribution": "Wrote the earliest known description of cryptanalysis: breaking a cipher by counting how often each symbol appears and matching that against the known frequencies of the language. The technique is called frequency analysis, and it is still the first thing taught in any cryptanalysis course.",
+    "how_they_thought": "Everyone before him attacked the message. al-Kindī stopped looking at the message at all and looked at the language behind it. A substitution cipher changes which symbol stands for a letter — but it cannot change how often that letter occurs. Frequency survives the disguise. So he counted symbols, ranked them, ranked the letters of ordinary Arabic beside them, and lined the two rankings up. The move is general: when you cannot read a thing, measure the property of it the disguise was unable to alter.",
+    "citation": "al-Kindī, Risāla fī Istikhrāj al-Muʿammā (Manuscript on Deciphering Cryptographic Messages), c. 850 CE",
+    "confidence": "direct",
+    "confidence_mark": "●",
+    "why_it_matters": "This hackathon is named for al-Khwārizmī, who gave computing the algorithm. al-Kindī, in the same city a generation later, gave it cryptanalysis. Both foundations of the industry in this room were laid within a few streets of each other."
+  },
+
+  "algorithm": {
+    "_note": "The universal layer — the transferable move, not the historical fact.",
+    "name": "Find what the disguise could not hide",
+    "steps": [
+      "You cannot read the message. Stop trying to read it.",
+      "Ask what the encoder was unable to change. Swapping symbols changes which, never how many.",
+      "Count every symbol in the ciphertext and rank them, most common first.",
+      "Rank the letters of the plain language by their known frequency, most common first.",
+      "Line the two rankings up. The commonest symbol is probably the commonest letter.",
+      "Test it, repair the near-misses using context, and the message falls out."
+    ],
+    "socratic_prompts": [
+      "The message is unreadable. What is still true about it that whoever encoded it could not change?",
+      "If every letter E in a message became the symbol Q, what happens to the number of Qs?",
+      "Which is easier to hide — which letter you used, or how often you used it?",
+      "Your two rankings almost match but not quite. Why would they never line up perfectly — and does that stop the attack working?"
+    ],
+    "quran_link": null
+  },
+
+  "cambridge_form": {
+    "objective_code": "0478 2.3",
+    "statement": "Understand the need for and purpose of encryption when transmitting data.",
+    "method": [
+      "Data crossing a network can be intercepted. Encryption does not stop interception — it makes what is intercepted useless.",
+      "Symmetric encryption: one key both encrypts and decrypts. Fast, but the key itself must somehow be shared safely.",
+      "Asymmetric encryption: a public key encrypts, a private key decrypts. This solves the key-sharing problem.",
+      "A simple substitution cipher is not encryption in any modern sense — al-Kindī broke that class of cipher in the ninth century."
+    ],
+    "general_result": "Encryption makes intercepted data unreadable without the key. Symmetric = one shared key; asymmetric = public key in, private key out.",
+    "command_words": "“Understand the need for” — name the threat, which is interception, not deletion or corruption. A full answer says what an attacker gains and what encryption denies them.",
+    "worked": {
+      "problem": "Why is a substitution cipher unsafe, even with a secret key?",
+      "steps": [
+        "The key is secret, so the attacker does not know which symbol means which letter.",
+        "But the attacker can still count symbols.",
+        "Letter frequencies in a language are stable and public knowledge.",
+        "Substitution moves the labels; it leaves the frequency pattern untouched.",
+        "So the pattern identifies the letters, and the secret key is worked out rather than guessed."
+      ],
+      "answer": "Because frequency survives substitution — the disguise leaves a fingerprint"
+    }
+  },
+
+  "apply": {
+    "_note": "Withhold-then-reveal. The child reads the histogram before the answer exists on screen.",
+    "problem": "An intercepted message uses 20 different symbols. Counted across the whole message, ✦ appears far more than any other, and ◈ is second. The message is known to be in English. Which plain letters are ✦ and ◈ almost certainly standing for — and why does this attack fail completely against a modern cipher?",
+    "hint": "Do not try to read the symbols. Ask what the two rankings have in common.",
+    "reveal_steps": [
+      "In English, E is the most common letter by a wide margin, then T.",
+      "So ✦ is almost certainly E, and ◈ almost certainly T.",
+      "Nothing about the secret key was needed. The frequency pattern gave it away.",
+      "A modern cipher defeats this by making the output frequencies flat: every symbol appears about equally often, so the ranking carries no information at all.",
+      "That is the whole purpose of the syllabus objective. Encryption is not hiding the letters — it is destroying the pattern."
+    ],
+    "answer": "✦ = E, ◈ = T. Modern encryption defeats the attack by flattening the frequency distribution so the ranking is meaningless.",
+    "mark_scheme": "B1 for identifying E and T. B1 for stating that frequency is unchanged by substitution. B1 for explaining that a modern cipher produces a uniform frequency distribution. Candidates who answer only 'the key is longer' do not gain the third mark."
+  }
+}
