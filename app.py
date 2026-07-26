@@ -48,6 +48,20 @@ def lesson_ids():
 
 
 @st.cache_data
+def exam_bank(lesson_id):
+    """Prefer the full local bank; fall back to the licence-clean set.
+
+    content/exam_local/ is gitignored, so a checkout of this repo — and the
+    deployed app — only ever sees the questions we wrote ourselves.
+    """
+    local = ROOT / "content" / "exam_local" / f"{lesson_id}.json"
+    if local.exists():
+        d = json.loads(local.read_text(encoding="utf-8"))
+        return d.get("mcq", []), d.get("theory", []), True
+    return None, None, False
+
+
+@st.cache_data
 def img_b64(rel_path):
     p = ROOT / rel_path
     if not p.exists():
@@ -175,6 +189,18 @@ h1.title {
 }
 
 /* ---- exam prep ---- */
+.exam-summary{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1.2rem}
+.es-item{
+  font-family:Georgia,serif;font-size:.88rem;color:#5a4726;
+  background:#f7ecd6;border:1px solid #dcc9a0;border-radius:2px;padding:.3rem .75rem;
+}
+.es-item b{color:#7a5c1a;font-size:1rem}
+.es-local,.es-open{
+  font-family:Georgia,serif;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;
+  padding:.3rem .7rem;border-radius:2px;
+}
+.es-local{background:#7a5c1a;color:#fdf7e9}
+.es-open{background:#efe3c6;border:1px solid #d3bd8e;color:#7a5c1a}
 .exq{display:flex;gap:.75rem;align-items:baseline;margin:0 0 .55rem}
 .exq-n{
   flex:0 0 auto;width:1.7rem;height:1.7rem;border-radius:50%;
@@ -1238,71 +1264,95 @@ def screen_keywords():
 
 def screen_exam():
     E = D["exam"]
+    local_mcq, local_theory, is_local = exam_bank(D["id"])
+    mcq = local_mcq if is_local else E["mcq"]
+    theory = local_theory if is_local else E["theory"]
+
     header("Exam prep", "Answer it the way it will be marked", E["intro"])
 
-    st.session_state.setdefault("mcq_pick", {})
     st.session_state.setdefault("mcq_shown", set())
     st.session_state.setdefault("theory_shown", set())
 
-    st.markdown('<div class="eyebrow">Multiple choice</div>', unsafe_allow_html=True)
+    marks = sum((t.get("marks") or 0) for t in theory)
+    st.markdown(
+        f'<div class="exam-summary">'
+        f'<span class="es-item"><b>{len(mcq)}</b> multiple choice</span>'
+        f'<span class="es-item"><b>{len(theory)}</b> structured'
+        f'{f" &middot; {marks} marks" if marks else ""}</span>'
+        + ('<span class="es-local">full local bank</span>' if is_local else
+           '<span class="es-open">original questions only</span>')
+        + '</div>',
+        unsafe_allow_html=True,
+    )
+
+    tab_mcq, tab_theory = st.tabs([f"Multiple choice  ·  {len(mcq)}",
+                                   f"Theory  ·  {len(theory)}"])
     LETTERS = "ABCD"
-    for i, q in enumerate(E["mcq"]):
-        own = ' <span class="own-tag">own item</span>' if q.get("own") else ""
-        st.markdown(f'<div class="exq"><span class="exq-n">{i + 1}</span>'
-                    f'<span class="exq-t">{q["q"]}{own}</span></div>',
-                    unsafe_allow_html=True)
-        c1, c2 = st.columns([2, 1], gap="large")
-        with c1:
-            pick = st.radio(
-                "options", q["options"], index=None, key=f"mcq_{i}",
-                label_visibility="collapsed",
-                format_func=lambda o, opts=q["options"]: f"{LETTERS[opts.index(o)]}.  {o}",
-            )
-        with c2:
-            if st.button("Check", key=f"mcqchk_{i}", use_container_width=True):
-                st.session_state.mcq_shown.add(i)
-            if i in st.session_state.mcq_shown:
-                right = q["options"][q["correct"]]
-                got = pick == right
-                verdict = ("<span class='ex-ok'>Correct</span>" if got
-                           else "<span class='ex-no'>Not right</span>" if pick
-                           else "<span class='ex-no'>No answer chosen</span>")
-                st.markdown(
-                    f'<div class="ex-a">{verdict}<span class="ex-key">Answer: '
-                    f'<b>{LETTERS[q["correct"]]}</b> — {right}</span>'
-                    f'<span class="ex-why">{q["why"]}</span></div>',
-                    unsafe_allow_html=True)
-        st.markdown('<div style="height:.5rem"></div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="eyebrow">Structured questions — '
-                f'{sum(t["marks"] for t in E["theory"])} marks total</div>',
-                unsafe_allow_html=True)
+    with tab_mcq:
+        for i, q in enumerate(mcq):
+            tag = q.get("source", "")
+            own = ('<span class="own-tag">own item</span>'
+                   if "Compiled" in tag or q.get("own") else "")
+            st.markdown(f'<div class="exq"><span class="exq-n">{i + 1}</span>'
+                        f'<span class="exq-t">{q["q"]} {own}</span></div>',
+                        unsafe_allow_html=True)
+            c1, c2 = st.columns([2, 1], gap="large")
+            with c1:
+                pick = st.radio(
+                    "options", q["options"], index=None, key=f"mcq_{i}",
+                    label_visibility="collapsed",
+                    format_func=lambda o, opts=q["options"]: (
+                        f"{LETTERS[opts.index(o)]}.  {o}"
+                        if opts.index(o) < len(LETTERS) else f"{opts.index(o) + 1}.  {o}"),
+                )
+            with c2:
+                if st.button("Check", key=f"mcqchk_{i}", use_container_width=True):
+                    st.session_state.mcq_shown.add(i)
+                if i in st.session_state.mcq_shown:
+                    right = q["options"][q["correct"]]
+                    verdict = ("<span class='ex-ok'>Correct</span>" if pick == right
+                               else "<span class='ex-no'>Not right</span>" if pick
+                               else "<span class='ex-no'>No answer chosen</span>")
+                    st.markdown(
+                        f'<div class="ex-a">{verdict}<span class="ex-key">Answer: '
+                        f'<b>{LETTERS[q["correct"]]}</b> — {right}</span>'
+                        f'<span class="ex-why">{q.get("why", "")}</span></div>',
+                        unsafe_allow_html=True)
+            st.markdown('<div style="height:.5rem"></div>', unsafe_allow_html=True)
 
-    for i, t in enumerate(E["theory"]):
-        own = ' <span class="own-tag">own item</span>' if t.get("own") else ""
-        parts = "".join(f'<div class="exq-part">{p}</div>' for p in t["parts"])
-        st.markdown(
-            f'<div class="exq"><span class="exq-n">{i + 1}</span>'
-            f'<span class="exq-t">{t["q"]}{own}'
-            f'<span class="exq-marks">[{t["marks"]} marks]</span></span></div>'
-            f'<div class="exq-parts">{parts}</div>',
-            unsafe_allow_html=True)
-
-        st.text_area("Your answer", key=f"th_{i}", height=130,
-                     placeholder="Write your answer here, as you would in the exam…",
-                     label_visibility="collapsed")
-
-        if st.button("Show the mark scheme", key=f"thchk_{i}"):
-            st.session_state.theory_shown.add(i)
-
-        if i in st.session_state.theory_shown:
+    with tab_theory:
+        for i, t in enumerate(theory):
+            tag = t.get("source", "")
+            own = ('<span class="own-tag">own item</span>'
+                   if "Compiled" in tag or t.get("own") else "")
+            m = t.get("marks")
+            parts = "".join(f'<div class="exq-part">{x}</div>' for x in t["parts"])
             st.markdown(
-                f'<div class="ex-model"><h4>Model answer</h4><p>{t["model"]}</p></div>'
-                f'<div class="ex-how"><h4>How to write it</h4><p>{t["how"]}</p></div>'
-                f'<div class="ex-scheme"><h4>Mark scheme</h4><p>{t["scheme"]}</p></div>',
+                f'<div class="exq"><span class="exq-n">{i + 1}</span>'
+                f'<span class="exq-t">{t["q"]} {own}'
+                + (f'<span class="exq-marks">[{m} marks]</span>' if m else "")
+                + f'</span></div><div class="exq-parts">{parts}</div>',
                 unsafe_allow_html=True)
-        st.markdown('<div style="height:1rem"></div>', unsafe_allow_html=True)
+
+            st.text_area("Your answer", key=f"th_{i}", height=140,
+                         placeholder="Write your answer here, as you would in the exam…",
+                         label_visibility="collapsed")
+
+            if st.button("Show the mark scheme", key=f"thchk_{i}"):
+                st.session_state.theory_shown.add(i)
+
+            if i in st.session_state.theory_shown:
+                if t.get("model"):
+                    st.markdown(f'<div class="ex-model"><h4>Model answer</h4>'
+                                f'<p>{t["model"]}</p></div>', unsafe_allow_html=True)
+                if t.get("how"):
+                    st.markdown(f'<div class="ex-how"><h4>How to write it</h4>'
+                                f'<p>{t["how"]}</p></div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="ex-scheme"><h4>Mark scheme</h4>'
+                            f'<p>{t.get("scheme", "")}</p></div>',
+                            unsafe_allow_html=True)
+            st.markdown('<div style="height:1rem"></div>', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="panel" style="border-color:#c9a227">'
