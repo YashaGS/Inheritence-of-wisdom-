@@ -142,5 +142,161 @@
     ],
     "refusal": "I can only answer from what has been verified for this lesson — the circulatory system, Ibn al-Nafīs, and Cambridge 0610 9.1. I do not have a checked source for that, so I am not going to guess at one.",
     "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  },
+  "story": {
+    "title": "The wall with no holes",
+    "the_word": [
+      "The <strong>septum</strong> is the muscular wall dividing the left side of the heart from the right. Your syllabus asks you to identify it on a diagram.",
+      "For roughly fourteen centuries, the accepted teaching was that blood passed <em>through</em> it, seeping between the chambers via pores too small to see.",
+      "That was Galen's account, written in the second century, and it was not seriously questioned. Galen was not merely an authority — he was <em>the</em> authority, in Greek, Latin and Arabic medicine alike.",
+      "Ibn al-Nafīs, in Cairo around 1242, looked at the septum and saw a thick solid wall with no visible opening. And he did the thing almost nobody does: he declined to believe in something he could not observe, even though the greatest name in his field had asserted it."
+    ],
+    "why": {
+      "lead": "What that refusal cost, and what it bought:",
+      "quote": null,
+      "citation": "Ibn al-Nafīs, Sharḥ Tashrīḥ al-Qānūn, c. 1242",
+      "after": "Removing the pores left a gap he then had to fill: if the blood cannot cross here, where does it go? Only one route remained — out to the lungs and back. So he described the pulmonary circulation, roughly three centuries before Servetus and four before Harvey. He did not overturn Galen by knowing more anatomy. He overturned him by refusing to build on a claim he could not check."
+    },
+    "where_now": [
+      [
+        "Every heart diagram you will ever be shown",
+        "The septum is drawn solid. That is not obvious — it is the result of somebody checking."
+      ],
+      [
+        "Why you have a double circulation",
+        "Because the septum separates the two circuits completely, blood passes through the heart twice per loop and reaches the body at full pressure."
+      ],
+      [
+        "Heart surgery",
+        "A hole in the septum is a real defect — a 'hole in the heart' — precisely because there should not be one."
+      ],
+      [
+        "How evidence beats authority",
+        "The medical habit of testing a claim rather than citing its source. This is one of the moments that habit was demonstrated."
+      ]
+    ]
+  },
+  "keywords": {
+    "command_words": [
+      [
+        "Describe",
+        "State the structure or the sequence. No reasons needed."
+      ],
+      [
+        "Explain",
+        "Give the reason why — for example why a double circulation is an advantage."
+      ],
+      [
+        "Identify",
+        "Name the labelled structure on a diagram."
+      ],
+      [
+        "State",
+        "One line."
+      ],
+      [
+        "Outline",
+        "The main points, briefly, in order."
+      ]
+    ],
+    "terms": [
+      [
+        "Circulatory system",
+        "A system of blood vessels with a pump and valves to ensure one-way flow of blood. Learn this wording — it is the syllabus definition."
+      ],
+      [
+        "Septum",
+        "The muscular wall separating the left and right sides of the heart. Complete — no blood crosses it."
+      ],
+      [
+        "Atrium",
+        "Upper chamber; receives blood returning to the heart. Plural: atria."
+      ],
+      [
+        "Ventricle",
+        "Lower chamber; pumps blood out of the heart. Thicker muscular wall than the atrium."
+      ],
+      [
+        "Artery",
+        "Carries blood <strong>away</strong> from the heart. Thick muscular wall, narrow lumen."
+      ],
+      [
+        "Vein",
+        "Carries blood <strong>back</strong> to the heart. Thinner wall, wider lumen, has valves."
+      ],
+      [
+        "Valve",
+        "Ensures one-way flow by preventing backflow."
+      ],
+      [
+        "Double circulation",
+        "Blood passes through the heart twice per complete circuit — pulmonary then systemic."
+      ],
+      [
+        "Pulmonary circulation",
+        "Heart → lungs → heart. Where gas exchange happens."
+      ],
+      [
+        "Systemic circulation",
+        "Heart → body → heart."
+      ],
+      [
+        "Coronary artery",
+        "Supplies the heart muscle itself with blood."
+      ]
+    ]
+  },
+  "practice": {
+    "intro": "The syllabus definition is worth memorising word for word. Several of these test it directly.",
+    "items": [
+      {
+        "q": "Describe the circulatory system.",
+        "form": "A system of blood vessels with a pump and valves to ensure one-way flow of blood",
+        "ans": "Pump, vessels, valves, one-way flow — four ideas, and the marks follow them.",
+        "type": "the syllabus definition"
+      },
+      {
+        "q": "State the difference between an artery and a vein.",
+        "form": "Away vs back",
+        "ans": "Arteries carry blood away from the heart; veins return it. Arteries have thicker walls; veins have valves.",
+        "type": "core"
+      },
+      {
+        "q": "Identify the four chambers of the heart.",
+        "form": "Left and right atria, left and right ventricles",
+        "ans": "Atria receive, ventricles pump. Note left/right are the patient's, not yours as you look at the diagram.",
+        "type": "recall"
+      },
+      {
+        "q": "Explain why valves are necessary.",
+        "form": "To prevent backflow",
+        "ans": "The pump supplies force; the valves supply direction. Without them blood would fall back as the muscle relaxes.",
+        "type": "explain"
+      },
+      {
+        "q": "State what the septum does.",
+        "form": "Separates left from right completely",
+        "ans": "It prevents oxygenated and deoxygenated blood from mixing.",
+        "type": "core"
+      },
+      {
+        "q": "Explain the advantage of a double circulation.",
+        "form": "Blood is repressurised between circuits",
+        "ans": "Blood returns to the heart after the lungs and is pumped again, so it reaches the body at high pressure. Oxygenated and deoxygenated blood never mix.",
+        "type": "explain — Supplement"
+      },
+      {
+        "q": "Describe the path of blood from the right side of the heart back to the left.",
+        "form": "Right ventricle → lungs → left atrium",
+        "ans": "Via the pulmonary artery to the lungs for gas exchange, returning via the pulmonary vein.",
+        "type": "the hard one"
+      },
+      {
+        "q": "A patient has a hole in the septum. Explain the effect.",
+        "form": "Oxygenated and deoxygenated blood mix",
+        "ans": "Blood reaching the body carries less oxygen, so the patient tires easily. It is a defect precisely because the septum should be complete.",
+        "type": "application"
+      }
+    ]
   }
 }

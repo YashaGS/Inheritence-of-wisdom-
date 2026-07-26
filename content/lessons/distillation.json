@@ -144,5 +144,165 @@
     ],
     "refusal": "I can only answer from what has been verified for this lesson — separation techniques, Jābir and al-Rāzī, and Cambridge 0620 12.4. I do not have a checked source for that, so I am not going to guess at one.",
     "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  },
+  "story": {
+    "title": "al-anbīq",
+    "the_word": [
+      "<strong>Alembic</strong> is <em>al-anbīq</em> — the still itself, the vessel with the long sloping neck. <strong>Alcohol</strong> is <em>al-kuḥl</em>. <strong>Alkali</strong> is <em>al-qily</em>, the ash of the saltwort plant.",
+      "Three pieces of ordinary chemistry vocabulary, still on your bench, carried into English from Arabic along with the equipment they name.",
+      "Jābir ibn Ḥayyān and al-Rāzī did not just contribute to the laboratory — to a large extent they assembled it. Distillation, filtration, crystallisation, sublimation, and the glassware to do them in.",
+      "al-Rāzī then did the thing that made it inheritable: he <em>wrote it down</em>. <em>Kitāb al-Asrār</em> lists equipment, describes procedures step by step, and classifies substances by how they behave rather than by what they supposedly are."
+    ],
+    "why": {
+      "lead": "What made their chemistry survive when their theories did not:",
+      "quote": null,
+      "citation": "al-Rāzī, Kitāb al-Asrār (The Book of Secrets), c. 900 CE",
+      "after": "Their theory of matter was wrong — they believed in transmutation, and no amount of distilling turns lead into gold. But their <em>procedures</em> were right, because a procedure can be checked by anyone who repeats it. Method outlived theory. That is exactly the pattern this whole project is built on: what gets written down as repeatable steps is what survives its author."
+    },
+    "where_now": [
+      [
+        "Every petrol station",
+        "Crude oil is separated into petrol, diesel and kerosene by fractional distillation — the same principle, at industrial scale."
+      ],
+      [
+        "Drinking water",
+        "Desalination plants distil seawater. The lever is still boiling point."
+      ],
+      [
+        "Every medicine you take",
+        "Purification and purity-testing by melting point are how a drug is shown to be what the label says."
+      ],
+      [
+        "Your school lab",
+        "Filtration, crystallisation, distillation — the three techniques on this syllabus page are theirs, and so is the word for the apparatus."
+      ]
+    ]
+  },
+  "keywords": {
+    "command_words": [
+      [
+        "Describe",
+        "Say what is done, step by step. Apparatus and actions."
+      ],
+      [
+        "Explain",
+        "Give the reason — name the <strong>property being exploited</strong>. This is where the marks are."
+      ],
+      [
+        "Suggest",
+        "Choose a technique for an unfamiliar case and justify it. Applying, not recalling."
+      ],
+      [
+        "Identify",
+        "Name the substance or technique."
+      ],
+      [
+        "State",
+        "One line, no reasoning."
+      ]
+    ],
+    "terms": [
+      [
+        "Mixture",
+        "Two or more substances not chemically joined — which is why they can be separated physically."
+      ],
+      [
+        "Solvent",
+        "The liquid that dissolves the solute."
+      ],
+      [
+        "Solute",
+        "The substance that dissolves in the solvent."
+      ],
+      [
+        "Solution",
+        "Solute dissolved in solvent."
+      ],
+      [
+        "Filtrate",
+        "The liquid that passes <em>through</em> the filter paper."
+      ],
+      [
+        "Residue",
+        "The solid left <em>on</em> the filter paper."
+      ],
+      [
+        "Filtration",
+        "Separating an insoluble solid from a liquid. Lever: particle size."
+      ],
+      [
+        "Crystallisation",
+        "Recovering a dissolved solid by evaporating the solvent. Lever: solubility."
+      ],
+      [
+        "Simple distillation",
+        "Recovering the solvent from a solution — you keep the condensed vapour. Lever: boiling point."
+      ],
+      [
+        "Fractional distillation",
+        "Separating two miscible liquids with different boiling points, using a column."
+      ],
+      [
+        "Miscible",
+        "Two liquids that mix completely."
+      ],
+      [
+        "Pure substance",
+        "Melts and boils at a single, sharp, fixed temperature. Impurity lowers and widens the melting point."
+      ]
+    ]
+  },
+  "practice": {
+    "intro": "For each one, name the property being exploited — that is where the explain mark lives.",
+    "items": [
+      {
+        "q": "How would you separate sand from water?",
+        "form": "Filtration",
+        "ans": "Sand is insoluble. Lever: particle size. Sand is the residue, water the filtrate.",
+        "type": "core"
+      },
+      {
+        "q": "How would you obtain pure water from sea water?",
+        "form": "Simple distillation",
+        "ans": "Water boils, salt does not. Condense and collect the vapour. Lever: boiling point.",
+        "type": "core"
+      },
+      {
+        "q": "How would you obtain the salt from sea water instead?",
+        "form": "Crystallisation / evaporation",
+        "ans": "Evaporate the water and the salt is left behind. Same mixture, opposite product.",
+        "type": "core"
+      },
+      {
+        "q": "State the difference between a filtrate and a residue.",
+        "form": "Through vs on",
+        "ans": "The filtrate passes through the paper; the residue stays on it.",
+        "type": "terminology"
+      },
+      {
+        "q": "Ethanol boils at 78°C and water at 100°C. Which technique separates them, and why?",
+        "form": "Fractional distillation",
+        "ans": "Both are liquids that boil, with close boiling points; the column enriches the vapour on each condense-evaporate cycle.",
+        "type": "explain"
+      },
+      {
+        "q": "You have sand, salt and water. Describe how to obtain both solids, in order.",
+        "form": "Filter, then crystallise",
+        "ans": "Filter first (sand is insoluble), then crystallise the filtrate. Reversing the order mixes the solids.",
+        "type": "the hard one"
+      },
+      {
+        "q": "How would you check that a sample is pure, using only a thermometer?",
+        "form": "Melting point",
+        "ans": "A pure substance melts at a sharp fixed temperature; impurity lowers it and spreads it over a range.",
+        "type": "application"
+      },
+      {
+        "q": "Suggest how to obtain a dye from a plant, given that the dye dissolves in ethanol.",
+        "form": "Suitable solvent, then filter, then evaporate",
+        "ans": "Crush in ethanol to dissolve the dye, filter off the plant solids, evaporate the ethanol to recover the dye.",
+        "type": "suggest — unfamiliar case"
+      }
+    ]
   }
 }

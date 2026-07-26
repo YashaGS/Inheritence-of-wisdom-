@@ -92,6 +92,11 @@ def check_lesson(path):
     check("landing can be built", bool(obj.get("syllabus_verbatim") or obj.get("title")),
           "landing falls back to the objective; without one the screen cannot render")
 
+    K = D.get("keywords", {})
+    check("has command words", bool(K.get("command_words")))
+    check("has key terms", bool(K.get("terms")))
+    check("has practice problems", bool(D.get("practice", {}).get("items")))
+
     A = D.get("ask", {})
     check("has an Ask panel", bool(A.get("qa")),
           "the panel is invisible on any lesson without one")

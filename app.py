@@ -25,7 +25,8 @@ SCREENS_SOURCE = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Ji
 SCREENS_PLAIN = ["Mīrāth", "Miftāḥ", "Jisr", "Apply"]
 # A lesson with a story opens on it: the story carries the manuscript and the
 # lineage together, so Manuscript and Mīrāth are not separate stops.
-SCREENS_STORY = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Shapes", "Jisr", "Practice"]
+SCREENS_FULL = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Shapes", "Jisr", "Key words", "Practice"]
+SCREENS_STORY = ["Mīrāth", "Miftāḥ", "Jisr", "Key words", "Practice"]
 
 st.set_page_config(
     page_title="Mīrāth al-Ḥikma · Algorism",
@@ -159,6 +160,26 @@ h1.title {
   border-left:2px solid #d4a933; padding:.35rem 0 .35rem .9rem; margin:.5rem 0;
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
+
+/* ---- key words ---- */
+.kwrow{
+  display:grid;grid-template-columns:minmax(88px,auto) 1fr;gap:.2rem .9rem;
+  padding:.5rem 0;border-top:1px solid #e8dcc0;
+}
+.kwrow:first-of-type{border-top:0}
+.kw-cmd{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:.98rem;
+  color:#7a5c1a;font-weight:600;
+}
+.kw-term{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:.98rem;color:#2c2216;
+}
+.kw-def{font-family:Georgia,serif;font-size:.9rem;line-height:1.55;color:#5a4726}
+.kw-def strong{color:#7a5c1a}
+@media(max-width:700px){
+  .kwrow{grid-template-columns:1fr}
+  .kw-def{grid-column:1}
+}
 
 /* ---- worked examples ---- */
 .ex-q{
@@ -523,7 +544,8 @@ elif _lesson and _lesson in lesson_ids():
 D = load(st.session_state.lesson)
 HAS_SOURCE = bool(D.get("has_source"))
 HAS_STORY = "story" in D
-SCREENS = (SCREENS_STORY if HAS_STORY else
+SCREENS = (SCREENS_FULL if (HAS_STORY and HAS_SOURCE) else
+           SCREENS_STORY if HAS_STORY else
            SCREENS_SOURCE if HAS_SOURCE else SCREENS_PLAIN)
 
 
@@ -980,10 +1002,10 @@ def screen_story():
     header("Lesson · Mīrāth", S["title"],
            "Where this came from, and why anyone bothered.")
 
-    c1, c2 = st.columns([1, 1.25], gap="large")
-    with c1:
-        b = img_b64(D["source"]["arabic_image"]) if HAS_SOURCE else None
-        if b:
+    b = img_b64(D["source"]["arabic_image"]) if HAS_SOURCE else None
+    c1, c2 = st.columns([1, 1.25], gap="large") if b else (None, st.container())
+    if b:
+        with c1:
             st.markdown(
                 f'<div class="panel" style="padding:.7rem"><img src="data:image/jpeg;base64,{b}" '
                 f'style="width:100%;border:1px solid #cbb489"/>'
@@ -996,15 +1018,19 @@ def screen_story():
         st.markdown(f'<div class="panel"><h3>The word</h3>{words}</div>',
                     unsafe_allow_html=True)
 
-    W = S["why_he_wrote_it"]
-    st.markdown(
-        f'<div class="panel"><h3>Why he wrote it</h3>'
-        f'<p>{W["lead"]}</p>'
-        f'<blockquote class="pq">{W["quote"]}</blockquote>'
-        f'<div class="cite">{W["citation"]}</div>'
-        f'<p style="margin-top:1rem">{W["after"]}</p></div>',
-        unsafe_allow_html=True,
-    )
+    W = S.get("why_he_wrote_it") or S.get("why") or {}
+    if W:
+        # Only algebra has a verified primary quote. The others get no
+        # blockquote rather than an invented one.
+        quote = (f'<blockquote class="pq">{W["quote"]}</blockquote>'
+                 if W.get("quote") else "")
+        st.markdown(
+            f'<div class="panel"><h3>Why it exists</h3>'
+            f'<p>{W["lead"]}</p>{quote}'
+            f'<div class="cite">{W["citation"]}</div>'
+            f'<p style="margin-top:1rem">{W["after"]}</p></div>',
+            unsafe_allow_html=True,
+        )
 
     st.markdown('<div class="eyebrow">Where it lives now</div>', unsafe_allow_html=True)
     cols = st.columns(2, gap="large")
@@ -1094,6 +1120,31 @@ def screen_practice():
             'the one he wrote down so it would outlast him.</p>'
             '<p class="gold" style="font-size:1.2rem">You are its <em>wārith</em>.</p>'
             '</div>', unsafe_allow_html=True)
+
+
+def screen_keywords():
+    K = D["keywords"]
+    header("Lesson · Jisr", "The words the marks are attached to",
+           "IGCSE is marked on precise terminology and on obeying the command word.")
+
+    c1, c2 = st.columns([1, 1.2], gap="large")
+    with c1:
+        rows = "".join(
+            f'<div class="kwrow"><span class="kw-cmd">{c}</span>'
+            f'<span class="kw-def">{d}</span></div>' for c, d in K["command_words"])
+        st.markdown(f'<div class="panel"><h3>Command words</h3>'
+                    f'<p style="font-size:.94rem;color:#6b5535">What the question is '
+                    f'actually asking you to do. Answering the wrong one scores zero '
+                    f'however correct the content.</p>{rows}</div>',
+                    unsafe_allow_html=True)
+    with c2:
+        rows = "".join(
+            f'<div class="kwrow"><span class="kw-term">{t}</span>'
+            f'<span class="kw-def">{d}</span></div>' for t, d in K["terms"])
+        st.markdown(f'<div class="panel"><h3>Key terms</h3>'
+                    f'<p style="font-size:.94rem;color:#6b5535">Examiners mark the word, '
+                    f'not the paraphrase. These are the ones that carry marks.</p>'
+                    f'{rows}</div>', unsafe_allow_html=True)
 
 
 def render_ask_panel():
@@ -1686,9 +1737,12 @@ def screen_subject():
     return
 
 
-if HAS_STORY:
-    RENDER = [screen_story, screen_unlock, screen_critic,
-              screen_miftah, screen_examples, screen_jisr, screen_practice]
+if HAS_STORY and HAS_SOURCE:
+    RENDER = [screen_story, screen_unlock, screen_critic, screen_miftah,
+              screen_examples, screen_jisr, screen_keywords, screen_practice]
+elif HAS_STORY:
+    RENDER = [screen_story, screen_miftah, screen_jisr,
+              screen_keywords, screen_practice]
 elif HAS_SOURCE:
     RENDER = [screen_manuscript, screen_unlock, screen_critic,
               screen_mirath, screen_miftah, screen_jisr, screen_apply]

@@ -397,5 +397,71 @@
         "type": "the discriminator — completed square form answers a question factorising cannot"
       }
     ]
+  },
+  "keywords": {
+    "command_words": [
+      [
+        "Write in the form",
+        "Give the completed square form itself — <em>(x + a)² + b</em>. The form is the answer and carries the mark."
+      ],
+      [
+        "Solve",
+        "Find the values of x. Show the completed square step; the roots alone may not earn full marks."
+      ],
+      [
+        "Show that",
+        "Every step must be visible. You are being marked on the working, not the result."
+      ],
+      [
+        "Hence",
+        "Use the previous part. Starting again from scratch can lose marks even if the answer is right."
+      ],
+      [
+        "Find the minimum value",
+        "Use completed square form. The minimum of (x + a)² + b is b, when x = −a."
+      ]
+    ],
+    "terms": [
+      [
+        "Quadratic",
+        "An expression whose highest power of x is 2."
+      ],
+      [
+        "Coefficient",
+        "The number multiplying a term. In ax² + bx + c, a and b are coefficients."
+      ],
+      [
+        "Completed square form",
+        "(x + a)² + b. Cambridge names this exactly; 'square form' will not do."
+      ],
+      [
+        "Root / solution",
+        "A value of x making the expression zero."
+      ],
+      [
+        "Factorise",
+        "Write as a product of brackets. Solves only when one side is zero."
+      ],
+      [
+        "Null factor law",
+        "If a product equals zero, at least one factor is zero. This is why factorising needs a zero."
+      ],
+      [
+        "Discriminant",
+        "b² − 4ac. Negative means no real roots — which completed square form shows directly."
+      ],
+      [
+        "Turning point",
+        "The maximum or minimum of a quadratic. From (x + a)² + b it is at (−a, b)."
+      ],
+      [
+        "al-jabr",
+        "Restoration — moving a subtracted term to the other side. The origin of the word algebra."
+      ],
+      [
+        "al-muqābala",
+        "Balancing — cancelling identical terms on both sides."
+      ]
+    ]
   }
 }

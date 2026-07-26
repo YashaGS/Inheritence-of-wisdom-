@@ -158,5 +158,157 @@
     ],
     "refusal": "I can only answer from what has been verified for this lesson — al-Kindī, frequency analysis, and Cambridge 0478 2.3. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
     "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  },
+  "story": {
+    "title": "The secret that counts itself",
+    "the_word": [
+      "<strong>Cryptography</strong> is hiding a message. <strong>Cryptanalysis</strong> is breaking one without being given the key. al-Kindī wrote the first known account of the second.",
+      "Ciphers were already ancient by 850 CE — Caesar had used one eight hundred years earlier. What nobody had was a <em>method</em> for breaking them. Codebreaking was guesswork, patience and luck.",
+      "al-Kindī turned it into a procedure anyone could follow. That is the same move al-Khwārizmī made with equations, in the same city, a generation earlier: take something that took genius, and write it down as steps.",
+      "His insight was statistical, six centuries before statistics existed as a subject. Letters are not used equally. That fact survives any relabelling of the alphabet."
+    ],
+    "why": {
+      "lead": "Why Baghdad, and why then:",
+      "quote": null,
+      "citation": "al-Kindī, Risāla fī Istikhrāj al-Muʿammā, c. 850 CE",
+      "after": "The House of Wisdom was translating and copying enormous volumes of text, which meant scholars were counting, comparing and analysing language at a scale nobody had before. Studying the Qur'an's text had produced careful frequency work on Arabic letters. al-Kindī sat where a linguistic tradition and a mathematical one met — and saw that one could be turned on the other."
+    },
+    "where_now": [
+      [
+        "Why your messages are safe",
+        "Modern ciphers are designed specifically to defeat his attack, by making every output symbol appear about equally often."
+      ],
+      [
+        "Every password you have",
+        "Hashing and salting exist so that patterns in what people choose cannot be counted the way al-Kindī counted letters."
+      ],
+      [
+        "Language detection",
+        "Software identifies which language a text is in by comparing letter frequencies. Same technique, opposite purpose."
+      ],
+      [
+        "Compression",
+        "ZIP files work because letters are unequally common — the frequency table al-Kindī exploited is the same one that lets you store text smaller."
+      ]
+    ]
+  },
+  "keywords": {
+    "command_words": [
+      [
+        "Understand",
+        "Explain the idea in your own words and apply it. Recall alone will not score."
+      ],
+      [
+        "Describe",
+        "State what happens, step by step."
+      ],
+      [
+        "Explain",
+        "Give the reason why. Name the threat or the mechanism."
+      ],
+      [
+        "State",
+        "One line, no justification."
+      ],
+      [
+        "Give",
+        "Name it. Usually a single term or example."
+      ]
+    ],
+    "terms": [
+      [
+        "Encryption",
+        "Scrambling data so that an interceptor cannot understand it. It does not prevent interception."
+      ],
+      [
+        "Plaintext",
+        "The original readable data before encryption."
+      ],
+      [
+        "Ciphertext",
+        "The scrambled data after encryption."
+      ],
+      [
+        "Key",
+        "The value used to encrypt or decrypt. Secrecy of the key, not of the method, is what provides security."
+      ],
+      [
+        "Symmetric encryption",
+        "One key both encrypts and decrypts. Fast, but the key must be shared safely."
+      ],
+      [
+        "Asymmetric encryption",
+        "A public key encrypts, a private key decrypts. Solves the key-distribution problem."
+      ],
+      [
+        "Public key",
+        "Distributed openly; used to encrypt."
+      ],
+      [
+        "Private key",
+        "Kept secret by the owner; used to decrypt."
+      ],
+      [
+        "Interception",
+        "The threat encryption defends against — data being read in transit. Not deletion, not corruption."
+      ],
+      [
+        "Frequency analysis",
+        "Breaking a cipher by counting symbol occurrences and matching them to known language frequencies."
+      ]
+    ]
+  },
+  "practice": {
+    "intro": "Answer in exam language — name the threat, name the mechanism.",
+    "items": [
+      {
+        "q": "State the purpose of encryption when transmitting data.",
+        "form": "To make intercepted data unreadable",
+        "ans": "It does not prevent interception; it makes what is intercepted useless without the key.",
+        "type": "definition"
+      },
+      {
+        "q": "Explain the difference between symmetric and asymmetric encryption.",
+        "form": "One key vs a public/private pair",
+        "ans": "Symmetric: one key encrypts and decrypts, but must be shared safely. Asymmetric: public key encrypts, private key decrypts, solving key distribution.",
+        "type": "core"
+      },
+      {
+        "q": "Give the correct terms for the data before and after encryption.",
+        "form": "Plaintext → ciphertext",
+        "ans": "Both terms are examinable; using 'normal text' loses the mark.",
+        "type": "terminology"
+      },
+      {
+        "q": "Explain why a substitution cipher is not secure, even with a secret key.",
+        "form": "Frequency survives substitution",
+        "ans": "The attacker counts symbols and matches to known letter frequencies. The key is deduced, not guessed.",
+        "type": "explain"
+      },
+      {
+        "q": "In an intercepted English message, one symbol is far commoner than the rest. Which letter is it likely to be?",
+        "form": "E",
+        "ans": "E is the most common letter in English by a wide margin, then T.",
+        "type": "application"
+      },
+      {
+        "q": "Explain why frequency analysis fails against modern encryption.",
+        "form": "The output distribution is flat",
+        "ans": "Every symbol appears about equally often, so ranking them carries no information.",
+        "type": "the hard one"
+      },
+      {
+        "q": "State which key is made public in asymmetric encryption, and what it is used for.",
+        "form": "The public key, used to encrypt",
+        "ans": "Only the matching private key can decrypt what it encrypted.",
+        "type": "recall"
+      },
+      {
+        "q": "Describe one situation where encryption is essential when transmitting data.",
+        "form": "Any: online banking, passwords, medical records",
+        "ans": "Name the data and name the threat — interception by a third party on the network.",
+        "type": "application"
+      }
+    ]
   }
 }

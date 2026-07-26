@@ -163,5 +163,150 @@
     ],
     "refusal": "I can only answer from what has been verified for this lesson — magnetic fields, Faraday, and Cambridge 0625 4.1. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
     "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  },
+  "story": {
+    "title": "The field",
+    "the_word": [
+      "A <strong>field</strong> is not an object. It is a <em>region</em> — every point in the space around a magnet where a pole would feel a force.",
+      "Before Faraday, physics said magnets simply pulled on each other across empty space. Nobody asked what the space in between was doing, because the answer was assumed to be: nothing.",
+      "Faraday's move was to make the empty space the subject. He said it is not empty — it is <em>altered</em>, at every point, and the alteration can be drawn.",
+      "That idea outgrew magnetism entirely. Electric fields, gravitational fields, the quantum fields modern physics is built on — all of them are Faraday's picture, extended."
+    ],
+    "why": {
+      "lead": "He arrived at it because he could not do the mathematics:",
+      "quote": null,
+      "citation": "Faraday, Experimental Researches in Electricity (1839–55)",
+      "after": "Faraday left school at thirteen and was apprenticed to a bookbinder. He had no algebra to speak of and never pretended otherwise. So instead of deriving, he drew — lines of force filling space — and then designed experiments to test whether the drawing predicted correctly. It did, again and again. Twenty years later Maxwell turned those drawings into the equations Faraday could never have written, and said openly that the ideas were Faraday's."
+    },
+    "where_now": [
+      [
+        "Every electric motor",
+        "A current in a field feels a force. That is a motor — and it is the direct descendant of Faraday's picture."
+      ],
+      [
+        "The power in your wall",
+        "Move a magnet near a coil and you generate current. Faraday found this too. Almost all the world's electricity is made this way."
+      ],
+      [
+        "Magnetic resonance imaging",
+        "MRI puts your body in an enormous field and reads what the atoms do. The scan is a field map."
+      ],
+      [
+        "Every field in modern physics",
+        "Electric, gravitational, quantum. The word and the picture are Faraday's, borrowed by physics and never given back."
+      ]
+    ]
+  },
+  "keywords": {
+    "_note": "IGCSE is marked on precise terminology and on obeying the command word. Both are listed.",
+    "command_words": [
+      [
+        "Describe",
+        "State what happens or what something looks like. No reasons required — but no marks for reasons either, so do not waste time."
+      ],
+      [
+        "Explain",
+        "Give the reason <em>why</em>. A description alone scores nothing here."
+      ],
+      [
+        "State",
+        "One line. No working, no justification."
+      ],
+      [
+        "Draw",
+        "A labelled diagram. For fields, <strong>arrows are worth marks</strong> — a drawing without them is incomplete however neat."
+      ],
+      [
+        "Know that",
+        "Recall it. Usually one mark, usually a definition."
+      ]
+    ],
+    "terms": [
+      [
+        "Magnetic field",
+        "A region in which a magnetic pole experiences a force. Say <em>region</em> — not 'area around a magnet'."
+      ],
+      [
+        "Field line",
+        "A line showing the direction of the force on a north pole placed at that point."
+      ],
+      [
+        "Direction of the field",
+        "The direction of the force on a <strong>north</strong> pole. Always specify north."
+      ],
+      [
+        "Induced magnetism",
+        "A magnetic material becoming a magnet when placed in a magnetic field."
+      ],
+      [
+        "Permanent magnet",
+        "Made of steel; keeps its magnetism."
+      ],
+      [
+        "Temporary magnet",
+        "Made of soft iron; loses its magnetism easily."
+      ],
+      [
+        "Neutral point",
+        "A point where two fields cancel and the resultant field is zero."
+      ],
+      [
+        "Magnetic material",
+        "A material that can be attracted by a magnet and can be magnetised — iron, steel, cobalt, nickel."
+      ]
+    ]
+  },
+  "practice": {
+    "intro": "Draw each one before you reveal it. Arrows count.",
+    "items": [
+      {
+        "q": "Draw the field pattern around a single bar magnet.",
+        "form": "Lines N → S outside the magnet, symmetrical, arrowed",
+        "ans": "Most crowded at the poles — that is where the field is strongest.",
+        "type": "core drawing"
+      },
+      {
+        "q": "State the direction of a magnetic field at a point.",
+        "form": "The direction of the force on a north pole at that point",
+        "ans": "Naming 'north' is the mark.",
+        "type": "definition"
+      },
+      {
+        "q": "Explain why two field lines can never cross.",
+        "form": "The direction at a point is unique",
+        "ans": "A compass at the crossing point would have to point two ways at once, which is impossible.",
+        "type": "explain"
+      },
+      {
+        "q": "Two field diagrams: one with crowded lines, one with spread lines. Which magnet is stronger?",
+        "form": "Crowded = stronger",
+        "ans": "Spacing represents relative field strength (Supplement 4.1.11).",
+        "type": "interpretation"
+      },
+      {
+        "q": "Describe how to plot a magnetic field using a compass.",
+        "form": "Place, mark, move, repeat",
+        "ans": "Place the compass, mark the needle direction, move it to the mark, repeat; join the marks into a line.",
+        "type": "practical"
+      },
+      {
+        "q": "State the difference between a permanent and a temporary magnet.",
+        "form": "Steel vs soft iron",
+        "ans": "Steel keeps its magnetism (permanent); soft iron loses it easily (temporary).",
+        "type": "recall"
+      },
+      {
+        "q": "Two N poles face each other. Sketch the field and mark where it is zero.",
+        "form": "Lines curve away; neutral point at the midpoint",
+        "ans": "Equal and opposite fields cancel exactly midway.",
+        "type": "the hard one"
+      },
+      {
+        "q": "Explain what is meant by induced magnetism.",
+        "form": "A magnetic material becomes a magnet in a field",
+        "ans": "It is magnetised by being placed in a magnetic field, without contact being needed.",
+        "type": "explain"
+      }
+    ]
   }
 }
