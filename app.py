@@ -145,6 +145,55 @@ h1.title {
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
 
+/* ---- home: three expandable brief cards ---- */
+.brief-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 2rem}
+@media(max-width:900px){.brief-grid{grid-template-columns:1fr}}
+.brief{
+  background:linear-gradient(#fdf7e9,#f7ecd6);border:1px solid #dcc9a0;
+  border-top:3px solid #b8860b;border-radius:3px;padding:1.25rem 1.3rem 1rem;
+  box-shadow:0 1px 3px rgba(90,70,30,.14);
+}
+.brief h4{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.08rem;
+  margin:0 0 .55rem;color:#7a5c1a;font-weight:600;
+}
+.brief p{font-family:Georgia,serif;font-size:.95rem;line-height:1.62;color:#33281a;margin:0 0 .7rem}
+.brief .lead{color:#2c2216}
+.brief details{margin-top:.2rem}
+.brief details p:last-child{margin-bottom:0}
+.brief summary{
+  font-family:Georgia,serif;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#9a7b2e;cursor:pointer;list-style:none;padding:.3rem 0;user-select:none;
+}
+.brief summary::-webkit-details-marker{display:none}
+.brief summary::after{content:" ↓";font-size:.9em}
+.brief details[open] summary::after{content:" ↑"}
+.brief summary:hover{color:#b8860b}
+.brief summary:focus-visible{outline:2px solid #b8860b;outline-offset:2px}
+.brief details[open] summary{margin-bottom:.5rem;border-bottom:1px solid #e5d6b4}
+.brief strong{color:#7a5c1a}
+
+.strip{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:1.6rem 0 0;
+}
+@media(max-width:900px){.strip{grid-template-columns:1fr}}
+.strip .s{
+  background:linear-gradient(#fdf7e9,#f7ecd6);border:1px solid #dcc9a0;border-radius:3px;
+  padding:1.1rem 1.2rem;
+}
+.strip .s b{
+  display:block;font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1rem;color:#7a5c1a;margin-bottom:.3rem;letter-spacing:.05em;
+}
+.strip .s span{font-family:Georgia,serif;font-size:.9rem;line-height:1.58;color:#33281a}
+.contrast{
+  background:linear-gradient(#fdf7e9,#f7ecd6);border:1px solid #c9a227;border-radius:3px;
+  padding:1.4rem 1.6rem;margin:1.6rem 0 0;
+}
+.contrast p{font-family:Georgia,serif;font-size:1.02rem;line-height:1.66;margin:0 0 .6rem;color:#33281a}
+.contrast p:last-child{margin-bottom:0}
+.contrast .promise{font-size:1.12rem;color:#2c2216}
+
 /* ---- home: subject cards ---- */
 .subject-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:.4rem 0 0}
 @media(max-width:1000px){.subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -644,28 +693,107 @@ def screen_apply():
         )
 
 
+BRIEF = """
+<div class="brief-grid">
+
+  <div class="brief">
+    <h4>What this is</h4>
+    <p class="lead">Your mind is the one asset that compounds for life — and the only
+    one nobody can take from you.</p>
+    <details>
+      <summary>Read more</summary>
+      <p>Every topic in your syllabus was once an unsolved problem. Someone cracked it,
+      and the way they thought left a <strong>blueprint</strong> — a repeatable set of
+      moves that still works centuries later.</p>
+      <p>Written down, a method outlives the person who found it. That is what makes it
+      an inheritance.</p>
+      <p>This is where you inherit it: the wisdom of great thinkers and visionaries,
+      handed over as <strong>method</strong>, not memorised as fact.</p>
+    </details>
+  </div>
+
+  <div class="brief">
+    <h4>Why we're doing this</h4>
+    <p class="lead">Curricula teach concepts as though they fell from the sky. Algebra
+    with no <em>al-jabr</em>. The concept survives — the mind that made it is deleted.</p>
+    <details>
+      <summary>Read more</summary>
+      <p>Algorithm with no al-Khwārizmī. Circulation with no Ibn al-Nafīs. Fields with
+      no Faraday, inheritance with no Mendel.</p>
+      <p>What a child absorbs from that is worse than a missing fact: that knowledge is
+      something which happens elsewhere, made by other people, in another time — never
+      something they could do themselves.</p>
+      <p>The usual fix is <strong>a module bolted on the side</strong> — a "great
+      thinkers" unit admired once, sitting beside the real subject, never examined. That
+      is precisely the mistake. A module parked alongside announces that the lineage is
+      optional.</p>
+      <p>So we don't bolt it on. <strong>We put the depth back inside the syllabus point
+      itself.</strong> One track. The same chapter your school teaches — with the mind
+      restored to it.</p>
+    </details>
+  </div>
+
+  <div class="brief">
+    <h4>What it does</h4>
+    <p class="lead">Four things, every lesson: a map of the method, a blueprint for the
+    solution, systems thinking, and questions before answers.</p>
+    <details>
+      <summary>Read more</summary>
+      <p><strong>A mind map of the method</strong> — not of the topic, of the
+      <em>thinking</em>. The shape of how to approach it, held in your head rather than
+      re-read off a page.</p>
+      <p><strong>A blueprint for the solution</strong> — the exact sequence of moves that
+      cracks this kind of problem, taken from the person who first made them.</p>
+      <p><strong>Systems thinking</strong> — where this idea sits, what it connects to,
+      what breaks if you pull it out. Nothing on a syllabus is really an island.</p>
+      <p><strong>Questions before answers</strong> — you are asked, not told. The
+      solution stays hidden until you have tried.</p>
+      <p>Struggle first, answer second. That is how a blueprint becomes a habit instead
+      of a note.</p>
+    </details>
+  </div>
+
+</div>
+"""
+
+BELOW_PICKER = """
+<div class="contrast">
+  <p><strong>School says:</strong> here is the rule, here is a worked example, here are
+  thirty more like it.<br/>
+  <strong>We say:</strong> here is the mind behind the rule, here is how it moved —
+  now move yours.</p>
+  <p class="promise">The outcome a parent should be able to claim:
+  <strong>my child mastered the syllabus — and knows the knowledge is theirs.</strong></p>
+  <p style="font-size:.94rem;color:#6b5535">Where a great thinker stands behind a topic,
+  you meet them first — and where that thread runs back to the Muslim world, it leads.
+  Where nobody single-handedly stands behind it, we say so and teach the method alone.
+  Nothing is invented to make a story tidier.</p>
+</div>
+
+<div class="strip">
+  <div class="s"><b>Unlock</b><span>We go to the primary source and read it ourselves —
+  transcribed, translated, then scored against a trusted benchmark before a word of it
+  is taught.</span></div>
+  <div class="s"><b>Understand</b><span>What survives that check becomes a chain of
+  citation. Every claim keeps its source and its confidence.</span></div>
+  <div class="s"><b>Transmit</b><span>Only then is the lesson written — from verified
+  material, at exactly the depth the exam demands.</span></div>
+</div>
+"""
+
+
 def screen_home():
     st.markdown('<div class="eyebrow">Mīrāth al-Ḥikma</div>', unsafe_allow_html=True)
     st.markdown('<h1 class="title" style="font-size:3.6rem;line-height:1.05">'
                 'Inheritance of Wisdom</h1>', unsafe_allow_html=True)
     st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
 
-    st.markdown(
-        '<div class="panel"><p class="dropcap" style="font-size:1.1rem">'
-        'Build your thought process. Every topic on your syllabus was cracked by '
-        'someone — and the way they thought is a <span class="gold">blueprint</span> '
-        'you can borrow. This trains your mind on those blueprints, then puts you to '
-        'work with them on the exact problems Cambridge sets.</p>'
-        '<p>Where a scholar of the Muslim world stands behind a topic, you meet them '
-        'first. Where one does not, we say so and hand you another great mind — or '
-        'the method alone. Nothing here is invented to make a story tidier.</p></div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown(BRIEF, unsafe_allow_html=True)
 
-    st.markdown('<div style="height:1.4rem"></div>', unsafe_allow_html=True)
     st.markdown('<div class="eyebrow">What do you want to learn today?</div>',
                 unsafe_allow_html=True)
     st.markdown(mindmap.render_subject_cards(), unsafe_allow_html=True)
+    st.markdown(BELOW_PICKER, unsafe_allow_html=True)
 
 
 def screen_subject():
