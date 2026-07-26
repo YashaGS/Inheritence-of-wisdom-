@@ -715,7 +715,8 @@ HERO = """
   <p class="punch">The mind is the greatest asset any of us will ever hold.<br/>
   Your child is inheriting a fortune —
   the wisdom of the greatest thinkers who ever lived.<br/>
-  We use it to mould the one thing that lasts: <em>how they think</em>.</p>
+  Unlock the blueprint, and mould the one thing that lasts:
+  <em>how they think</em>.</p>
 
   <p class="names">Algebra without <b>al-jabr</b>. Algorithm without <b>al-Khwārizmī</b>.
   Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.
@@ -734,7 +735,12 @@ HERO = """
   taken — a method, written down, outlives the one who found it. And it has to be handed
   over <strong>now</strong>, while the mind is still being shaped.</p>
 
-  <p class="kicker">Same syllabus. Same exam. A child who walks out knowing
+  <p>Not so your child can admire the thinkers of the past.
+  <strong>So they become the problem-solvers of the present.</strong></p>
+
+  <p class="kicker">Then we stop talking, and the page turns to them:
+  <strong>now you think</strong> — use the faculties you were given.<br/>
+  Same syllabus. Same exam. A child who walks out knowing
   <strong>the knowledge is theirs</strong>.</p>
 </div>
 """
