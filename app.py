@@ -248,6 +248,13 @@ section[data-testid="stSidebar"] input{
 }
 .ask-a p{font-family:Georgia,serif;font-size:.92rem;line-height:1.6;color:#33281a;margin:0}
 
+.tagline{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1.28rem;line-height:1.4;color:#6b5535;
+  margin:.45rem 0 1.1rem;text-wrap:balance;
+}
+.tagline em{font-style:italic;color:#9a7b2e}
+
 /* ---- home: hero statement ---- */
 .hero{margin:0 0 2rem;max-width:64ch}
 .hero .punch{
@@ -1622,6 +1629,8 @@ def screen_home():
     st.markdown('<div class="eyebrow">Mīrāth al-Ḥikma</div>', unsafe_allow_html=True)
     st.markdown('<h1 class="title" style="font-size:3.6rem;line-height:1.05">'
                 'Inheritance of Wisdom</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="tagline">The algorithm behind every topic — '
+                '<em>how to think, how to solve</em></p>', unsafe_allow_html=True)
     st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
 
     st.markdown(HERO, unsafe_allow_html=True)
