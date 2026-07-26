@@ -308,5 +308,14 @@
         "type": "explain"
       }
     ]
+  },
+  "framing": {
+    "heading": "Why this was hard",
+    "lead": "The weakness produced the idea.",
+    "body": [
+      "The accepted explanation was <em>action at a distance</em> — which <strong>names the mystery rather than explaining it</strong>. The space between two magnets was assumed to be doing nothing at all.",
+      "Faraday could not join that argument on its own terms, because he had almost no mathematics. So he asked a <strong>physical</strong> question instead: what is the space in between actually doing?",
+      "The limitation is what forced the new idea. Had he been able to derive, he would probably have derived — and the field, the single most important concept in modern physics, might have waited another generation."
+    ]
   }
 }

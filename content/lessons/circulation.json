@@ -298,5 +298,14 @@
         "type": "application"
       }
     ]
+  },
+  "framing": {
+    "heading": "Why this was hard",
+    "lead": "Courage, not cleverness.",
+    "body": [
+      "Galen had been the supreme authority in medicine for a thousand years, across Greek, Latin and Arabic traditions alike. Disagreeing with him was not a scientific position so much as a reckless one.",
+      "And Ibn al-Nafīs had a <strong>completely respectable escape available</strong> — the one everybody else took: assume the pores in the septum are simply too small to see. Nobody would have blamed him.",
+      "He refused it. That cost him his safety net and left a hole in the account which he then had to fill himself. <strong>He did not overturn Galen by knowing more anatomy — he overturned him by declining to build on something he could not verify.</strong>"
+    ]
   }
 }

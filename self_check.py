@@ -92,6 +92,10 @@ def check_lesson(path):
     check("landing can be built", bool(obj.get("syllabus_verbatim") or obj.get("title")),
           "landing falls back to the objective; without one the screen cannot render")
 
+    F = D.get("framing", {})
+    check("has framing", bool(F.get("body")),
+          "the 'why this was hard' panel is what makes the story land")
+
     K = D.get("keywords", {})
     check("has command words", bool(K.get("command_words")))
     check("has key terms", bool(K.get("terms")))

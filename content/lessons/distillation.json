@@ -304,5 +304,14 @@
         "type": "suggest — unfamiliar case"
       }
     ]
+  },
+  "framing": {
+    "heading": "Why this was hard",
+    "lead": "Method outlived theory.",
+    "body": [
+      "Alchemy was <strong>deliberately secretive</strong>. Recipes were written in allegory to protect them, quantities were vague, and results could not be reproduced by anyone else. Nothing was checkable, so nothing accumulated.",
+      "Their fix was to write procedures down <strong>explicitly</strong> — apparatus, quantities, steps — so that another person could repeat them and get the same result.",
+      "And here is the part worth keeping: <strong>their theory was wrong.</strong> They believed in transmutation, and no amount of distilling turns lead into gold. But the procedures were right, because a procedure can be checked by repeating it. What gets written down as repeatable steps is what survives its author."
+    ]
   }
 }

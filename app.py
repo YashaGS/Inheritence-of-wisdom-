@@ -161,6 +161,18 @@ h1.title {
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
 
+/* ---- framing: why the problem was hard ---- */
+.panel.framing{
+  border-left:4px solid #7a5c1a;
+  background:linear-gradient(#fbf5e6,#f4ead2);
+}
+.panel.framing h3{color:#6b4f14}
+.framing-lead{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif !important;
+  font-size:1.16rem !important;color:#2c2216 !important;
+  margin:0 0 .8rem !important;
+}
+
 /* ---- key words ---- */
 .kwrow{
   display:grid;grid-template-columns:minmax(88px,auto) 1fr;gap:.2rem .9rem;
@@ -996,9 +1008,15 @@ def screen_landing():
             st.session_state.view = "lesson"
             st.session_state.step = 0
             st.rerun()
-        if st.button("← Chapters", key="landing_back"):
-            st.session_state.view = "subject"
-            st.rerun()
+        lb1, lb2 = st.columns(2)
+        with lb1:
+            if st.button("← Chapters", key="landing_back", use_container_width=True):
+                st.session_state.view = "subject"
+                st.rerun()
+        with lb2:
+            if st.button("⌂  Home", key="landing_home", use_container_width=True):
+                st.session_state.view = "home"
+                st.rerun()
 
 
 def screen_story():
@@ -1035,6 +1053,15 @@ def screen_story():
             f'<p>{W["lead"]}</p>{quote}'
             f'<div class="cite">{W["citation"]}</div>'
             f'<p style="margin-top:1rem">{W["after"]}</p></div>',
+            unsafe_allow_html=True,
+        )
+
+    F = D.get("framing")
+    if F:
+        body = "".join(f"<p>{x}</p>" for x in F["body"])
+        st.markdown(
+            f'<div class="panel framing"><h3>{F["heading"]}</h3>'
+            f'<p class="framing-lead">{F["lead"]}</p>{body}</div>',
             unsafe_allow_html=True,
         )
 
@@ -1802,17 +1829,19 @@ render_ask_panel()
 RENDER[st.session_state.step]()
 
 # ------------------------------------------------------------------- nav
+# Back and Next carry the lesson; Home and the subject are always one click
+# away, so nobody has to press Back five times to get out of a chapter.
+SUBJECT_KEY = (mindmap.key_for_subject(D.get("subject"))
+               or st.session_state.subject or "maths")
+SUBJECT_NAME = D.get("subject", "Subject")
+
 st.markdown('<div style="height:1.2rem"></div>', unsafe_allow_html=True)
 st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+
 nav1, nav2, nav3 = st.columns([1, 2.4, 1])
 with nav1:
-    if st.session_state.step > 0:
-        if st.button("← Back", key="back"):
-            st.session_state.step -= 1
-            st.rerun()
-    elif st.button("← Chapters", key="tosubject"):
-        st.session_state.view = "subject"
-        st.session_state.subject = st.session_state.subject or "maths"
+    if st.session_state.step > 0 and st.button("← Back", key="back"):
+        st.session_state.step -= 1
         st.rerun()
 with nav2:
     dots = " · ".join(
@@ -1822,7 +1851,17 @@ with nav2:
     st.markdown(f'<div class="progress" style="text-align:center">{dots}</div>',
                 unsafe_allow_html=True)
 with nav3:
-    if st.session_state.step < len(SCREENS) - 1:
-        if st.button("Next →", key="next"):
-            st.session_state.step += 1
-            st.rerun()
+    if st.session_state.step < len(SCREENS) - 1 and st.button("Next →", key="next"):
+        st.session_state.step += 1
+        st.rerun()
+
+esc1, esc2, esc3 = st.columns([1, 2.4, 1])
+with esc1:
+    if st.button("⌂  Home", key="tohome_lesson", use_container_width=True):
+        st.session_state.view = "home"
+        st.rerun()
+with esc3:
+    if st.button(f"All of {SUBJECT_NAME}", key="tosubject", use_container_width=True):
+        st.session_state.view = "subject"
+        st.session_state.subject = SUBJECT_KEY
+        st.rerun()

@@ -246,6 +246,15 @@ def subject_by_key(key):
         return None
 
 
+def key_for_subject(name):
+    """Subject key from its display name, so a lesson can jump back to its own
+    subject page without hard-coding one."""
+    for key, (subject, *_rest) in zip(SUBJECT_KEYS, SUBJECTS):
+        if subject.lower() == (name or "").lower():
+            return key
+    return None
+
+
 def subject_stats(chapters):
     d = sum(1 for *_, m, _ in chapters if m == DIRECT)
     p = sum(1 for *_, m, _ in chapters if m in (PRECURSOR, TIER2))

@@ -495,5 +495,14 @@
         "Balancing — cancelling identical terms on both sides."
       ]
     ]
+  },
+  "framing": {
+    "heading": "Why this was hard",
+    "lead": "The constraint explains the invention.",
+    "body": [
+      "He had <strong>no notation</strong>. No <em>x</em>, no plus sign, no equals sign — symbolic algebra is roughly six centuries away. Every equation in the book is written out as a sentence.",
+      "And <strong>negative numbers were not accepted</strong>, so you could not simply move a term across to tidy an equation up. That single restriction is why there were exactly <strong>six</strong> canonical types rather than one — and why each needed its own written procedure.",
+      "So the interesting thing is not that he invented algebra. It is <em>what he was working without</em>, and that he built something repeatable anyway."
+    ]
   }
 }

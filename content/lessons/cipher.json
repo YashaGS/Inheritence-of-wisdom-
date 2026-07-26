@@ -310,5 +310,14 @@
         "type": "application"
       }
     ]
+  },
+  "framing": {
+    "heading": "Why this was hard",
+    "lead": "Everyone was staring at the wrong object.",
+    "body": [
+      "Ciphers had existed for eight centuries. What nobody had was a <strong>method</strong> — breaking one was patience, guesswork and luck.",
+      "The reason is that every previous attempt attacked <em>the message</em>. That is the obvious move, and it is a dead end: the message is precisely the thing that has been disguised.",
+      "al-Kindī looked away from it, at <strong>the language behind it</strong>. Once you ask what the encoder was <em>unable</em> to change, the answer is immediate — and the problem stops being a puzzle and becomes a procedure."
+    ]
   }
 }
