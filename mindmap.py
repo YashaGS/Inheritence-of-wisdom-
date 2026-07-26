@@ -1,180 +1,210 @@
 """
 The syllabus map — the app's front page.
 
-Shows the whole territory with every topic's lineage tier marked, and is honest
-about which lessons actually exist. Exactly one node is built; the rest are
-drawn as planned, not pretended.
+Five subject boxes, each holding that subject's **real Cambridge chapters**.
+Every chapter title here was verified verbatim against the syllabus PDFs in
+resources/ — nothing is paraphrased and nothing is invented.
 
-Tier data is transcribed by hand from Miraath-al-Hikma_Heritage-Topics.md.
-Per algorism-code-spine.md §5 it is curation, not generation — no model decides
-a tier here.
+Chapters carrying a genuine Islamic thread are highlighted and name the scholar.
+The rest are left plain: they are on the syllabus, they are not on the heritage
+map, and pretending otherwise is the failure the whole project exists to avoid.
+
+Lineage transcribed by hand from Miraath-al-Hikma_Heritage-Topics.md —
+curation, not generation (algorism-code-spine.md §5).
 """
 
 from xml.sax.saxutils import escape
 
-# tier: 1 = Islamic scholar | 2 = other great mind | 3 = no single originator
-# conf: "direct" / "precursor" — only meaningful within tier 1
-# key:  set only where a lesson actually exists
+DIRECT, PRECURSOR, NONE = "direct", "precursor", None
 
+# (chapter, scholar, mark, lesson_key)
 SUBJECTS = [
-    ("Mathematics", "0580", [
-        ("Completing the square", "al-Khwārizmī", 1, "direct", "algebra"),
-        ("Numerals & zero", "al-Khwārizmī", 1, "direct", None),
-        ("Trigonometry", "al-Battānī · al-Ṭūsī", 1, "direct", None),
-        ("Decimal fractions", "al-Uqlīdisī", 1, "precursor", None),
-        ("Binomial patterns", "al-Karajī", 1, "precursor", None),
-        ("Coordinate geometry", "Descartes", 2, None, None),
-        ("Vectors & matrices", "no single originator", 3, None, None),
-        ("Probability & statistics", "Pascal · Fermat", 2, None, None),
-        ("Mensuration", "no single originator", 3, None, None),
+    ("Mathematics", "0580", "#6a4bc0", [
+        ("Number", "al-Khwārizmī — numerals & zero", DIRECT, None),
+        ("Algebra and graphs", "al-Khwārizmī — al-jabr", DIRECT, "algebra"),
+        ("Coordinate geometry", None, NONE, None),
+        ("Geometry", "ʿUmar Khayyām — cubics", PRECURSOR, None),
+        ("Mensuration", None, NONE, None),
+        ("Trigonometry", "al-Battānī, al-Ṭūsī", DIRECT, None),
+        ("Transformations and vectors", None, NONE, None),
+        ("Probability", None, NONE, None),
+        ("Statistics", None, NONE, None),
     ]),
-    ("Physics", "0625", [
-        ("Light & optics", "Ibn al-Haytham", 1, "direct", None),
-        ("The experimental method", "Ibn al-Haytham", 1, "direct", None),
-        ("Astronomy", "al-Battānī · Ibn al-Shāṭir", 1, "direct", None),
-        ("Motion & density", "Ibn Sīnā · al-Bīrūnī", 1, "precursor", None),
-        ("Electricity & magnetism", "Faraday", 2, None, None),
-        ("Nuclear physics", "Rutherford", 2, None, None),
-        ("Thermal physics", "no single originator", 3, None, None),
-        ("Energy & work", "no single originator", 3, None, None),
-        ("Electrical circuits", "no single originator", 3, None, None),
+    ("Physics", "0625", "#2b7cc4", [
+        ("Motion, forces and energy", "Ibn Sīnā, al-Bīrūnī", PRECURSOR, None),
+        ("Thermal physics", None, NONE, None),
+        ("Waves", "Ibn al-Haytham — optics", DIRECT, None),
+        ("Electricity and magnetism", None, NONE, None),
+        ("Nuclear physics", None, NONE, None),
+        ("Space physics", "al-Battānī, Ibn al-Shāṭir", DIRECT, None),
     ]),
-    ("Chemistry", "0620", [
-        ("Lab technique & distillation", "Jābir ibn Ḥayyān", 1, "direct", None),
-        ("Acids, bases & salts", "al-Rāzī", 1, "direct", None),
-        ("Classification of matter", "Jābir · al-Rāzī", 1, "direct", None),
-        ("Organic separation", "Muslim chemists", 1, "precursor", None),
-        ("The Periodic Table", "Mendeleev", 2, None, None),
-        ("Conservation of mass", "Lavoisier", 2, None, None),
-        ("Stoichiometry & moles", "no single originator", 3, None, None),
-        ("Electrochemistry", "no single originator", 3, None, None),
-        ("Chemical energetics", "no single originator", 3, None, None),
+    ("Chemistry", "0620", "#c9453a", [
+        ("States of matter", None, NONE, None),
+        ("Atoms, elements and compounds", "Jābir, al-Rāzī", DIRECT, None),
+        ("Stoichiometry", None, NONE, None),
+        ("Electrochemistry", None, NONE, None),
+        ("Chemical energetics", None, NONE, None),
+        ("Chemical reactions", None, NONE, None),
+        ("Acids, bases and salts", "al-Rāzī", DIRECT, None),
+        ("The Periodic Table", None, NONE, None),
+        ("Metals", "Jābir — classifying metals", DIRECT, None),
+        ("Chemistry of the environment", None, NONE, None),
+        ("Organic chemistry", "Muslim chemists — distillation", PRECURSOR, None),
+        ("Experimental techniques and chemical analysis", "Jābir, al-Rāzī", DIRECT, None),
     ]),
-    ("Biology", "0610", [
-        ("Blood circulation", "Ibn al-Nafīs", 1, "direct", None),
-        ("Disease & immunity", "al-Rāzī · Ibn Sīnā", 1, "direct", None),
-        ("The eye & vision", "Ibn al-Haytham", 1, "direct", None),
-        ("Classification & ecosystems", "al-Jāḥiẓ · al-Dīnawarī", 1, "direct", None),
-        ("Variation & selection", "al-Jāḥiẓ", 1, "precursor", None),
-        ("Inheritance & genetics", "Mendel", 2, None, None),
-        ("Biological molecules", "no single originator", 3, None, None),
-        ("Enzymes", "no single originator", 3, None, None),
-        ("Respiration biochemistry", "no single originator", 3, None, None),
+    ("Biology", "0610", "#1f9c6e", [
+        ("Characteristics and classification", "al-Jāḥiẓ, al-Dīnawarī", DIRECT, None),
+        ("Organisation of the organism", None, NONE, None),
+        ("Movement into and out of cells", None, NONE, None),
+        ("Biological molecules", None, NONE, None),
+        ("Enzymes", None, NONE, None),
+        ("Plant nutrition", None, NONE, None),
+        ("Human nutrition", "Ibn Sīnā — Canon", DIRECT, None),
+        ("Transport in plants", None, NONE, None),
+        ("Transport in animals", "Ibn al-Nafīs — circulation", DIRECT, None),
+        ("Diseases and immunity", "al-Rāzī, Ibn Sīnā", DIRECT, None),
+        ("Gas exchange in humans", None, NONE, None),
+        ("Respiration", None, NONE, None),
+        ("Excretion in humans", None, NONE, None),
+        ("Coordination and response", "Ibn al-Haytham — the eye", DIRECT, None),
+        ("Drugs", None, NONE, None),
+        ("Reproduction", None, NONE, None),
+        ("Inheritance", None, NONE, None),
+        ("Variation and selection", "al-Jāḥiẓ — adaptation", PRECURSOR, None),
+        ("Organisms and their environment", "al-Jāḥiẓ — food chains", DIRECT, None),
+        ("Human influences on ecosystems", None, NONE, None),
+        ("Biotechnology and genetic modification", None, NONE, None),
     ]),
-    ("Computer Science", "0478", [
-        ("Algorithm design", "al-Khwārizmī", 1, "direct", None),
-        ("Automata & robotics", "al-Jazarī · Banū Mūsā", 1, "direct", None),
-        ("Data security", "al-Kindī", 1, "direct", None),
-        ("Boolean logic", "al-Fārābī · Ibn Rushd", 1, "precursor", None),
-        ("Data representation", "al-Khwārizmī", 1, "precursor", None),
-        ("Hardware & architecture", "von Neumann", 2, None, None),
-        ("Computer networks", "no single originator", 3, None, None),
-        ("Databases", "no single originator", 3, None, None),
-        ("Software development", "no single originator", 3, None, None),
+    ("Computer Science", "0478", "#d1497f", [
+        ("Data representation", "numeral heritage", PRECURSOR, None),
+        ("Data transmission", "al-Kindī — cryptanalysis", DIRECT, None),
+        ("Hardware", None, NONE, None),
+        ("Software", None, NONE, None),
+        ("The internet and its uses", None, NONE, None),
+        ("Automated and emerging technologies", "al-Jazarī, Banū Mūsā", DIRECT, None),
+        ("Algorithm design and problem-solving", "al-Khwārizmī", DIRECT, None),
+        ("Programming", None, NONE, None),
+        ("Databases", None, NONE, None),
+        ("Boolean logic", "al-Fārābī, Ibn Rushd", PRECURSOR, None),
     ]),
 ]
 
-INK, GOLD, MUTED = "#2c2216", "#b8860b", "#9a8358"
-CARD, CARD_LIVE = "#f7ecd6", "#f6e2b0"
-EDGE, EDGE_LIVE = "#dcc9a0", "#b8860b"
+INK, MUTED, FAINT = "#2c2216", "#6b5535", "#a3937a"
+GOLD, EDGE, CARD, CARD2 = "#b8860b", "#dcc9a0", "#fdf7e9", "#f7ecd6"
 
-MARGIN, COL_W, GAP = 34, 266, 12
-ROW_H, CARD_H = 47, 41
-TOP = 150
+W = 1460
+MARGIN, GAP = 22, 12
+HEAD_H, TOP = 54, 30
+ROW_PLAIN, ROW_MARKED = 23, 33
 
 
-def _tier_glyph(tier, conf):
-    if tier == 1:
-        return ("●", GOLD) if conf == "direct" else ("○", GOLD)
-    if tier == 2:
-        return ("◆", "#6b7f8a")
-    return ("·", MUTED)
+def _fit(text, limit):
+    """Truncate on a word boundary with an ellipsis — never mid-word, which
+    reads as a rendering bug rather than a deliberate elision."""
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return cut + "\u2026"
 
 
 def counts():
-    """Honest coverage numbers, computed — not asserted."""
-    t = {1: 0, 2: 0, 3: 0}
-    live = 0
-    for _, _, topics in SUBJECTS:
-        for _, _, tier, _, key in topics:
-            t[tier] += 1
-            if key:
-                live += 1
-    return t, sum(t.values()), live
+    d = p = plain = live = 0
+    for *_, chapters in SUBJECTS:
+        for _, _, mark, key in chapters:
+            d += mark == DIRECT
+            p += mark == PRECURSOR
+            plain += mark is NONE
+            live += key is not None
+    return {"direct": d, "precursor": p, "plain": plain,
+            "total": d + p + plain, "live": live}
 
 
-def render(width=1440):
-    rows = max(len(t) for _, _, t in SUBJECTS)
-    height = TOP + rows * ROW_H + 96
+def render():
+    n = len(SUBJECTS)
+    col_w = (W - 2 * MARGIN - (n - 1) * GAP) / n
 
-    s = [f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" '
+    heights = []
+    for *_, chapters in SUBJECTS:
+        h = sum(ROW_MARKED if m else ROW_PLAIN for _, _, m, _ in chapters)
+        heights.append(h)
+    box_h = max(heights) + HEAD_H + 20
+    height = TOP + box_h + 92
+
+    s = [f'<svg viewBox="0 0 {W} {height}" xmlns="http://www.w3.org/2000/svg" '
          f'font-family="Iowan Old Style, Palatino, Georgia, serif" '
          f'style="width:100%;height:auto">']
 
-    # title
-    s.append(f'<text x="{width/2}" y="52" text-anchor="middle" font-size="30" '
-             f'fill="{INK}">The syllabus, honestly mapped</text>')
-    s.append(f'<text x="{width/2}" y="80" text-anchor="middle" font-size="15" '
-             f'fill="#6b5535" font-style="italic">Every topic carries a thinking method. '
-             f'Not every topic carries an Islamic lineage — and we say which.</text>')
-    s.append(f'<line x1="{MARGIN}" y1="100" x2="{width-MARGIN}" y2="100" '
-             f'stroke="{EDGE}" stroke-width="1"/>')
+    for ci, (subject, code, colour, chapters) in enumerate(SUBJECTS):
+        x = MARGIN + ci * (col_w + GAP)
 
-    for ci, (subject, code, topics) in enumerate(SUBJECTS):
-        x = MARGIN + ci * (COL_W + GAP)
+        # subject box
+        s.append(f'<rect x="{x}" y="{TOP}" width="{col_w}" height="{box_h}" rx="9" '
+                 f'fill="{CARD}" stroke="{colour}" stroke-width="1.6" stroke-opacity=".55"/>')
+        s.append(f'<path d="M {x+9} {TOP} h {col_w-18} a 9 9 0 0 1 9 9 v {HEAD_H-9} '
+                 f'h {-col_w} v {-(HEAD_H-9)} a 9 9 0 0 1 9 -9 z" fill="{colour}"/>')
+        s.append(f'<text x="{x+col_w/2}" y="{TOP+23}" text-anchor="middle" font-size="15.5" '
+                 f'fill="#fdf7e9">{escape(subject)}</text>')
+        s.append(f'<text x="{x+col_w/2}" y="{TOP+41}" text-anchor="middle" font-size="11.5" '
+                 f'fill="#fdf7e9" fill-opacity=".85">{code}</text>')
 
-        s.append(f'<text x="{x}" y="126" font-size="16" fill="{INK}">{escape(subject)}</text>')
-        s.append(f'<text x="{x + COL_W}" y="126" text-anchor="end" font-size="13" '
-                 f'fill="{MUTED}">{code}</text>')
-        s.append(f'<line x1="{x}" y1="134" x2="{x+COL_W}" y2="134" '
-                 f'stroke="{GOLD}" stroke-width="1.4" stroke-opacity=".55"/>')
-
-        for ri, (label, who, tier, conf, key) in enumerate(topics):
-            y = TOP + ri * ROW_H
+        y = TOP + HEAD_H + 14
+        for chapter, who, mark, key in chapters:
             live = key is not None
-            glyph, gcol = _tier_glyph(tier, conf)
-            fill = CARD_LIVE if live else CARD
-            edge = EDGE_LIVE if live else EDGE
-            op = "1" if live else ".62"
+            row_h = ROW_MARKED if mark else ROW_PLAIN
 
             if live:
                 s.append(f'<a href="?t={key}" target="_self">')
 
-            s.append(f'<g opacity="{op}">')
-            s.append(f'<rect x="{x}" y="{y}" width="{COL_W}" height="{CARD_H}" rx="2" '
-                     f'fill="{fill}" stroke="{edge}" '
-                     f'stroke-width="{1.8 if live else 1}"/>')
-            s.append(f'<text x="{x+11}" y="{y+18}" font-size="12.5" fill="{gcol}">{glyph}</text>')
-            s.append(f'<text x="{x+27}" y="{y+18}" font-size="13.5" fill="{INK}">'
-                     f'{escape(label[:30])}</text>')
-            s.append(f'<text x="{x+27}" y="{y+33}" font-size="11.5" fill="#7a6338" '
-                     f'font-style="italic">{escape(who[:34])}</text>')
-
-            if live:
-                s.append(f'<rect x="{x+COL_W-52}" y="{y+8}" width="44" height="15" rx="2" '
-                         f'fill="{GOLD}"/>')
-                s.append(f'<text x="{x+COL_W-30}" y="{y+19}" text-anchor="middle" '
-                         f'font-size="9" fill="#fdf7e9" letter-spacing="1">LIVE</text>')
-            s.append("</g>")
+            if mark:
+                s.append(f'<rect x="{x+7}" y="{y-11}" width="{col_w-14}" height="{row_h-4}" rx="3" '
+                         f'fill="{CARD2 if not live else "#f6e2b0"}" stroke="{colour}" '
+                         f'stroke-width="{1.6 if live else 0.9}" '
+                         f'stroke-opacity="{1 if live else .5}"/>')
+                if mark == DIRECT:
+                    s.append(f'<circle cx="{x+17}" cy="{y}" r="4.4" fill="{colour}"/>')
+                else:
+                    s.append(f'<circle cx="{x+17}" cy="{y}" r="4.1" fill="none" '
+                             f'stroke="{colour}" stroke-width="1.6"/>')
+                s.append(f'<text x="{x+27}" y="{y+4}" font-size="10.9" fill="{INK}" '
+                         f'font-weight="{600 if live else 400}">{escape(_fit(chapter, 34))}</text>')
+                s.append(f'<text x="{x+27}" y="{y+16}" font-size="10" fill="{MUTED}" '
+                         f'font-style="italic">{escape(_fit(who or "", 36))}</text>')
+                if live:
+                    s.append(f'<rect x="{x+col_w-46}" y="{y-8}" width="34" height="14" rx="2" fill="{GOLD}"/>')
+                    s.append(f'<text x="{x+col_w-29}" y="{y+2.5}" text-anchor="middle" '
+                             f'font-size="8" fill="#fdf7e9" letter-spacing=".8">LIVE</text>')
+            else:
+                s.append(f'<text x="{x+27}" y="{y+4}" font-size="10.8" fill="{FAINT}">'
+                         f'{escape(_fit(chapter, 35))}</text>')
 
             if live:
                 s.append("</a>")
+            y += row_h
 
-    # legend
-    ly = TOP + rows * ROW_H + 34
-    s.append(f'<line x1="{MARGIN}" y1="{ly-22}" x2="{width-MARGIN}" y2="{ly-22}" '
+    # legend + footnote
+    ly = TOP + box_h + 34
+    s.append(f'<line x1="{MARGIN}" y1="{ly-22}" x2="{W-MARGIN}" y2="{ly-22}" '
              f'stroke="{EDGE}" stroke-width="1"/>')
-    legend = [
-        ("●", GOLD, "Tier 1 — Islamic scholar, direct"),
-        ("○", GOLD, "Tier 1 — precursor"),
-        ("◆", "#6b7f8a", "Tier 2 — another great mind"),
-        ("·", MUTED, "Tier 3 — no single originator"),
-    ]
-    lx = MARGIN
-    for glyph, col, text in legend:
-        s.append(f'<text x="{lx}" y="{ly}" font-size="13" fill="{col}">{glyph}</text>')
-        s.append(f'<text x="{lx+16}" y="{ly}" font-size="12.5" fill="#6b5535">{text}</text>')
-        lx += 300
+    items = [("fill", "Direct lineage — the field was shaped in the Muslim world"),
+             ("ring", "Precursor — an early or partial contribution, marked as such"),
+             ("none", "On the syllabus, no Islamic thread — carried by Tier 2 or Tier 3")]
+    lx = MARGIN + 6
+    for kind, label in items:
+        if kind == "fill":
+            s.append(f'<circle cx="{lx}" cy="{ly-4}" r="4.6" fill="{INK}"/>')
+        elif kind == "ring":
+            s.append(f'<circle cx="{lx}" cy="{ly-4}" r="4.3" fill="none" stroke="{INK}" stroke-width="1.6"/>')
+        else:
+            s.append(f'<text x="{lx-4}" y="{ly}" font-size="12" fill="{FAINT}">—</text>')
+        s.append(f'<text x="{lx+14}" y="{ly}" font-size="12.5" fill="{MUTED}">{label}</text>')
+        lx += 470
+
+    c = counts()
+    s.append(f'<text x="{W/2}" y="{ly+32}" text-anchor="middle" font-size="13" '
+             f'fill="{FAINT}" font-style="italic">'
+             f'{c["direct"] + c["precursor"]} of {c["total"]} Cambridge chapters carry an Islamic '
+             f'thread. The other {c["plain"]} are taught through the algorithm of the topic — '
+             f'Tier 2 or Tier 3 — and are no less rigorous for it.</text>')
 
     s.append("</svg>")
     return "".join(s)

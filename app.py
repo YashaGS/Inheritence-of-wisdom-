@@ -572,25 +572,25 @@ def screen_map():
     header(
         "Cambridge IGCSE · five subjects",
         "Mīrāth al-Ḥikma",
-        "Choose a topic. The map shows the whole syllabus — and admits what is not built yet.",
+        "Choose a topic. This is the inherited layer — where the thread is real, and how strong it is.",
     )
     st.markdown(f'<div class="panel" style="padding:1.1rem">{mindmap.render()}</div>',
                 unsafe_allow_html=True)
 
-    tiers, total, live = mindmap.counts()
+    n = mindmap.counts()
     c1, c2, c3, c4 = st.columns(4, gap="medium")
-    for col, (n, label) in zip(
+    for col, (num, label) in zip(
         (c1, c2, c3, c4),
-        [(f"{tiers[1]}/{total}", "carry a Tier-1 Islamic lineage"),
-         (f"{tiers[2]}/{total}", "carry another great mind (Tier 2)"),
-         (f"{tiers[3]}/{total}", "have no single originator (Tier 3)"),
-         (f"{live}", "lessons built so far")],
+        [(f"{n['total']}", "Cambridge chapters, verified against the syllabus"),
+         (f"{n['direct']}", "with a direct Islamic lineage"),
+         (f"{n['precursor']}", "precursor threads — partial, and marked so"),
+         (f"{n['live']}", "lessons actually built")],
     ):
         with col:
             st.markdown(
                 f'<div class="panel" style="text-align:center;padding:1rem .7rem">'
                 f'<div style="font-family:Iowan Old Style,Palatino,Georgia,serif;'
-                f'font-size:1.9rem;color:#7a5c1a">{n}</div>'
+                f'font-size:1.9rem;color:#7a5c1a">{num}</div>'
                 f'<div style="font-family:Georgia,serif;font-size:.82rem;color:#6b5535">'
                 f'{label}</div></div>',
                 unsafe_allow_html=True,
@@ -609,14 +609,14 @@ def screen_map():
         )
     with c2:
         st.markdown(
-            '<div class="panel"><h3>Read these numbers carefully</h3>'
-            '<p>This map is at <span class="gold">topic</span> level — 45 topics across '
-            'five syllabuses. At the finer grain of individual Cambridge '
-            '<span class="gold">objectives</span>, the Tier-1 share falls well below '
-            'what you see here: most objectives have no Islamic thread at all.</p>'
-            '<p>Which is the point. The lineage is a bonus where it is real. '
-            'The <em>algorithm of the topic</em> — the thinking method — is what covers '
-            'the whole syllabus, and it is present at every tier.</p></div>',
+            '<div class="panel"><h3>These are the real chapters</h3>'
+            '<p>Every title on this map was checked word-for-word against the Cambridge '
+            'syllabus PDFs — all 58 of them. Nothing is paraphrased to make a lineage fit.</p>'
+            '<p>Highlighted chapters carry an Islamic thread: <span class="gold">filled</span> '
+            'for direct, <span class="gold">hollow</span> for precursor. The plain ones are on '
+            'the syllabus and not on the heritage map — they are taught through '
+            '<span class="gold">Tier 2</span> (another great mind) or <span class="gold">Tier 3</span> '
+            '(the algorithm alone), and are no less rigorous for it.</p></div>',
             unsafe_allow_html=True,
         )
 
