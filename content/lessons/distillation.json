@@ -1,0 +1,148 @@
+{
+  "id": "distillation",
+  "title": "Separation and purification",
+  "subject": "Chemistry",
+  "subject_code": "0620",
+  "chapter": "Experimental techniques and chemical analysis",
+  "has_source": false,
+  "_README": "TIER 1, no manuscript. Jabir's corpus has contested authorship and no public-domain facing-page edition we have read, so no Unlock/Critic layer. Curation fields frozen.",
+  "objective": {
+    "code": "0620 12.4",
+    "subject": "Cambridge IGCSE Chemistry 0620 (2026-2028)",
+    "title": "Separation and purification",
+    "syllabus_verbatim": "Describe and explain methods of separation and purification using: a suitable solvent, filtration, crystallisation, simple distillation, fractional distillation.",
+    "related_code": "0620 12.4.2",
+    "related_verbatim": "Suggest suitable separation and purification techniques, given information about the substances involved.",
+    "syllabus_page": 38,
+    "bridge": "The apparatus on this syllabus page is not modern. The alembic still, the systematic use of distillation and crystallisation to purify rather than transform — that is the laboratory Jābir and al-Rāzī built, and English kept its Arabic names for it.",
+    "depth_ref": "Core. Full-mark answers name the property being exploited, not just the apparatus."
+  },
+  "lineage": {
+    "tier": 1,
+    "tier_label": "Tier 1 — Islamic scholar (direct)",
+    "thinker": "Jābir ibn Ḥayyān and Abū Bakr al-Rāzī",
+    "place_time": "Kufa and Rayy, 8th–10th centuries",
+    "contribution": "Built the practical laboratory: distillation, filtration, crystallisation, sublimation, and the apparatus to do them. al-Rāzī then wrote it down as procedure — equipment lists, step-by-step methods, and substances classified by how they behave rather than what they are made of.",
+    "how_they_thought": "They stopped asking what a substance <em>is</em> and started asking what it <em>does</em>. Two things mixed together can always be separated if you can find one property where they differ — boiling point, solubility, particle size. Find the difference, then design apparatus that exploits it. That is a procedure rather than a theory, which is why it still works today and why their theories do not.",
+    "citation": "al-Rāzī, Kitāb al-Asrār (The Book of Secrets), c. 900 CE",
+    "confidence": "direct",
+    "confidence_mark": "●",
+    "why_it_matters": "Three words on your chemistry bench are Arabic: <strong>alembic</strong> (al-anbīq), <strong>alcohol</strong> (al-kuḥl), <strong>alkali</strong> (al-qily). You have been speaking their vocabulary since your first practical."
+  },
+  "algorithm": {
+    "name": "Find the difference, then exploit it",
+    "steps": [
+      "You have a mixture. Do not ask what it is made of — ask how the parts differ.",
+      "List the properties where they are not the same: boiling point, solubility, particle size, magnetism.",
+      "Pick the property with the biggest gap. That gap is your lever.",
+      "Choose the apparatus that acts on exactly that property, and nothing else.",
+      "Check nothing was changed chemically — separation is not reaction. What went in should come out.",
+      "Test the purity: a pure substance melts and boils at a sharp, fixed temperature."
+    ],
+    "socratic_prompts": [
+      "Salt water and muddy water are both mixtures. Why does filtering rescue one and do nothing for the other?",
+      "You want the water, not the salt. Which apparatus, and what exactly is the water doing that the salt is not?",
+      "Ethanol boils at 78°C, water at 100°C. Why is that gap enough to separate them, and what happens if two liquids boil three degrees apart?",
+      "How would you know your product is actually pure — without any instrument beyond a thermometer?"
+    ],
+    "quran_link": null
+  },
+  "cambridge_form": {
+    "objective_code": "0620 12.4",
+    "statement": "Describe and explain methods of separation and purification using a suitable solvent, filtration, crystallisation, simple distillation and fractional distillation.",
+    "method": [
+      "Filtration — separates an insoluble solid from a liquid. The lever is particle size.",
+      "Crystallisation — recovers a soluble solid from solution. The lever is solubility falling as the solvent evaporates.",
+      "Simple distillation — recovers the solvent from a solution. The lever is boiling point, and you keep the vapour.",
+      "Fractional distillation — separates two miscible liquids. The lever is a difference in boiling point, and the column lets you exploit a small one.",
+      "Purity check — a pure substance has a sharp melting and boiling point; impurity lowers and spreads the melting point."
+    ],
+    "general_result": "Name the property that differs, then the apparatus that acts on it. The property is the answer; the apparatus is only the consequence.",
+    "command_words": "“Describe and explain” — describing the apparatus earns you half. The explain mark is for naming the property being exploited.",
+    "worked": {
+      "problem": "How would you obtain pure water from sea water, and how would you obtain the salt?",
+      "steps": [
+        "The difference is boiling point: water boils at 100°C, the salt does not boil at all.",
+        "Simple distillation — heat the sea water, and only the water evaporates.",
+        "Condense that vapour and collect it. That is the pure water.",
+        "For the salt instead, use crystallisation — evaporate the water off and leave the solid behind.",
+        "Same mixture, two products, chosen by which one you keep."
+      ],
+      "answer": "Distil to keep the water; crystallise to keep the salt"
+    }
+  },
+  "apply": {
+    "problem": "You are given a mixture of sand, salt and water. Describe how you would obtain dry sand and dry salt, in the right order, and name the property each step exploits.",
+    "hint": "Three substances, so two separations. Which one is not dissolved?",
+    "reveal_steps": [
+      "Filter first. Sand is insoluble, so it stays on the paper — the lever is particle size.",
+      "Wash and dry the sand in an oven. That is your first product.",
+      "The filtrate is salt dissolved in water.",
+      "Crystallise it: evaporate the water and the salt is left behind — the lever is solubility.",
+      "Order matters. Evaporate first and the salt and sand end up mixed together, and you are back where you started."
+    ],
+    "answer": "Filter to remove the sand (particle size), then crystallise the filtrate to recover the salt (solubility). Filtration must come first.",
+    "mark_scheme": "M1 filtration named first. A1 sand described as insoluble / residue. A1 crystallisation or evaporation of the filtrate. A1 naming the property for each step. Candidates who reverse the order lose both A marks.",
+    "reveal_heading": "Two levers, in the right order",
+    "closing": "with a procedure written down in Rayy eleven centuries ago"
+  },
+  "ask": {
+    "suggested": [
+      "What is the difference between distillation and evaporation?",
+      "Why do we filter before crystallising?",
+      "Where do the words alembic and alcohol come from?",
+      "How do I know something is pure?",
+      "When do I need fractional rather than simple distillation?"
+    ],
+    "qa": [
+      {
+        "match": [
+          "distillation and evaporation",
+          "difference between distillation",
+          "evaporation"
+        ],
+        "answer": "Both boil the liquid off. The difference is what you <em>keep</em>. In evaporation you keep what is left behind — the solid. In distillation you condense the vapour and keep <em>that</em> — the liquid. Same heat, opposite product."
+      },
+      {
+        "match": [
+          "filter before",
+          "why do we filter",
+          "order",
+          "which first"
+        ],
+        "answer": "Because filtration only removes what is undissolved. If you evaporate first, the dissolved salt comes out of solution and mixes back in with the sand, and now you have two solids you cannot separate by filtering. Always remove the insoluble solid while it is still the only solid present."
+      },
+      {
+        "match": [
+          "alembic",
+          "alcohol",
+          "words",
+          "arabic",
+          "where do the words",
+          "etymology"
+        ],
+        "answer": "<strong>Alembic</strong> is <em>al-anbīq</em>, the still itself. <strong>Alcohol</strong> is <em>al-kuḥl</em>, originally a finely ground powder obtained by sublimation, later applied to distilled spirit. <strong>Alkali</strong> is <em>al-qily</em>, the ash of saltwort. Three pieces of ordinary chemistry vocabulary, all carried into English from Arabic along with the techniques."
+      },
+      {
+        "match": [
+          "pure",
+          "purity",
+          "how do i know",
+          "melting point"
+        ],
+        "answer": "A pure substance melts at a single sharp temperature and boils at a single sharp temperature. An impurity lowers the melting point and smears it over a range. So a narrow, correct melting point is evidence of purity — and you need nothing but a thermometer to check."
+      },
+      {
+        "match": [
+          "fractional",
+          "simple distillation",
+          "when do i need",
+          "column"
+        ],
+        "answer": "Simple distillation works when one component does not really boil at all — salt from water. Fractional distillation is for two liquids that both boil, with close boiling points. The column gives the vapour many chances to condense and re-evaporate, and each cycle enriches it further in the lower-boiling component."
+      }
+    ],
+    "refusal": "I can only answer from what has been verified for this lesson — separation techniques, Jābir and al-Rāzī, and Cambridge 0620 12.4. I do not have a checked source for that, so I am not going to guess at one.",
+    "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  }
+}

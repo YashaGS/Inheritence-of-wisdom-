@@ -1,0 +1,146 @@
+{
+  "id": "circulation",
+  "title": "Circulatory systems",
+  "subject": "Biology",
+  "subject_code": "0610",
+  "chapter": "Transport in animals",
+  "has_source": false,
+  "_README": "TIER 1, no manuscript. Ibn al-Nafis's commentary survives but we have not read a public-domain facing-page edition, so no Unlock/Critic layer. Curation fields frozen.",
+  "objective": {
+    "code": "0610 9.1",
+    "subject": "Cambridge IGCSE Biology 0610 (2026-2028)",
+    "title": "Circulatory systems",
+    "syllabus_verbatim": "Describe the circulatory system as a system of blood vessels with a pump and valves to ensure one-way flow of blood.",
+    "related_code": "0610 9.2",
+    "related_verbatim": "Identify in diagrams and images the structures of the mammalian heart, limited to: muscular wall, septum, left and right ventricles, left and right atria, one-way valves and coronary arteries.",
+    "syllabus_page": 24,
+    "bridge": "Your syllabus asks you to identify the <strong>septum</strong> on a heart diagram. For fourteen centuries the accepted teaching was that blood seeped straight through it via invisible pores. Ibn al-Nafīs is the reason your textbook draws it solid.",
+    "depth_ref": "Core 9.1.1 with 9.2.1. Full-mark answers name the septum as a barrier and the valves as the mechanism enforcing one-way flow."
+  },
+  "lineage": {
+    "tier": 1,
+    "tier_label": "Tier 1 — Islamic scholar (direct)",
+    "thinker": "Ibn al-Nafīs",
+    "place_time": "Cairo, c. 1242 — three centuries before Servetus, four before Harvey",
+    "contribution": "Described the pulmonary circulation: that blood cannot pass through the septum, and must instead travel from the right side of the heart to the lungs, mix with air there, and return to the left side. The first known correct account of how blood reaches the lungs and comes back.",
+    "how_they_thought": "Galen — the supreme medical authority for a thousand years — taught that blood crossed the septum through invisible pores. Ibn al-Nafīs looked at the septum and saw a thick, solid wall with no visible opening. Rather than assume the pores were simply too small to see, he refused the claim: if he could not verify it, he would not build on it. That forced a question — if blood cannot cross here, where does it go? — and the lungs were the only answer left. He overturned the greatest authority in medicine not by knowing more, but by declining to accept something unobserved.",
+    "citation": "Ibn al-Nafīs, Sharḥ Tashrīḥ al-Qānūn (Commentary on the Anatomy of Avicenna's Canon), c. 1242",
+    "confidence": "direct",
+    "confidence_mark": "●",
+    "why_it_matters": "This is the same discipline this app runs on. He refused an unverifiable claim from the highest authority available; our critic refuses an unverified reading. Doubt, applied honestly, is not disrespect — it is the method."
+  },
+  "algorithm": {
+    "name": "Refuse what you cannot verify, then follow what is left",
+    "steps": [
+      "Find the claim everyone accepts without checking. Here: blood seeps through the septum.",
+      "Go and look. Is the thing actually there?",
+      "If you cannot observe it, do not build on it — however respected the source.",
+      "Removing the claim leaves a gap. Name the gap precisely: if not through the wall, then where?",
+      "List the routes that remain physically possible. Here, only one: out to the lungs and back.",
+      "Check the new route against everything else you can observe. If it survives, it stands."
+    ],
+    "socratic_prompts": [
+      "The greatest authority in your field states something you cannot see. What are your options, and what does each one cost you?",
+      "The septum is solid. What does that force to be true about where the blood goes?",
+      "Why would 'the pores are too small to see' be a dangerous thing to accept?",
+      "Valves let blood pass one way only. What would happen, beat by beat, if one failed?"
+    ],
+    "quran_link": null
+  },
+  "cambridge_form": {
+    "objective_code": "0610 9.1",
+    "statement": "Describe the circulatory system as a system of blood vessels with a pump and valves to ensure one-way flow of blood.",
+    "method": [
+      "A pump — the heart, a muscular wall dividing into four chambers.",
+      "The septum separates left from right completely. No blood crosses it.",
+      "Vessels — arteries carry blood away from the heart, veins return it.",
+      "Valves ensure flow in one direction only; without them blood would fall back each beat.",
+      "Double circulation: right side to the lungs and back, left side to the body and back. Two circuits, one pump."
+    ],
+    "general_result": "Pump + vessels + valves = one-way flow. The septum is why there are two separate circuits rather than one.",
+    "command_words": "“Describe the circulatory system as…” — the marks are for pump, vessels and valves, and for one-way flow. Naming chambers without naming the function earns nothing.",
+    "worked": {
+      "problem": "Why must a mammal have a double circulation?",
+      "steps": [
+        "The septum is solid, so oxygenated and deoxygenated blood never mix.",
+        "That means blood must make two separate journeys.",
+        "Right side → lungs → back to the left side: this is the pulmonary circuit.",
+        "Left side → body → back to the right side: the systemic circuit.",
+        "Blood is repressurised between circuits, so it reaches the body at full pressure."
+      ],
+      "answer": "Because the septum separates the circuits — which is exactly what Ibn al-Nafīs deduced"
+    }
+  },
+  "apply": {
+    "problem": "Galen taught that blood passed through pores in the septum. Assume, as Ibn al-Nafīs did, that the septum is completely solid. Work out where the blood must go instead — and state what must be true of the lungs for your answer to work.",
+    "hint": "Blood arrives on the right side and has to reach the left. If the direct route is closed, what is left?",
+    "reveal_steps": [
+      "Blood arrives in the right side of the heart, having come back from the body.",
+      "It has to reach the left side to be pumped out again. The septum is closed, so not directly.",
+      "The only vessels leaving the right side go to the lungs. So the blood must go there.",
+      "It must then return from the lungs to the left side — which requires vessels running back.",
+      "And for the journey to be worth making, the blood must change in the lungs: it meets air and takes up oxygen.",
+      "That is the pulmonary circulation, deduced in Cairo in 1242 from one refusal to accept an invisible pore."
+    ],
+    "answer": "Right side → lungs → left side. The lungs must allow blood and air to come close enough to exchange gases, and vessels must carry the blood back.",
+    "mark_scheme": "M1 blood cannot cross the septum. A1 route right side to lungs. A1 return from lungs to left side. A1 gas exchange occurring in the lungs. Candidates who state the route without saying why the septum forces it do not gain M1.",
+    "reveal_heading": "Where the blood had to go",
+    "closing": "with a deduction made in Cairo in 1242, by a man who would not accept what he could not see"
+  },
+  "ask": {
+    "suggested": [
+      "What is the septum and why does it matter?",
+      "Who was Ibn al-Nafīs?",
+      "Wasn't it Harvey who discovered circulation?",
+      "Why do we need valves?",
+      "What is double circulation?"
+    ],
+    "qa": [
+      {
+        "match": [
+          "septum",
+          "why does it matter",
+          "wall"
+        ],
+        "answer": "The septum is the muscular wall dividing the left side of the heart from the right. It matters because it is <em>complete</em> — no blood crosses it. Galen taught that blood seeped through invisible pores in it; Ibn al-Nafīs saw no pores, refused to assume them, and worked out that the blood must travel via the lungs instead. Your syllabus asks you to identify it in 9.2."
+      },
+      {
+        "match": [
+          "ibn al-nafis",
+          "al-nafis",
+          "who was",
+          "nafis"
+        ],
+        "answer": "A physician in Cairo, around 1242, who wrote a commentary on Ibn Sīnā's <em>Canon</em>. In it he described the pulmonary circulation — blood going from the right heart to the lungs and back to the left — roughly three centuries before Servetus and four before Harvey."
+      },
+      {
+        "match": [
+          "harvey",
+          "wasn't it harvey",
+          "who discovered",
+          "servetus"
+        ],
+        "answer": "Harvey (1628) described the full circulation of the blood and demonstrated it experimentally — that is real and his own. But the pulmonary circuit specifically was described by Ibn al-Nafīs around 1242. Both are true, and neither claim needs to be inflated: he was first to that piece, and we say only that."
+      },
+      {
+        "match": [
+          "valves",
+          "why do we need",
+          "one-way",
+          "one way"
+        ],
+        "answer": "Valves make the flow one-way. The heart pushes blood forward, but nothing stops it falling back when the muscle relaxes — except a valve that only opens one way. That is why the syllabus definition is 'a pump <em>and valves</em>': the pump supplies force, the valves supply direction."
+      },
+      {
+        "match": [
+          "double circulation",
+          "two circuits",
+          "why two"
+        ],
+        "answer": "Blood passes through the heart twice per full loop. Right side → lungs → back to the left side (pulmonary), then left side → body → back to the right (systemic). Because the septum keeps them separate, oxygenated and deoxygenated blood never mix, and the blood is re-pressurised before being sent to the body."
+      }
+    ],
+    "refusal": "I can only answer from what has been verified for this lesson — the circulatory system, Ibn al-Nafīs, and Cambridge 0610 9.1. I do not have a checked source for that, so I am not going to guess at one.",
+    "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
+  }
+}

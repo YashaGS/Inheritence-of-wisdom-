@@ -857,6 +857,57 @@ EXAMPLE_FIGURES = {"even": svg_type_even, "odd": svg_type_odd,
                    "zero": svg_type_zero}
 
 
+def svg_still():
+    """The alembic: heat, vapour rises, condenses, drips out. al-anbiq."""
+    ink, gold, red, blue = "#2c2216", "#b8860b", "#8b2635", "#2b6f9a"
+    s = ['<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,serif">']
+    s.append(f'<path d="M 70 200 a 46 46 0 1 0 92 0 z" fill="#e9dcc0" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<rect x="98" y="120" width="36" height="46" fill="none" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<path d="M 98 120 q 18 -30 36 0" fill="#f2e6c9" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<text x="116" y="230" text-anchor="middle" font-size="12" fill="{ink}">mixture</text>')
+    s.append(f'<path d="M 116 236 l -9 16 M 116 236 l 9 16" stroke="{red}" stroke-width="2"/>')
+    s.append(f'<text x="116" y="268" text-anchor="middle" font-size="11.5" fill="{red}">heat</text>')
+    for k, y in enumerate((150, 136, 122)):
+        s.append(f'<path d="M 108 {y} q 8 -7 16 0" fill="none" stroke="{blue}" stroke-width="1.4" stroke-opacity="{.8-k*.18}"/>')
+    s.append(f'<path d="M 134 108 L 300 150" stroke="{ink}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 134 122 L 300 164" stroke="{ink}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<text x="212" y="126" text-anchor="middle" font-size="11.5" fill="{blue}">vapour cools →</text>')
+    s.append(f'<path d="M 300 150 L 330 158 L 330 172 L 300 164 z" fill="#e9dcc0" stroke="{ink}" stroke-width="1.5"/>')
+    s.append(f'<circle cx="342" cy="186" r="3" fill="{blue}"/><circle cx="342" cy="200" r="2.4" fill="{blue}"/>')
+    s.append(f'<path d="M 322 214 a 34 30 0 1 0 44 0 z" fill="#eef4f7" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<text x="344" y="252" text-anchor="middle" font-size="12" fill="{ink}">pure liquid</text>')
+    s.append(f'<text x="240" y="36" text-anchor="middle" font-size="15" fill="#7a5c1a" font-style="italic">The alembic — <tspan font-size="14">al-anbīq</tspan></text>')
+    s.append(f'<text x="240" y="58" text-anchor="middle" font-size="12.5" fill="#6b5535">One property exploited: boiling point. Nothing is changed chemically.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_heart():
+    """Solid septum, so blood must detour through the lungs."""
+    ink, red, blue, gold = "#2c2216", "#a83232", "#2b6f9a", "#b8860b"
+    s = ['<svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" font-family="Georgia,serif">',
+         '<defs><marker id="bl" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5" '
+         f'orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="{ink}"/></marker></defs>']
+    s.append(f'<rect x="150" y="90" width="80" height="150" rx="10" fill="#dce9f2" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<rect x="250" y="90" width="80" height="150" rx="10" fill="#f6dede" stroke="{ink}" stroke-width="1.6"/>')
+    s.append(f'<rect x="230" y="86" width="20" height="158" fill="{gold}" stroke="{ink}" stroke-width="1.8"/>')
+    s.append(f'<text x="240" y="266" text-anchor="middle" font-size="13" fill="#7a5c1a">septum — solid</text>')
+    s.append(f'<text x="190" y="120" text-anchor="middle" font-size="12.5" fill="{blue}">RIGHT</text>')
+    s.append(f'<text x="290" y="120" text-anchor="middle" font-size="12.5" fill="{red}">LEFT</text>')
+    s.append(f'<path d="M 234 150 L 246 150" stroke="{ink}" stroke-width="3"/>')
+    s.append(f'<path d="M 228 138 L 252 162 M 252 138 L 228 162" stroke="#8b2635" stroke-width="2.6"/>')
+    s.append(f'<text x="240" y="184" text-anchor="middle" font-size="11.5" fill="#8b2635">no way through</text>')
+    s.append(f'<ellipse cx="240" cy="46" rx="86" ry="28" fill="#eaf3ea" stroke="{ink}" stroke-width="1.5"/>')
+    s.append(f'<text x="240" y="51" text-anchor="middle" font-size="14" fill="{ink}">lungs</text>')
+    s.append(f'<path d="M 178 90 C 150 60, 178 26, 200 34" fill="none" stroke="{blue}" stroke-width="2.2" marker-end="url(#bl)"/>')
+    s.append(f'<path d="M 282 34 C 306 26, 332 60, 304 90" fill="none" stroke="{red}" stroke-width="2.2" marker-end="url(#bl)"/>')
+    s.append(f'<text x="126" y="70" font-size="11.5" fill="{blue}">out</text>')
+    s.append(f'<text x="336" y="70" font-size="11.5" fill="{red}">back</text>')
+    s.append(f'<text x="240" y="292" text-anchor="middle" font-size="12.5" fill="#6b5535" font-style="italic">Close the wall and only one route remains.</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
 def show_svg(markup, caption=None):
     st.markdown(
         f'<div class="panel" style="text-align:center">{markup}'
@@ -869,8 +920,27 @@ def show_svg(markup, caption=None):
 
 # ------------------------------------------------------------------ screens
 
+def landing_data():
+    """Every lesson gets a landing page, whether or not it declares one.
+
+    Only algebra carried a hand-written `landing` block, and routing all
+    lessons through this screen crashed the rest with a KeyError. The fallback
+    is built from fields every lesson already has.
+    """
+    Ld = dict(D.get("landing") or {})
+    obj = D.get("objective", {})
+    Ld.setdefault("chapter_code", obj.get("code", ""))
+    Ld.setdefault("chapter", D.get("chapter", ""))
+    Ld.setdefault("statement", obj.get("syllabus_verbatim", obj.get("title", "")))
+    Ld.setdefault("cta", "Unlock the wisdom")
+    Ld.setdefault("teaser", "Before the method, the reason. Where this came from, "
+                            "why anyone bothered, and where you are already using it "
+                            "without knowing.")
+    return Ld
+
+
 def screen_landing():
-    Ld = D["landing"]
+    Ld = landing_data()
     st.markdown(f'<div class="eyebrow">{Ld["chapter_code"]} · {Ld["chapter"]}</div>',
                 unsafe_allow_html=True)
     st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
@@ -1241,6 +1311,18 @@ def screen_miftah():
                     unsafe_allow_html=True)
 
     st.markdown('<div style="height:.4rem"></div>', unsafe_allow_html=True)
+    if D["id"] == "distillation":
+        st.markdown('<div class="eyebrow">The apparatus they built — and the word '
+                    'English kept</div>', unsafe_allow_html=True)
+        show_svg(svg_still(), "Find the difference, then build the thing that exploits it")
+        return
+
+    if D["id"] == "circulation":
+        st.markdown('<div class="eyebrow">What a solid wall forces to be true</div>',
+                    unsafe_allow_html=True)
+        show_svg(svg_heart(), "Galen said blood seeped through. Ibn al-Nafīs looked, and it does not.")
+        return
+
     if D["id"] == "cipher":
         st.markdown('<div class="eyebrow">He stopped reading the message and '
                     'counted it instead</div>', unsafe_allow_html=True)
@@ -1351,7 +1433,8 @@ def screen_apply():
                 f'<div class="cite">{A["mark_scheme"]}</div></div>',
                 unsafe_allow_html=True,
             )
-            figure = {"magnetism": svg_neutral_point, "cipher": svg_frequency}.get(
+            figure = {"magnetism": svg_neutral_point, "cipher": svg_frequency,
+                      "distillation": svg_still, "circulation": svg_heart}.get(
                 D["id"], svg_overlap)
             show_svg(figure())
         else:

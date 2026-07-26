@@ -68,7 +68,7 @@ SUBJECTS = [
          "Muslim chemists", PRECURSOR, None),
         ("Experimental techniques and chemical analysis",
          "The laboratory itself — distillation, filtration, crystallisation",
-         "Jābir, al-Rāzī", DIRECT, None),
+         "Jābir, al-Rāzī", DIRECT, "distillation"),
     ]),
     ("Biology", "0610", "#1f9c6e", [
         ("Characteristics and classification", "Kitāb al-Ḥayawān — classifying the living world",
@@ -82,7 +82,7 @@ SUBJECTS = [
          "Ibn Sīnā", DIRECT, None),
         ("Transport in plants", None, None, NONE, None),
         ("Transport in animals", "The pulmonary circulation, described and argued",
-         "Ibn al-Nafīs", DIRECT, None),
+         "Ibn al-Nafīs", DIRECT, "circulation"),
         ("Diseases and immunity", "Smallpox distinguished from measles by observation",
          "al-Rāzī, Ibn Sīnā", DIRECT, None),
         ("Gas exchange in humans", None, None, NONE, None),
@@ -226,11 +226,15 @@ LESSON_SUBTOPIC = {
     "algebra": ("E2.2", "Algebraic manipulation — completing the square"),
     "magnetism": ("4.1", "Simple phenomena of magnetism"),
     "cipher": ("2.3", "Encryption"),
+    "distillation": ("12.4", "Separation and purification"),
+    "circulation": ("9.1", "Circulatory systems"),
 }
 LESSON_SOURCE = {
     "algebra": "al-Khwārizmī, Kitāb al-jabr · Rosen 1831, p. 8",
     "magnetism": "Faraday, Experimental Researches in Electricity · no manuscript layer",
     "cipher": "al-Kindī, Risāla fī Istikhrāj al-Muʿammā, c. 850 CE · no manuscript layer",
+    "distillation": "al-Rāzī, Kitāb al-Asrār, c. 900 CE · no manuscript layer",
+    "circulation": "Ibn al-Nafīs, Sharḥ Tashrīḥ al-Qānūn, c. 1242 · no manuscript layer",
 }
 
 

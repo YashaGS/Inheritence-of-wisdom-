@@ -88,6 +88,10 @@ def check_lesson(path):
             check(f"no phantom {ghost} block", ghost not in D,
                   "lesson claims no source but carries one")
 
+    obj = D.get("objective", {})
+    check("landing can be built", bool(obj.get("syllabus_verbatim") or obj.get("title")),
+          "landing falls back to the objective; without one the screen cannot render")
+
     A = D.get("ask", {})
     check("has an Ask panel", bool(A.get("qa")),
           "the panel is invisible on any lesson without one")
