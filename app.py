@@ -362,11 +362,17 @@ section[data-testid="stSidebar"] input{
 .tagline em{font-style:italic;color:#9a7b2e}
 
 /* ---- home: hero statement ---- */
-.hero{margin:0 0 2rem;max-width:64ch}
+.hero{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:clamp(20px,3.5vw,48px);align-items:start;margin:0 0 2.2rem;
+}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-l{min-width:0}
+.hero-r{min-width:0}
 .hero .punch{
   font-family:'Iowan Old Style',Palatino,Georgia,serif;
-  font-size:clamp(1.6rem,3.1vw,2.25rem);line-height:1.22;font-weight:600;
-  color:#2c2216;margin:0 0 1.1rem;text-wrap:balance;
+  font-size:clamp(1.55rem,2.5vw,2.05rem);line-height:1.26;font-weight:600;
+  color:#2c2216;margin:0;text-wrap:balance;
 }
 .hero .punch em{font-style:normal;color:#9a7b2e}
 .hero p{font-family:Georgia,serif;font-size:1.04rem;line-height:1.7;color:#33281a;margin:0 0 .85rem}
@@ -1752,12 +1758,14 @@ def screen_apply():
 
 HERO = """
 <div class="hero">
+ <div class="hero-l">
   <p class="punch">The mind is the greatest asset any of us will ever hold.<br/>
   Your child is inheriting a fortune —
   the wisdom of the greatest thinkers who ever lived.<br/>
   Unlock the blueprint, and mould the one thing that lasts:
   <em>how they think</em>.</p>
-
+ </div>
+ <div class="hero-r">
   <p class="names">Algebra without <b>al-jabr</b>. Algorithm without <b>al-Khwārizmī</b>.
   Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.
   Your child has inherited every one of these, and been introduced to none of them.</p>
@@ -1786,6 +1794,7 @@ HERO = """
   <strong>now you think</strong> — use the faculties you were given.<br/>
   Same syllabus. Same exam. A child who walks out knowing
   <strong>the knowledge is theirs</strong>.</p>
+ </div>
 </div>
 """
 
@@ -1921,13 +1930,16 @@ def screen_home():
     st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
 
     st.markdown(HERO, unsafe_allow_html=True)
-    st.markdown(BRIEF, unsafe_allow_html=True)
 
-    st.markdown(ARC, unsafe_allow_html=True)
-
+    # The picker sits directly under the hero: a judge should reach the product
+    # in one screen, and read the argument underneath if they want it.
     st.markdown('<div class="eyebrow">What do you want to learn today?</div>',
                 unsafe_allow_html=True)
     st.markdown(mindmap.render_subject_cards(), unsafe_allow_html=True)
+
+    st.markdown('<div style="height:2.2rem"></div>', unsafe_allow_html=True)
+    st.markdown(ARC, unsafe_allow_html=True)
+    st.markdown(BRIEF, unsafe_allow_html=True)
     st.markdown(BELOW_PICKER, unsafe_allow_html=True)
 
 
