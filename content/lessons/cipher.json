@@ -85,6 +85,7 @@
     ],
     "answer": "✦ = E, ◈ = T. Modern encryption defeats the attack by flattening the frequency distribution so the ranking is meaningless.",
     "mark_scheme": "B1 for identifying E and T. B1 for stating that frequency is unchanged by substitution. B1 for explaining that a modern cipher produces a uniform frequency distribution. Candidates who answer only 'the key is longer' do not gain the third mark.",
-    "reveal_heading": "What the count gave away"
+    "reveal_heading": "What the count gave away",
+    "closing": "with a method written down in Baghdad twelve centuries ago"
   }
 }

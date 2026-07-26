@@ -61,7 +61,10 @@ def check_lesson(path):
         "lineage": ["tier", "thinker", "how_they_thought", "citation", "confidence"],
         "algorithm": ["name", "steps", "socratic_prompts"],
         "cambridge_form": ["statement", "method", "general_result"],
-        "apply": ["problem", "reveal_steps", "answer", "mark_scheme"],
+        # closing and reveal_heading exist because copy written for one lesson
+        # silently leaked into the others once there was more than one.
+        "apply": ["problem", "reveal_steps", "answer", "mark_scheme",
+                  "reveal_heading", "closing"],
     }
     if has_source:
         required["source"] = ["work", "author", "edition", "arabic_image", "arabic_locator"]
@@ -84,6 +87,11 @@ def check_lesson(path):
         for ghost in ("source", "unlock", "critic"):
             check(f"no phantom {ghost} block", ghost not in D,
                   "lesson claims no source but carries one")
+
+    baghdad = "baghdad" in D["apply"].get("closing", "").lower()
+    islamic = D["lineage"].get("tier") == 1 and not D["lineage"].get("no_islamic_thread")
+    check("closing line matches the lesson's own lineage", baghdad <= islamic,
+          "a non-Islamic-lineage lesson must not close by crediting Baghdad")
 
     print("Lineage integrity")
     tier = D["lineage"].get("tier")

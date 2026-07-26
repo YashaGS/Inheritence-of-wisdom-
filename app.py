@@ -790,8 +790,8 @@ def screen_mirath():
                "Wisdom is taken wherever it is found.")
 
     st.markdown(
-        f'<span class="tier1{"" if tier == 1 else " t2"}">{L["tier_label"]} '
-        f'{L.get("confidence_mark", "")}</span>',
+        f'<span class="tier1{"" if tier == 1 else " t2"}">{L["tier_label"]}'
+        f'{" " + L.get("confidence_mark", "") if tier == 1 else ""}</span>',
         unsafe_allow_html=True,
     )
     st.markdown("<div style='height:.9rem'></div>", unsafe_allow_html=True)
@@ -983,11 +983,11 @@ def screen_apply():
 
     if st.session_state.attempted:
         st.markdown(
-            '<div class="panel" style="text-align:center;border-color:#c9a227">'
-            '<p style="font-size:1.12rem">You did not watch someone solve it. '
-            'You solved it — with a method written down in Baghdad twelve centuries ago.</p>'
-            '<p class="gold" style="font-size:1.25rem;letter-spacing:.06em">'
-            'You are its <em>wārith</em>.</p></div>',
+            f'<div class="panel" style="text-align:center;border-color:#c9a227">'
+            f'<p style="font-size:1.12rem">You did not watch someone solve it. '
+            f'You solved it — {A.get("closing", "using a method someone wrote down so it would outlive them")}.</p>'
+            f'<p class="gold" style="font-size:1.25rem;letter-spacing:.06em">'
+            f'You are its <em>wārith</em>.</p></div>',
             unsafe_allow_html=True,
         )
 
