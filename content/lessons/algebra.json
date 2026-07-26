@@ -140,5 +140,121 @@
     "mark_scheme": "M1 for (x + 3)². A1 for −4. A1 for both roots. Full marks require the completed square form to be shown, not just the roots.",
     "reveal_heading": "The overlap",
     "closing": "with a method written down in Baghdad twelve centuries ago"
+  },
+  "landing": {
+    "code": "E2.2",
+    "chapter_code": "0580 E2.2",
+    "chapter": "Algebraic manipulation",
+    "statement": "Complete the square for expressions in the form ax² + bx + c.",
+    "cta": "Unlock the wisdom",
+    "teaser": "Before the method, the reason. Where this came from, why anyone bothered, and where you are already using it without knowing."
+  },
+  "story": {
+    "_note": "The 'why should I care' layer, before any method. The al-Khwārizmī quote is verbatim from Rosen 1831, p. 3, checked against the scan.",
+    "title": "al-jabr",
+    "the_word": [
+      "The book is called <em>Kitāb al-mukhtaṣar fī ḥisāb al-jabr wa-l-muqābala</em> — the Compendious Book on Calculation by <strong>Restoration</strong> and <strong>Balancing</strong>.",
+      "<strong>al-jabr</strong> — restoration. You have something subtracted on one side; you restore it by adding it to both. The negative goes away.",
+      "<strong>al-muqābala</strong> — balancing. Whatever is the same on both sides, cancel it. What is left is simpler and still true.",
+      "Those two moves are the whole of school algebra. You have been doing <em>al-jabr</em> since you were eleven and nobody told you its name.",
+      "The word travelled: <em>al-jabr</em> → <em>algebra</em>. And the author's own name, al-Khwārizmī, Latinised as <em>algorismus</em>, became <strong>algorithm</strong>."
+    ],
+    "why_he_wrote_it": {
+      "lead": "Not for mathematicians. He says so himself, in the opening pages:",
+      "quote": "…confining it to what is easiest and most useful in arithmetic, such as men constantly require in cases of inheritance, legacies, partition, law-suits, and trade, and in all their dealings with one another, or where the measuring of lands, the digging of canals, geometrical computation, and other objects of various sorts and kinds are concerned.",
+      "citation": "al-Khwārizmī, preface — Rosen 1831, p. 3",
+      "after": "Inheritance disputes. Land boundaries. Trade. Canals. This was written to settle arguments about real money and real ground — and the algebra your exam asks for was invented as a tool for that job."
+    },
+    "where_now": [
+      [
+        "A ball thrown in the air",
+        "Its height is a quadratic in time. Complete the square and the answer falls out: the highest point it reaches, and exactly when."
+      ],
+      [
+        "Anything you want the most or least of",
+        "Maximum area from a fixed fence, maximum profit, minimum cost. Same move every time."
+      ],
+      [
+        "The equation of a circle",
+        "Complete the square twice — once in x, once in y — and the centre and radius appear."
+      ],
+      [
+        "The quadratic formula itself",
+        "The formula is not a separate thing to memorise. It <em>is</em> completing the square, done once, in general, for every quadratic at once. You have been using his method all along."
+      ]
+    ]
+  },
+  "ask": {
+    "_note": "Grounded Q&A. Answers are frozen, matched deterministically in code. No model call, no network. Anything outside the node gets the refusal, and the refusal is the point.",
+    "suggested": [
+      "Why does completing the square actually work?",
+      "Where would I ever use this?",
+      "What if b is an odd number?",
+      "Why is it called al-jabr?",
+      "Is this the same as the quadratic formula?"
+    ],
+    "qa": [
+      {
+        "match": [
+          "why does",
+          "actually work",
+          "how does it work",
+          "why work"
+        ],
+        "answer": "Because a square is a shape you can complete. x² + bx is a square with a strip stuck to one side. Halve the strip, move the halves to two sides, and there is exactly one corner missing — (b/2)². Add it, and you have a true square. You add it to both sides, so the equation stays true. That is <em>al-jabr</em>: restoring the balance."
+      },
+      {
+        "match": [
+          "where would i",
+          "where do we use",
+          "use this",
+          "real life",
+          "useful",
+          "point of this"
+        ],
+        "answer": "Anywhere something has a maximum or a minimum. The height of a thrown ball, the biggest area you can fence, the lowest cost. Completing the square turns the expression into (x + a)² + b, and that b is the answer — because a square is never negative, the smallest the whole thing can ever be is b. al-Khwārizmī used it for inheritance shares and land measurement."
+      },
+      {
+        "match": [
+          "odd",
+          "b is odd",
+          "not even",
+          "fraction",
+          "halve an odd"
+        ],
+        "answer": "Nothing breaks. Halving an odd number gives a fraction, and the method carries on unchanged. For x² + 5x, half of 5 is 2.5, so the bracket is (x + 2.5)² and you subtract 2.5² = 6.25. Cambridge will often accept the fraction form — (x + 5/2)² − 25/4 — which is tidier than decimals."
+      },
+      {
+        "match": [
+          "al-jabr",
+          "aljabr",
+          "name",
+          "why is it called",
+          "word",
+          "meaning"
+        ],
+        "answer": "<em>al-jabr</em> means restoration. If you have x² − 4x = 5, the −4x is a deficiency; you restore it by adding 4x to both sides. Its partner <em>al-muqābala</em> means balancing — cancelling what is identical on both sides. Those two words are the title of the book, and <em>al-jabr</em> became the word <em>algebra</em>."
+      },
+      {
+        "match": [
+          "quadratic formula",
+          "same as the formula",
+          "formula"
+        ],
+        "answer": "It is the same thing. Take ax² + bx + c = 0 and complete the square using letters instead of numbers, and what drops out is x = (−b ± √(b² − 4ac)) / 2a. The formula is his method done once, in general, so nobody has to redo it. When you use the formula you are running al-Khwārizmī's procedure without noticing."
+      },
+      {
+        "match": [
+          "geometric",
+          "picture",
+          "why a square",
+          "shape",
+          "diagram"
+        ],
+        "answer": "He did not have algebraic notation — that came centuries later. So he proved it by drawing: an actual square of side x, with rectangles laid along two edges, and a corner missing. The proof is visible rather than symbolic, which is why the diagram in this lesson is his and not a modern illustration."
+      }
+    ],
+    "refusal": "I can only answer from what has been verified for this lesson — al-Khwārizmī, completing the square, and Cambridge 0580 E2.2. I do not have a checked source for that, so I am not going to guess at one. Try one of the suggested questions, or ask about this topic another way.",
+    "grounding_note": "Answers here come from this lesson's verified node. Nothing is generated live."
   }
 }

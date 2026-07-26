@@ -14,6 +14,7 @@ from pathlib import Path
 
 import streamlit as st
 
+import ask
 import critic
 import mindmap
 
@@ -22,12 +23,15 @@ ROOT = Path(__file__).parent
 # manuscript skips Unlock and Critic rather than inventing a source to verify.
 SCREENS_SOURCE = ["Manuscript", "Unlock", "Critic", "Mīrāth", "Miftāḥ", "Jisr", "Apply"]
 SCREENS_PLAIN = ["Mīrāth", "Miftāḥ", "Jisr", "Apply"]
+# A lesson with a story opens on it: the story carries the manuscript and the
+# lineage together, so Manuscript and Mīrāth are not separate stops.
+SCREENS_STORY = ["Mīrāth", "Unlock", "Critic", "Miftāḥ", "Jisr", "Apply"]
 
 st.set_page_config(
     page_title="Mīrāth al-Ḥikma · Algorism",
     page_icon="◈",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 
@@ -155,6 +159,56 @@ h1.title {
   border-left:2px solid #d4a933; padding:.35rem 0 .35rem .9rem; margin:.5rem 0;
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
+
+/* ---- subtopic landing ---- */
+.landing-q{border-left:4px solid #b8860b}
+.landing-q .statement{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1.72rem;line-height:1.3;color:#2c2216;margin:0;text-wrap:balance;
+}
+.landing-cta p{font-size:.98rem;color:#5a4726;margin:0}
+
+/* ---- story: the primary-source quote ---- */
+blockquote.pq{
+  margin:.9rem 0 0;padding:.9rem 1.2rem;border-left:3px solid #b8860b;
+  background:#f6ecd4;font-family:Georgia,serif;font-style:italic;
+  font-size:1.02rem;line-height:1.7;color:#3f3220;
+}
+
+/* ---- pinned Ask panel (sidebar) ---- */
+section[data-testid="stSidebar"]{
+  background:linear-gradient(#f7ecd6,#f1e3c4);border-right:1px solid #dcc9a0;
+}
+section[data-testid="stSidebar"] .block-container{padding-top:2rem}
+.ask-head{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;font-size:1.5rem;
+  color:#2c2216;margin:0 0 .2rem;
+}
+.ask-note{
+  font-family:Georgia,serif;font-size:.78rem;color:#8a7550;font-style:italic;
+  line-height:1.5;margin:0 0 1rem;
+}
+section[data-testid="stSidebar"] div.stButton > button{
+  background:#fdf7e9;color:#4a3a1c;border:1px solid #dcc9a0;
+  font-family:Georgia,serif;font-size:.86rem;text-align:left;
+  padding:.5rem .7rem;line-height:1.35;letter-spacing:0;
+}
+section[data-testid="stSidebar"] div.stButton > button:hover{
+  background:#f6e2b0;border-color:#b8860b;color:#2c2216;
+}
+section[data-testid="stSidebar"] input{
+  font-family:Georgia,serif;background:#fdf7e9;border:1px solid #dcc9a0;color:#2c2216;
+}
+.ask-a{
+  margin-top:1rem;background:#fdf7e9;border:1px solid #dcc9a0;
+  border-left:3px solid #1f5e3d;border-radius:3px;padding:.85rem 1rem;
+}
+.ask-a.refused{border-left-color:#8b2635;background:#faf1e4}
+.ask-q{
+  font-family:Georgia,serif;font-size:.8rem;font-style:italic;color:#8a7550;
+  margin-bottom:.45rem;
+}
+.ask-a p{font-family:Georgia,serif;font-size:.92rem;line-height:1.6;color:#33281a;margin:0}
 
 /* ---- home: hero statement ---- */
 .hero{margin:0 0 2rem;max-width:64ch}
@@ -416,14 +470,16 @@ if _subject and mindmap.subject_by_key(_subject):
     st.session_state.subject = _subject
 elif _lesson and _lesson in lesson_ids():
     st.session_state.lesson = _lesson
-    st.session_state.view = "lesson"
+    st.session_state.view = "landing"
     st.session_state.step = 0
     st.session_state.revealed = False
     st.session_state.attempted = False
 
 D = load(st.session_state.lesson)
 HAS_SOURCE = bool(D.get("has_source"))
-SCREENS = SCREENS_SOURCE if HAS_SOURCE else SCREENS_PLAIN
+HAS_STORY = "story" in D
+SCREENS = (SCREENS_STORY if HAS_STORY else
+           SCREENS_SOURCE if HAS_SOURCE else SCREENS_PLAIN)
 
 
 def header(eyebrow, title, subtitle=None):
@@ -671,6 +727,120 @@ def show_svg(markup, caption=None):
 
 
 # ------------------------------------------------------------------ screens
+
+def screen_landing():
+    Ld = D["landing"]
+    st.markdown(f'<div class="eyebrow">{Ld["chapter_code"]} · {Ld["chapter"]}</div>',
+                unsafe_allow_html=True)
+    st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+
+    c1, c2 = st.columns([1.5, 1], gap="large")
+    with c1:
+        st.markdown(
+            f'<div class="panel landing-q"><div class="eyebrow" '
+            f'style="margin-bottom:.7rem">What the exam asks you to do</div>'
+            f'<p class="statement">{Ld["statement"]}</p></div>',
+            unsafe_allow_html=True,
+        )
+    with c2:
+        st.markdown(
+            f'<div class="panel landing-cta"><p>{Ld["teaser"]}</p></div>',
+            unsafe_allow_html=True,
+        )
+        if st.button(f'{Ld["cta"]} →', key="unlock_wisdom", type="primary"):
+            st.session_state.view = "lesson"
+            st.session_state.step = 0
+            st.rerun()
+        if st.button("← Chapters", key="landing_back"):
+            st.session_state.view = "subject"
+            st.rerun()
+
+
+def screen_story():
+    S = D["story"]
+    L = D["lineage"]
+    header("Lesson · Mīrāth", S["title"],
+           "Where this came from, and why anyone bothered.")
+
+    c1, c2 = st.columns([1, 1.25], gap="large")
+    with c1:
+        b = img_b64(D["source"]["arabic_image"]) if HAS_SOURCE else None
+        if b:
+            st.markdown(
+                f'<div class="panel" style="padding:.7rem"><img src="data:image/jpeg;base64,{b}" '
+                f'style="width:100%;border:1px solid #cbb489"/>'
+                f'<div class="cite" style="margin:.6rem .4rem 0">'
+                f'{D["source"]["edition"]}<br/>{D["source"]["arabic_locator"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+    with c2:
+        words = "".join(f"<p>{w}</p>" for w in S["the_word"])
+        st.markdown(f'<div class="panel"><h3>The word</h3>{words}</div>',
+                    unsafe_allow_html=True)
+
+    W = S["why_he_wrote_it"]
+    st.markdown(
+        f'<div class="panel"><h3>Why he wrote it</h3>'
+        f'<p>{W["lead"]}</p>'
+        f'<blockquote class="pq">{W["quote"]}</blockquote>'
+        f'<div class="cite">{W["citation"]}</div>'
+        f'<p style="margin-top:1rem">{W["after"]}</p></div>',
+        unsafe_allow_html=True,
+    )
+
+    st.markdown('<div class="eyebrow">Where it lives now</div>', unsafe_allow_html=True)
+    cols = st.columns(2, gap="large")
+    for i, (title, body) in enumerate(S["where_now"]):
+        with cols[i % 2]:
+            st.markdown(
+                f'<div class="panel" style="min-height:8.4rem"><h3>{title}</h3>'
+                f'<p style="font-size:.97rem">{body}</p></div>',
+                unsafe_allow_html=True,
+            )
+
+    st.markdown(
+        f'<div class="panel" style="border-color:#c9a227">'
+        f'<h3>{L["thinker"]} · {L["place_time"]}</h3>'
+        f'<p class="dropcap">{L["how_they_thought"]}</p>'
+        f'<div class="cite">{L["citation"]} · {L["tier_label"]} '
+        f'{L["confidence_mark"]}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_ask_panel():
+    """Pinned beside every lesson screen. Deterministic: see ask.py."""
+    A = D.get("ask")
+    if not A:
+        return
+    with st.sidebar:
+        st.markdown('<div class="ask-head">Ask</div>', unsafe_allow_html=True)
+        st.markdown(f'<p class="ask-note">{A["grounding_note"]}</p>',
+                    unsafe_allow_html=True)
+
+        for i, q in enumerate(A["suggested"]):
+            if st.button(q, key=f"sq_{i}", use_container_width=True):
+                st.session_state.asked = q
+
+        # A form rather than a bare text_input: a form always commits on
+        # submit, instead of depending on Enter-key or blur behaviour that
+        # differs between browsers. On stage that difference is not worth it.
+        with st.form("ask_form", clear_on_submit=False):
+            typed = st.text_input("Or ask your own",
+                                  placeholder="Type your own question…",
+                                  label_visibility="collapsed")
+            if st.form_submit_button("Ask", use_container_width=True) and typed.strip():
+                st.session_state.asked = typed.strip()
+
+        q = st.session_state.get("asked")
+        if q:
+            text, matched = ask.answer(q, A)
+            st.markdown(
+                f'<div class="ask-a{"" if matched else " refused"}">'
+                f'<div class="ask-q">{q}</div><p>{text}</p></div>',
+                unsafe_allow_html=True,
+            )
+
 
 def screen_manuscript():
     header(
@@ -1213,8 +1383,20 @@ def screen_subject():
     return
 
 
-RENDER = ([screen_manuscript, screen_unlock, screen_critic] if HAS_SOURCE else []) + \
-         [screen_mirath, screen_miftah, screen_jisr, screen_apply]
+if HAS_STORY:
+    RENDER = [screen_story, screen_unlock, screen_critic,
+              screen_miftah, screen_jisr, screen_apply]
+elif HAS_SOURCE:
+    RENDER = [screen_manuscript, screen_unlock, screen_critic,
+              screen_mirath, screen_miftah, screen_jisr, screen_apply]
+else:
+    RENDER = [screen_mirath, screen_miftah, screen_jisr, screen_apply]
+
+if st.session_state.view == "landing":
+    screen_landing()
+    st.stop()
+
+render_ask_panel()
 
 if st.session_state.view == "home":
     screen_home()
