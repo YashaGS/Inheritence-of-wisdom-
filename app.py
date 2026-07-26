@@ -145,6 +145,23 @@ h1.title {
 }
 .progress { font-family: Georgia,serif; font-size:.78rem; color:#9a8358; letter-spacing:.16em; text-transform:uppercase; }
 
+/* ---- home: hero statement ---- */
+.hero{margin:0 0 2rem;max-width:64ch}
+.hero .punch{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:clamp(1.6rem,3.1vw,2.25rem);line-height:1.22;font-weight:600;
+  color:#2c2216;margin:0 0 1.1rem;text-wrap:balance;
+}
+.hero .punch em{font-style:normal;color:#9a7b2e}
+.hero p{font-family:Georgia,serif;font-size:1.04rem;line-height:1.7;color:#33281a;margin:0 0 .85rem}
+.hero .names{color:#6b5535}
+.hero .names b{color:#7a5c1a;font-weight:600}
+.hero .kicker{
+  font-family:'Iowan Old Style',Palatino,Georgia,serif;
+  font-size:1.16rem;line-height:1.5;color:#2c2216;
+  border-left:3px solid #b8860b;padding:.5rem 0 .5rem 1rem;margin:1.2rem 0 0;
+}
+
 /* ---- home: three expandable brief cards ---- */
 .brief-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 2rem}
 @media(max-width:900px){.brief-grid{grid-template-columns:1fr}}
@@ -693,6 +710,32 @@ def screen_apply():
         )
 
 
+HERO = """
+<div class="hero">
+  <p class="punch">Your child is inheriting a fortune —<br/>
+  and <em>no one has told them who left it</em>.</p>
+
+  <p class="names">Algebra without <b>al-jabr</b>. Algorithm without <b>al-Khwārizmī</b>.
+  Circulation without <b>Ibn al-Nafīs</b>. Fields without <b>Faraday</b>.</p>
+
+  <p>Every rule in that textbook was once somebody's breakthrough. School hands over the
+  finished product and throws away the working — and a finished product is the one thing
+  a mind cannot learn from.</p>
+
+  <p>Children arrive as natural explorers. Then we spend eleven years handing them
+  conclusions, and wonder where the curiosity went. Give them the raw material instead:
+  <strong>how those minds actually moved</strong>. How to think. How to break a problem
+  open.</p>
+
+  <p>That is the real inheritance — a method, written down, outlives the one who found
+  it. It cannot be spent, lost or taken. And it has to be handed over
+  <strong>now</strong>, while the mind is still being shaped.</p>
+
+  <p class="kicker">Same syllabus. Same exam. A child who walks out knowing
+  <strong>the knowledge is theirs</strong>.</p>
+</div>
+"""
+
 BRIEF = """
 <div class="brief-grid">
 
@@ -735,8 +778,8 @@ BRIEF = """
 
   <div class="brief">
     <h4>What it does</h4>
-    <p class="lead">Four things, every lesson: a map of the method, a blueprint for the
-    solution, systems thinking, and questions before answers.</p>
+    <p class="lead">Hands over how to think and how to solve — as raw material, not a
+    finished answer. Four things, every lesson.</p>
     <details>
       <summary>Read more</summary>
       <p><strong>A mind map of the method</strong> — not of the topic, of the
@@ -788,6 +831,7 @@ def screen_home():
                 'Inheritance of Wisdom</h1>', unsafe_allow_html=True)
     st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
 
+    st.markdown(HERO, unsafe_allow_html=True)
     st.markdown(BRIEF, unsafe_allow_html=True)
 
     st.markdown('<div class="eyebrow">What do you want to learn today?</div>',
