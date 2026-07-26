@@ -912,6 +912,12 @@ def screen_jisr():
             f'<div class="cite">{C["command_words"]}</div></div>',
             unsafe_allow_html=True,
         )
+        if D["objective"].get("bridge"):
+            st.markdown(
+                f'<div class="panel"><h3>Why this counts as inherited</h3>'
+                f'<p>{D["objective"]["bridge"]}</p></div>',
+                unsafe_allow_html=True,
+            )
     with c2:
         w = C.get("khwarizmi_worked") or C.get("worked")
         rows = "".join(f"<li>{s}</li>" for s in w["steps"])
@@ -924,9 +930,10 @@ def screen_jisr():
             f'<strong>{w["answer"]}</strong></p></div>',
             unsafe_allow_html=True,
         )
+        n_steps = len(w.get("steps", []))
         st.markdown(
-            f'<div class="panel"><p style="font-size:.95rem">Twelve centuries apart, '
-            f'the same six moves. The syllabus did not invent this method — '
+            f'<div class="panel"><p style="font-size:.95rem">Centuries apart, the same '
+            f'{n_steps} moves. The syllabus did not invent this method — '
             f'it inherited it.</p></div>',
             unsafe_allow_html=True,
         )
@@ -956,7 +963,7 @@ def screen_apply():
         if st.session_state.attempted:
             steps = "".join(f"<li>{s}</li>" for s in A["reveal_steps"])
             st.markdown(
-                f'<div class="panel"><h3>The overlap</h3>'
+                f'<div class="panel"><h3>{A.get("reveal_heading", "The solution")}</h3>'
                 f'<ol class="steps">{steps}</ol>'
                 f'<p style="text-align:center;color:#1f5e3d;font-size:1.12rem">'
                 f'<strong>{A["answer"]}</strong></p>'

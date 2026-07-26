@@ -137,6 +137,7 @@
       "(x + 3)² = 4 → x + 3 = ±2 → x = −1 or x = −5"
     ],
     "answer": "(x + 3)² − 4 = 0, giving x = −1 or x = −5",
-    "mark_scheme": "M1 for (x + 3)². A1 for −4. A1 for both roots. Full marks require the completed square form to be shown, not just the roots."
+    "mark_scheme": "M1 for (x + 3)². A1 for −4. A1 for both roots. Full marks require the completed square form to be shown, not just the roots.",
+    "reveal_heading": "The overlap"
   }
 }

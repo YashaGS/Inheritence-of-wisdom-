@@ -5,9 +5,7 @@
   "subject_code": "0478",
   "chapter": "Data transmission",
   "has_source": false,
-
   "_README": "TIER 1, no manuscript. al-Kindī's Risāla is extant but not available as a public-domain facing-page edition we have read, so there is no Unlock/Critic layer here and the app does not pretend otherwise. Tier, citation and confidence are frozen curation fields. Note the honest bridge in objective.bridge — Cambridge asks for the NEED for encryption, and al-Kindī is why the need exists.",
-
   "objective": {
     "code": "0478 2.3",
     "subject": "Cambridge IGCSE Computer Science 0478 (2026-2028)",
@@ -19,7 +17,6 @@
     "bridge": "The syllabus asks why encryption is needed. The honest answer is historical: because al-Kindī showed, in the ninth century, that the obvious method does not work. Every modern cipher is built to survive the attack he invented.",
     "depth_ref": "Core. Full-mark answers name interception as the threat, and distinguish symmetric (one shared key) from asymmetric (public key encrypts, private key decrypts)."
   },
-
   "lineage": {
     "_note": "Tier 1 direct. Curated by hand from Miraath-al-Hikma_Heritage-Topics.md.",
     "tier": 1,
@@ -33,7 +30,6 @@
     "confidence_mark": "●",
     "why_it_matters": "This hackathon is named for al-Khwārizmī, who gave computing the algorithm. al-Kindī, in the same city a generation later, gave it cryptanalysis. Both foundations of the industry in this room were laid within a few streets of each other."
   },
-
   "algorithm": {
     "_note": "The universal layer — the transferable move, not the historical fact.",
     "name": "Find what the disguise could not hide",
@@ -53,7 +49,6 @@
     ],
     "quran_link": null
   },
-
   "cambridge_form": {
     "objective_code": "0478 2.3",
     "statement": "Understand the need for and purpose of encryption when transmitting data.",
@@ -77,7 +72,6 @@
       "answer": "Because frequency survives substitution — the disguise leaves a fingerprint"
     }
   },
-
   "apply": {
     "_note": "Withhold-then-reveal. The child reads the histogram before the answer exists on screen.",
     "problem": "An intercepted message uses 20 different symbols. Counted across the whole message, ✦ appears far more than any other, and ◈ is second. The message is known to be in English. Which plain letters are ✦ and ◈ almost certainly standing for — and why does this attack fail completely against a modern cipher?",
@@ -90,6 +84,7 @@
       "That is the whole purpose of the syllabus objective. Encryption is not hiding the letters — it is destroying the pattern."
     ],
     "answer": "✦ = E, ◈ = T. Modern encryption defeats the attack by flattening the frequency distribution so the ranking is meaningless.",
-    "mark_scheme": "B1 for identifying E and T. B1 for stating that frequency is unchanged by substitution. B1 for explaining that a modern cipher produces a uniform frequency distribution. Candidates who answer only 'the key is longer' do not gain the third mark."
+    "mark_scheme": "B1 for identifying E and T. B1 for stating that frequency is unchanged by substitution. B1 for explaining that a modern cipher produces a uniform frequency distribution. Candidates who answer only 'the key is longer' do not gain the third mark.",
+    "reveal_heading": "What the count gave away"
   }
 }
